@@ -59,7 +59,6 @@ export default {}
     font-size: $text-lg;
     font-weight: 600;
     color: $primary-800;
-    flex-grow: 1;
 
     &:hover {
       color: $primary-700;
