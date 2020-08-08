@@ -6,6 +6,10 @@
   padding: $size-3 $size-5;
   text-transform: uppercase;
   border-radius: 0;
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .btn-primary {
@@ -13,12 +17,24 @@
   border-color: $primary-700;
   color: $white;
 
+  &:disabled {
+    background-color: $primary-500;
+    border-color: $primary-500;
+
+    &:hover {
+      background-color: $primary-500;
+      border-color: $primary-500;
+    }
+  }
+
   &:hover {
     background-color: $primary-600;
+    border-color: $primary-600;
   }
 
   &:active {
     background-color: $primary-800;
+    border-color: $primary-800;
   }
 
   &:focus {

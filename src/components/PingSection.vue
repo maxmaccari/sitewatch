@@ -1,13 +1,27 @@
 <template>
   <div class="ping-section grid-8 grid-offset-2">
     <div class="ping-section__form-group">
-      <input class="input" type="text" placeholder="ex: www.google.com" />
-      <button class="btn btn-primary">Ping</button>
+      <input
+        data-test-id="site-input"
+        v-model="siteUrl"
+        class="input"
+        type="text"
+        placeholder="ex: www.google.com"
+      />
+      <button
+        data-test-id="ping-button"
+        @click="pingSite(sanitizedUrl)"
+        class="btn btn-primary"
+        :disabled="!isValidUrl"
+      >
+        Ping
+      </button>
     </div>
 
     <PingSectionResult
-      siteUrl="www.google.com"
-      :latency="500"
+      v-if="lastSiteUrl && lastLatency"
+      :siteUrl="lastSiteUrl"
+      :latency="lastLatency"
       class="ping-section-result"
     />
   </div>
@@ -15,10 +29,39 @@
 
 <script>
 import PingSectionResult from '@/components/PingSectionResult'
+import { mapState, mapActions } from 'vuex'
+
+var urlPattern = new RegExp(
+  '^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$',
+  'i'
+)
+
 export default {
   components: {
     PingSectionResult,
   },
+  data() {
+    return {
+      siteUrl: '',
+    }
+  },
+  computed: {
+    sanitizedUrl() {
+      if (
+        this.siteUrl.startsWith('http://') ||
+        this.siteUrl.startsWith('https://')
+      ) {
+        return this.siteUrl
+      }
+
+      return `http://${this.siteUrl}`
+    },
+    isValidUrl() {
+      return urlPattern.test(this.sanitizedUrl)
+    },
+    ...mapState(['lastSiteUrl', 'lastLatency']),
+  },
+  methods: mapActions(['pingSite']),
 }
 </script>
 
