@@ -1,4 +1,6 @@
 // Colors
+$white: #FCFCFC;
+
 $gray-base: #627D98;
 $gray-100: lighten($gray-base, 40%);
 $gray-200: lighten($gray-base, 30%);
@@ -85,7 +87,7 @@ $text-6xl: 4rem;
 $space-px: 1px;
 $space-0: 0;
 $space-1: 0.25rem;
-$space-2: 0.5;
+$space-2: 0.5rem;
 $space-3: 0.75rem;
 $space-4: 1rem;
 $space-5: 1.25rem;
@@ -101,3 +103,29 @@ $space-40: 10rem;
 $space-48: 12rem;
 $space-56: 14rem;
 $space-64: 16rem;
+
+// Sizing
+$size-px: 1px;
+$size-full: 100%;
+$size-screen: 100vw;
+$size-0: 0;
+$size-1: 0.25rem;
+$size-2: 0.5rem;
+$size-3: 0.75rem;
+$size-4: 1rem;
+$size-5: 1.25rem;
+$size-6: 1.5rem;
+$size-8: 2rem;
+$size-10: 2.5rem;
+$size-12: 3rem;
+$size-16: 4rem;
+$size-20: 5rem;
+$size-24: 6rem;
+$size-32: 8rem;
+$size-40: 10rem;
+$size-48: 12rem;
+$size-56: 14rem;
+$size-64: 16rem;
+
+// Screen Sizes
+$medium-screen: 461px;

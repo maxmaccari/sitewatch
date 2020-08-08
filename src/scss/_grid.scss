@@ -8,13 +8,11 @@ $grid-max: 980px;
 
 .container {
   max-width: $grid-max;
-  margin: auto;
+  margin: 0 8px;
 }
 
 // Grids
 [class*="grid-"] {
-  background: lightgray;
-  outline: 1px solid gray;
   float: left;
   padding: 0 $grid-gutter;
   margin-bottom: 20px;
@@ -22,6 +20,23 @@ $grid-max: 980px;
 
 @for $i from 1 through $grid-columns{ 
   .grid-#{$i} {
-    width: 100% / $grid-columns * $i;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: $medium-screen) {
+  .container {
+    max-width: $grid-max;
+    margin: auto;
+  }
+
+  @for $i from 1 through $grid-columns{ 
+    .grid-#{$i} {
+      width: 100% / $grid-columns * $i;
+    }
+
+    .grid-offset-#{$i} {
+      margin-left: (100% / $grid-columns * $i)
+    }
   }
 }

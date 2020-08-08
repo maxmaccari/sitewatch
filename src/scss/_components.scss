@@ -1,0 +1,40 @@
+.btn {
+  border: 1px solid $gray-300;
+  cursor: pointer;
+  font-weight: 800;
+  outline: 0;
+  padding: $size-3 $size-5;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+.btn-primary {
+  background-color: $primary-700;
+  border-color: $primary-700;
+  color: $white;
+
+  &:hover {
+    background-color: $primary-600;
+  }
+
+  &:active {
+    background-color: $primary-800;
+  }
+
+  &:focus {
+    border-color: $gray-700;
+  }
+}
+
+.input {
+  background: $white;
+  border-radius: 0;
+  border: 1px solid $gray-300;
+  font-size: $text-sm;
+  outline: none;
+  padding: $size-3 $size-4;
+
+  &:focus {
+    border-color: $gray-700;
+  }
+}
