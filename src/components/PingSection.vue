@@ -4,11 +4,18 @@
       <input class="input" type="text" placeholder="ex: www.google.com" />
       <button class="btn btn-primary">Ping</button>
     </div>
+
+    <PingSectionResult class="ping-section-result" />
   </div>
 </template>
 
 <script>
-export default {}
+import PingSectionResult from '@/components/PingSectionResult'
+export default {
+  components: {
+    PingSectionResult,
+  },
+}
 </script>
 
 <style lang="scss" scoped>
