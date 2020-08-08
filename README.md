@@ -1,6 +1,6 @@
 # Sitewatch
 
-![.github/workflows/main.yml](https://github.com/maxmaccari/sitewatch/workflows/.github/workflows/main.yml/badge.svg)
+![.github/workflows/release.yml](https://github.com/maxmaccari/sitewatch/workflows/.github/workflows/release.yml/badge.svg)
 
 ## Project setup
 
