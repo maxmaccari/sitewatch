@@ -5,7 +5,11 @@
       <button class="btn btn-primary">Ping</button>
     </div>
 
-    <PingSectionResult class="ping-section-result" />
+    <PingSectionResult
+      siteUrl="www.google.com"
+      :latency="500"
+      class="ping-section-result"
+    />
   </div>
 </template>
 
