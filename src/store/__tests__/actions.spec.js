@@ -15,7 +15,7 @@ describe('pingSite', () => {
     expect(BrowserPingService.ping).toBeCalledWith(siteUrl)
   })
 
-  test('should commit SET_PING_RESULT with the given url and the timeout if ping is sucessfull', async () => {
+  test('should commit START_LOADING and SET_PING_RESULT with the given url and the timeout if ping is sucessfull', async () => {
     const latency = 250
     const siteUrl = 'http://www.example.com'
     const commit = jest.fn()
@@ -24,11 +24,12 @@ describe('pingSite', () => {
 
     await actions.pingSite({ commit }, siteUrl)
 
-    expect(commit).toBeCalledTimes(1)
+    expect(commit).toBeCalledTimes(2)
     expect(commit).toBeCalledWith('SET_PING_RESULT', { latency, siteUrl })
+    expect(commit).toBeCalledWith('START_LOADING')
   })
 
-  test('should commit SET_ERROR with the given url and the error in case of errors', async () => {
+  test('should commit START_LOADING and SET_ERROR with the given url and the error in case of errors', async () => {
     const error = 'my error'
     const siteUrl = 'http://www.example.com'
     const commit = jest.fn()
@@ -37,7 +38,8 @@ describe('pingSite', () => {
 
     await actions.pingSite({ commit }, siteUrl)
 
-    expect(commit).toBeCalledTimes(1)
+    expect(commit).toBeCalledTimes(2)
     expect(commit).toBeCalledWith('SET_ERROR', { error, siteUrl })
+    expect(commit).toBeCalledWith('START_LOADING')
   })
 })

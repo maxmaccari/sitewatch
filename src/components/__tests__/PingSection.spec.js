@@ -2,6 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import PingSection from '../PingSection.vue'
 import PingSectionError from '../PingSectionError.vue'
 import PingSectionResult from '../PingSectionResult.vue'
+import VLoading from '../VLoading.vue'
 
 const defaultStore = {
   state: {
@@ -294,5 +295,74 @@ describe('PingSection', () => {
     siteInput.setValue(lastSite)
     await wrapper.vm.$nextTick()
     expect(pingButton.text()).toContain('Retry')
+  })
+
+  test('ping button and input should be disabled if state is loading', () => {
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl: false,
+            latency: false,
+            loading: true,
+          },
+          getters: {
+            lastSite: null,
+          },
+        },
+      },
+    })
+
+    const siteInput = wrapper.find('[data-test-id="site-input"]')
+    const pingButton = wrapper.find('[data-test-id="ping-button"]')
+
+    expect(siteInput.element.disabled).toBe(true)
+    expect(pingButton.element.disabled).toBe(true)
+  })
+
+  test('should show VLoading component if state is loading', () => {
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl: false,
+            latency: false,
+            loading: true,
+          },
+          getters: {
+            lastSite: null,
+          },
+        },
+      },
+    })
+
+    const vLoading = wrapper.findAllComponents(VLoading)
+
+    expect(vLoading.exists()).toBe(true)
+    expect(vLoading.length).toBe(2)
+  })
+
+  test('should not show results or errors if state is loading', () => {
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl: 'https://www.example.com',
+            latency: 200,
+            loading: true,
+            errors: 'my error',
+          },
+          getters: {
+            lastSite: 'www.example.com',
+          },
+        },
+      },
+    })
+
+    const pingSectionResult = wrapper.findComponent(PingSectionResult)
+    const pingSectionError = wrapper.findComponent(PingSectionError)
+
+    expect(pingSectionResult.exists()).toBe(false)
+    expect(pingSectionError.exists()).toBe(false)
   })
 })

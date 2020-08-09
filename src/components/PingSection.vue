@@ -8,16 +8,18 @@
         class="input"
         type="text"
         placeholder="ex: www.mywebsite.com"
+        :disabled="loading"
       />
       <button
         data-test-id="ping-button"
         @click="pingSite(sanitizedUrl)"
         class="btn btn-primary btn-icon"
-        :disabled="!isValidUrl"
+        :disabled="!isValidUrl || loading"
       >
         {{ pingLabel }}
 
-        <svg fill="currentColor" viewBox="0 0 20 20">
+        <VLoading v-if="loading" color="white" class="btn__v-loading" />
+        <svg fill="currentColor" viewBox="0 0 20 20" v-else>
           <path
             fill-rule="evenodd"
             d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
@@ -27,26 +29,31 @@
       </button>
     </div>
 
-    <PingSectionResult
-      v-if="lastSiteUrl && lastLatency"
-      :site="lastSite"
-      :latency="lastLatency"
-      class="space-top"
-    />
+    <VLoading v-if="loading" class="space-top" :with-text="true" />
 
-    <PingSectionError
-      v-if="lastSiteUrl && error"
-      @try-again="tryAgain"
-      class="space-top"
-      :error="error"
-      :site="lastSite"
-    />
+    <template v-else>
+      <PingSectionResult
+        v-if="lastSiteUrl && lastLatency"
+        :site="lastSite"
+        :latency="lastLatency"
+        class="space-top"
+      />
+
+      <PingSectionError
+        v-if="lastSiteUrl && error"
+        @try-again="tryAgain"
+        class="space-top"
+        :error="error"
+        :site="lastSite"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import PingSectionError from '@/components/PingSectionError'
 import PingSectionResult from '@/components/PingSectionResult'
+import VLoading from '@/components/VLoading'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 const urlPattern = new RegExp(
@@ -58,6 +65,7 @@ export default {
   components: {
     PingSectionError,
     PingSectionResult,
+    VLoading,
   },
   data() {
     return {
@@ -85,7 +93,7 @@ export default {
 
       return 'Ping'
     },
-    ...mapState(['lastSiteUrl', 'lastLatency', 'error']),
+    ...mapState(['lastSiteUrl', 'lastLatency', 'error', 'loading']),
     ...mapGetters(['lastSite']),
   },
   methods: {
@@ -122,11 +130,32 @@ export default {
       flex-grow: 0;
       margin-left: -$size-px;
       padding-right: $size-6;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: $space-2;
+      }
+    }
+
+    .v-loading.btn__v-loading {
+      margin-left: $space-2;
+      width: 20px;
+      height: 20px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     &--shadowed {
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     }
+  }
+
+  .v-loading {
+    margin: auto;
   }
 
   .space-top {

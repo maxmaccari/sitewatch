@@ -11,6 +11,7 @@ export default new Vuex.Store({
     lastSiteUrl: null,
     lastLatency: null,
     error: null,
+    loading: false,
   },
   mutations,
   actions,

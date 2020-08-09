@@ -6,6 +6,7 @@ describe('SET_PING_RESULT', () => {
       lastSiteUrl: null,
       lastLatency: null,
       error: {},
+      loading: true,
     }
 
     const siteUrl = 'http://www.example.com'
@@ -17,16 +18,18 @@ describe('SET_PING_RESULT', () => {
       lastSiteUrl: siteUrl,
       lastLatency: latency,
       error: null,
+      loading: false,
     })
   })
 })
 
 describe('SET_ERROR', () => {
-  test('should set lastSiteUrl and error, and clear latency', () => {
+  test('should set lastSiteUrl and error, and clear latency and loading', () => {
     const state = {
       lastSiteUrl: null,
       lastLatency: 1000,
       error: null,
+      loading: true,
     }
 
     const siteUrl = 'http://www.example.com'
@@ -35,9 +38,30 @@ describe('SET_ERROR', () => {
     mutations.SET_ERROR(state, { siteUrl, error })
 
     expect(state).toEqual({
+      error,
       lastSiteUrl: siteUrl,
       lastLatency: null,
-      error,
+      loading: false,
+    })
+  })
+})
+
+describe('START_LOADING', () => {
+  test('should set loading as true', () => {
+    const state = {
+      lastSiteUrl: null,
+      lastLatency: null,
+      error: null,
+      loading: false,
+    }
+
+    mutations.START_LOADING(state)
+
+    expect(state).toEqual({
+      error: null,
+      lastSiteUrl: null,
+      lastLatency: null,
+      loading: true,
     })
   })
 })
