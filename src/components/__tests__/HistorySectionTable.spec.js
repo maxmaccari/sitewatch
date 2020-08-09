@@ -54,4 +54,36 @@ describe('HistorySectionTable', () => {
     expect(icon.element.src).toBe(expectedSrc)
     expect(icon.element.alt).toBe(expectedAlt)
   })
+
+  it('renders latency indicators properly', () => {
+    const url = 'http://wwww.example-1.com'
+    const pingHistory = [
+      { url, latency: 250 },
+      { url, latency: 500 },
+      { url, latency: 1200 },
+    ]
+    const wrapper = shallowMount(HistorySectionTable, {
+      propsData: {
+        pingHistory,
+      },
+    })
+
+    const indicators = wrapper.findAll(
+      '[data-test-id="table-latency-indicator"]'
+    )
+
+    expect(indicators.exists()).toBe(true)
+    expect(indicators.at(0).classes()).toContain(
+      'history-section-table__latency-indicator--good'
+    )
+    expect(indicators.at(0).element.title).toContain('good')
+    expect(indicators.at(1).classes()).toContain(
+      'history-section-table__latency-indicator--average'
+    )
+    expect(indicators.at(1).element.title).toContain('average')
+    expect(indicators.at(2).classes()).toContain(
+      'history-section-table__latency-indicator--bad'
+    )
+    expect(indicators.at(2).element.title).toContain('bad')
+  })
 })
