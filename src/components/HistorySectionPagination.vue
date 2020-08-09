@@ -9,7 +9,10 @@
         @click="$emit('previous-page')"
         :disabled="disableBack"
         data-test-id="page-back"
+        class="with-icon"
+        title="Back"
       >
+        <inline-svg :src="require('@/assets/svg/arrow-circle-left.svg')" />
         Back
       </button>
     </li>
@@ -28,8 +31,11 @@
         @click="$emit('next-page')"
         :disabled="disableNext"
         data-test-id="page-next"
+        class="with-icon"
+        title="Next"
       >
         Next
+        <inline-svg :src="require('@/assets/svg/arrow-circle-right.svg')" />
       </button>
     </li>
   </ul>
@@ -68,6 +74,7 @@ export default {
   margin-top: $space-4;
   border-radius: 5px;
   overflow: hidden;
+  max-height: $size-8;
 
   li {
     list-style: none;
@@ -90,6 +97,17 @@ export default {
 
     &:disabled {
       cursor: default;
+      background-color: $gray-100;
+
+      svg {
+        color: $gray-300;
+      }
+    }
+
+    svg {
+      width: $size-3;
+      color: $gray-800;
+      vertical-align: middle;
     }
   }
 

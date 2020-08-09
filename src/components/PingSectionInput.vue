@@ -18,13 +18,7 @@
       {{ pingLabel }}
 
       <VLoading v-if="loading" color="white" class="btn__v-loading" />
-      <svg fill="currentColor" viewBox="0 0 20 20" v-else>
-        <path
-          fill-rule="evenodd"
-          d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
+      <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" v-else />
     </button>
   </div>
 </template>

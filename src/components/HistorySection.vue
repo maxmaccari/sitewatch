@@ -7,13 +7,7 @@
         <div class="history-section__header-controls">
           <div class="input-addon">
             <div class="input-addon__icon">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+              <inline-svg :src="require('@/assets/svg/search.svg')" />
             </div>
 
             <input
@@ -32,6 +26,7 @@
             class="btn btn-red"
           >
             Clear
+            <inline-svg :src="require('@/assets/svg/trash.svg')" />
           </button>
         </div>
       </div>
@@ -129,6 +124,12 @@ export default {
       font-size: $text-sm;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      display: flex;
+
+      svg {
+        width: $size-4;
+        margin-left: $space-1;
+      }
     }
   }
 
