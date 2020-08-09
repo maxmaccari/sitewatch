@@ -25,11 +25,7 @@
 
 <script>
 import VLoading from '@/components/VLoading'
-
-const urlPattern = new RegExp(
-  '^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$',
-  'i'
-)
+import validateUrl from '@/utils/validateUrl'
 
 export default {
   components: {
@@ -54,7 +50,7 @@ export default {
   },
   computed: {
     isValidUrl() {
-      return urlPattern.test(this.sanitizedUrl)
+      return validateUrl(this.sanitizedUrl)
     },
     sanitizedUrl() {
       if (
