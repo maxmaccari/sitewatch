@@ -12,6 +12,11 @@
   }
 }
 
+.btn-icon svg{
+  width: $size-5;
+  vertical-align: text-bottom;
+}
+
 .btn-primary {
   background-color: $primary-700;
   border-color: $primary-700;
