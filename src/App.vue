@@ -7,18 +7,22 @@
         fast (or slow) it is.
       </p>
 
-      <PingSection class="ping-section" />
+      <PingSection />
     </div>
+
+    <HistorySection />
   </div>
 </template>
 
 <script>
 import PingSection from '@/components/PingSection'
+import HistorySection from '@/components/HistorySection'
 
 export default {
   name: 'App',
   components: {
     PingSection,
+    HistorySection,
   },
 }
 </script>
@@ -33,6 +37,11 @@ export default {
   .container {
     margin-top: $space-16;
   }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {

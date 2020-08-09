@@ -98,14 +98,17 @@ export default {
   width: $size-full;
 
   .input {
+    border-radius: 0;
     border-bottom-left-radius: 25px;
     border-top-left-radius: 25px;
     flex-grow: 1;
     margin-right: -$size-px;
     padding-left: $size-6;
+    font-size: $text-sm;
   }
 
   .btn {
+    border-radius: 0;
     border-bottom-right-radius: 25px;
     border-top-right-radius: 25px;
     flex-grow: 0;
@@ -113,6 +116,7 @@ export default {
     padding-right: $size-6;
     display: flex;
     align-items: center;
+    font-size: $text-base;
 
     svg {
       margin-left: $space-2;

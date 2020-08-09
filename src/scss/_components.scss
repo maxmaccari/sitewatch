@@ -1,11 +1,12 @@
 .btn {
   border: 1px solid $gray-300;
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 600;
+  font-size: $text-sm;
   outline: 0;
   padding: $size-3 $size-5;
   text-transform: uppercase;
-  border-radius: 0;
+  border-radius: 2px;
 
   &:disabled {
     cursor: default;
@@ -47,6 +48,36 @@
   }
 }
 
+.btn-red {
+  background-color: $red-600;
+  border-color: $red-600;
+  color: $white;
+
+  &:disabled {
+    background-color: $red-400;
+    border-color: $red-400;
+
+    &:hover {
+      background-color: $red-400;
+      border-color: $red-400;
+    }
+  }
+
+  &:hover {
+    background-color: $red-500;
+    border-color: $red-500;
+  }
+
+  &:active {
+    background-color: $red-600;
+    border-color: $red-600;
+  }
+
+  &:focus {
+    border-color: $gray-700;
+  }
+}
+
 .input {
   background: $white;
   border-radius: 0;
@@ -54,6 +85,11 @@
   font-size: $text-sm;
   outline: none;
   padding: $size-3 $size-4;
+  border-radius: 2px;
+
+  &::placeholder {
+    color: $gray-400;
+  }
 
   &:focus {
     border-color: $gray-700;
