@@ -6,6 +6,7 @@ import HistorySectionPagination from '../HistorySectionPagination.vue'
 const defaultStore = {
   state: {
     currentPage: 1,
+    pingHistory: [1],
   },
   getters: {
     filteredHistory: [],
@@ -22,6 +23,58 @@ describe('HistorySection', () => {
     })
 
     expect(wrapper.text()).toContain('No data found here.')
+  })
+
+  it('renders the search input and clear button if it have pingHistory filled', () => {
+    const wrapper = shallowMount(HistorySection, {
+      mocks: {
+        $store: defaultStore,
+      },
+    })
+
+    const searchInput = wrapper.find('[data-test-id="search-input"]')
+    const clearButton = wrapper.find('[data-test-id="clear-button"]')
+
+    expect(searchInput.exists()).toBe(true)
+    expect(clearButton.exists()).toBe(true)
+  })
+
+  it('does not render the search input and clear button if it have pingHistory is empty', () => {
+    const wrapper = shallowMount(HistorySection, {
+      mocks: {
+        $store: {
+          state: {
+            ...defaultStore.state,
+            pingHistory: [],
+          },
+          getters: defaultStore.getters,
+        },
+      },
+    })
+
+    const searchInput = wrapper.find('[data-test-id="search-input"]')
+    const clearButton = wrapper.find('[data-test-id="clear-button"]')
+
+    expect(searchInput.exists()).toBe(false)
+    expect(clearButton.exists()).toBe(false)
+  })
+
+  it("add 'history-section__header--empty' to history-section__header if pingHistory is empty", () => {
+    const wrapper = shallowMount(HistorySection, {
+      mocks: {
+        $store: {
+          state: {
+            ...defaultStore.state,
+            pingHistory: [],
+          },
+          getters: defaultStore.getters,
+        },
+      },
+    })
+
+    const header = wrapper.find('.history-section__header')
+
+    expect(header.classes()).toContain('history-section__header--empty')
   })
 
   it('renders an empty search input', () => {
@@ -118,7 +171,7 @@ describe('HistorySection', () => {
       mocks: {
         $store: {
           state: {
-            ...defaultStore.getters,
+            ...defaultStore.state,
             currentPage,
           },
           getters: {

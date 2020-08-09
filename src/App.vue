@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <h1>How fast is your website loading?</h1>
-      <p class="grid-8 grid-offset-2">
+      <p>
         Enter a url bellow to measure the website latency and we will show how
         fast (or slow) it is.
       </p>
@@ -11,16 +11,20 @@
     </div>
 
     <HistorySection />
+
+    <AppFooter />
   </div>
 </template>
 
 <script>
+import AppFooter from '@/components/AppFooter'
 import PingSection from '@/components/PingSection'
 import HistorySection from '@/components/HistorySection'
 
 export default {
   name: 'App',
   components: {
+    AppFooter,
     PingSection,
     HistorySection,
   },
@@ -31,17 +35,27 @@ export default {
 <style lang="scss" src="@/scss/app.scss"></style>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-@media screen and (min-width: $medium-screen) {
+@include break('medium') {
   .container {
     margin-top: $space-16;
+    margin: auto;
+    flex-grow: 0;
+  }
+
+  .history-section {
+    min-height: $size-64;
   }
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+  margin: auto;
+  padding: 0 $space-2;
 }
 
 h1 {
@@ -52,9 +66,15 @@ p {
   color: $gray-700;
   font-size: $text-xl;
   text-align: center;
+  max-width: $layout-8;
+  margin: auto;
 }
 
 .ping-section {
-  margin-top: $space-3;
+  margin-top: $space-6;
+}
+
+.history-section {
+  margin-top: $space-6;
 }
 </style>

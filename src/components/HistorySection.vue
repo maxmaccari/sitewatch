@@ -1,58 +1,67 @@
 <template>
   <div class="history-section">
     <div class="container">
-      <div class="history-section__header">
+      <div
+        class="history-section__header"
+        :class="{ 'history-section__header--empty': !pingHistory.length }"
+      >
         <h2>Ping History</h2>
 
-        <div class="history-section__header-controls">
-          <div class="input-addon">
-            <div class="input-addon__icon">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+        <transition name="fade-slow" mode="out-in">
+          <div
+            class="history-section__header-controls"
+            v-if="pingHistory.length"
+          >
+            <div class="input-addon">
+              <div class="input-addon__icon">
+                <inline-svg :src="require('@/assets/svg/search.svg')" />
+              </div>
+
+              <input
+                data-test-id="search-input"
+                type="text"
+                class="input"
+                placeholder="Search"
+                :value="historySearch"
+                @input="searchHistory($event.target.value)"
+              />
             </div>
 
-            <input
-              data-test-id="search-input"
-              type="text"
-              class="input"
-              placeholder="Search"
-              :value="historySearch"
-              @input="searchHistory($event.target.value)"
-            />
+            <button
+              @click="resetHistory()"
+              data-test-id="clear-button"
+              class="btn btn-red"
+            >
+              Clear
+              <inline-svg :src="require('@/assets/svg/trash.svg')" />
+            </button>
           </div>
+        </transition>
+      </div>
 
-          <button
-            @click="resetHistory()"
-            data-test-id="clear-button"
-            class="btn btn-red"
-          >
-            Clear
-          </button>
+      <transition name="fade-slow" mode="out-in">
+        <HistorySectionTable
+          :pingHistory="filteredHistory"
+          @ping-url="pingSite"
+        />
+      </transition>
+
+      <transition name="fade-slow" mode="out-in">
+        <div class="history-section__no-data" v-if="!filteredHistory.length">
+          <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
+          <p>No data found here.</p>
         </div>
-      </div>
+      </transition>
 
-      <HistorySectionTable
-        :pingHistory="filteredHistory"
-        @ping-url="pingSite"
-      />
-
-      <div class="history-section__no-data" v-if="!filteredHistory.length">
-        <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
-        <p>No data found here.</p>
-      </div>
-
-      <HistorySectionPagination
-        :page="currentPage"
-        :totalPages="historyPages"
-        @next-page="nextPage"
-        @previous-page="previousPage"
-        @change-page="goToPage"
-      />
+      <transition name="fade-slow" mode="out-in">
+        <HistorySectionPagination
+          :page="currentPage"
+          :totalPages="historyPages"
+          @next-page="nextPage"
+          @previous-page="previousPage"
+          @change-page="goToPage"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -68,7 +77,7 @@ export default {
     HistorySectionPagination,
   },
   computed: {
-    ...mapState(['currentPage', 'historySearch']),
+    ...mapState(['currentPage', 'historySearch', 'pingHistory']),
     ...mapGetters(['filteredHistory', 'historyPages']),
   },
   methods: mapActions([
@@ -82,8 +91,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .history-section {
   background-color: $gray-100;
   padding-top: $space-4;
@@ -101,9 +108,18 @@ export default {
     flex-direction: column;
   }
 
+  &__header--empty {
+    justify-content: center;
+
+    h2 {
+      margin: auto;
+    }
+  }
+
   &__header-controls {
     width: $size-full;
     display: flex;
+    position: relative;
 
     .input-addon {
       flex-grow: 1;
@@ -126,9 +142,16 @@ export default {
     }
 
     .btn {
+      position: relative;
       font-size: $text-sm;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      display: flex;
+
+      svg {
+        width: $size-4;
+        margin-left: $space-1;
+      }
     }
   }
 
@@ -156,7 +179,7 @@ export default {
   }
 }
 
-@media screen and (min-width: $medium-screen) {
+@include break('medium') {
   .history-section {
     h2 {
       font-weight: 600;

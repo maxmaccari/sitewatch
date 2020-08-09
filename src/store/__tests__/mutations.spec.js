@@ -1,5 +1,9 @@
 import mutations from '../mutations'
 import originalState from '../state'
+import generateGuid from '@/utils/generateGuid'
+
+jest.mock('@/utils/generateGuid')
+generateGuid.mockImplementation(() => '')
 
 const createState = (replacement = {}) => {
   return {
@@ -47,6 +51,7 @@ describe('SET_PING_RESULT', () => {
 
     expect(state.pingHistory).toEqual([
       {
+        id: '',
         url: siteUrl,
         latency,
       },
@@ -54,7 +59,7 @@ describe('SET_PING_RESULT', () => {
   })
 
   it('should push new entry to pingHistory on top of the array', () => {
-    const oldUrl = { url: 'http://www.oldurl.com', latency: 100 }
+    const oldUrl = { id: '', url: 'http://www.oldurl.com', latency: 100 }
     const state = createState({
       pingHistory: [oldUrl],
     })
@@ -64,7 +69,10 @@ describe('SET_PING_RESULT', () => {
 
     mutations.SET_PING_RESULT(state, { siteUrl, latency })
 
-    expect(state.pingHistory).toEqual([{ url: siteUrl, latency }, oldUrl])
+    expect(state.pingHistory).toEqual([
+      { id: '', url: siteUrl, latency },
+      oldUrl,
+    ])
   })
 })
 

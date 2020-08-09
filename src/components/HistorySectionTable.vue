@@ -8,8 +8,8 @@
         <th class="col-4"></th>
       </tr>
     </thead>
-    <tbody>
-      <tr v-for="(site, index) in pingHistory" :key="index">
+    <transition-group name="list" tag="tbody">
+      <tr v-for="site in pingHistory" :key="site.id">
         <td class="col-1">
           <img
             data-test-id="table-site-icon"
@@ -30,13 +30,7 @@
               :title="getIndicatorTitle(site.latency)"
               data-test-id="table-latency-indicator"
             >
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+              <inline-svg :src="require('@/assets/svg/globe.svg')" />
             </div>
             <span>{{ site.latency }} ms</span>
           </div>
@@ -48,17 +42,11 @@
             class="history-section-table__ping-again"
             title="ping this url"
           >
-            <svg fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
+            <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" />
           </a>
         </td>
       </tr>
-    </tbody>
+    </transition-group>
   </table>
 </template>
 
@@ -93,8 +81,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '@/scss/_variables.scss';
-
 .history-section-table {
   width: $size-full;
   border: 1px solid $gray-200;
@@ -117,6 +103,7 @@ export default {
 
   tr {
     background-color: $gray-100;
+    transition: 0.25s ease-in;
 
     &:hover {
       background-color: lighten($gray-100, 2%);
@@ -173,6 +160,7 @@ export default {
     width: $size-4;
     color: $gray-800;
     cursor: pointer;
+    transition: 0.25s ease-in;
 
     &:hover {
       color: $gray-600;

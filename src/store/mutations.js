@@ -1,3 +1,5 @@
+import generateGuid from '@/utils/generateGuid'
+
 export default {
   SET_PING_RESULT(state, { siteUrl, latency }) {
     state.lastSiteUrl = siteUrl
@@ -5,6 +7,7 @@ export default {
     state.error = null
     state.loading = false
     state.pingHistory.unshift({
+      id: generateGuid(),
       url: siteUrl,
       latency,
     })

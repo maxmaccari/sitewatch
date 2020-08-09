@@ -18,24 +18,14 @@
       {{ pingLabel }}
 
       <VLoading v-if="loading" color="white" class="btn__v-loading" />
-      <svg fill="currentColor" viewBox="0 0 20 20" v-else>
-        <path
-          fill-rule="evenodd"
-          d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
+      <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" v-else />
     </button>
   </div>
 </template>
 
 <script>
 import VLoading from '@/components/VLoading'
-
-const urlPattern = new RegExp(
-  '^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$',
-  'i'
-)
+import validateUrl from '@/utils/validateUrl'
 
 export default {
   components: {
@@ -60,7 +50,7 @@ export default {
   },
   computed: {
     isValidUrl() {
-      return urlPattern.test(this.sanitizedUrl)
+      return validateUrl(this.sanitizedUrl)
     },
     sanitizedUrl() {
       if (
@@ -89,13 +79,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-input {
   display: flex;
   margin: auto;
   overflow: hidden;
   width: $size-full;
+  max-width: $layout-8;
 
   .input {
     border-radius: 0;

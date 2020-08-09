@@ -68,9 +68,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-result {
+  max-width: $layout-6;
+  margin: auto;
   border-left: $size-1 solid $gray-500;
   display: flex;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -184,7 +184,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: $medium-screen) {
+  @include break('medium') {
     &__details {
       padding: $space-4;
     }

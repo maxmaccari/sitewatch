@@ -1,13 +1,7 @@
 <template>
   <div class="ping-section-error">
     <div class="ping-section-error__icon">
-      <svg fill="currentColor" viewBox="0 0 20 20">
-        <path
-          fill-rule="evenodd"
-          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
+      <inline-svg :src="require('@/assets/svg/exclamation-circle.svg')" />
     </div>
     <div class="ping-section-error__message">
       <div class="ping-section-error__title">Error: {{ title }}</div>
@@ -50,9 +44,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-error {
+  max-width: $layout-6;
+  margin: auto;
   background-color: $red-100;
   border: 1px solid $red-700;
   color: $red-700;
@@ -90,7 +84,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: $medium-screen) {
+  @include break('medium') {
     flex-direction: row;
     padding: $space-5 $space-6;
 

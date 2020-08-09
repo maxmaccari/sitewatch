@@ -1,5 +1,5 @@
 <template>
-  <div class="ping-section grid-8 grid-offset-2">
+  <div class="ping-section">
     <PingSectionInput
       :loading="loading"
       :lastSite="lastSite"
@@ -8,24 +8,24 @@
       ref="pingSectionInput"
     />
 
-    <VLoading v-if="loading" class="space-top" :with-text="true" />
+    <transition name="fade" mode="out-in">
+      <VLoading class="space-top" :with-text="true" v-if="loading" />
 
-    <template v-else>
-      <PingSectionResult
-        v-if="lastSiteUrl && lastLatency"
-        :site="lastSite"
-        :latency="lastLatency"
-        class="space-top"
-      />
+      <template v-else>
+        <PingSectionResult
+          v-if="lastSiteUrl && lastLatency"
+          :site="lastSite"
+          :latency="lastLatency"
+        />
 
-      <PingSectionError
-        v-if="lastSiteUrl && error"
-        @try-again="tryAgain"
-        class="space-top"
-        :error="error"
-        :site="lastSite"
-      />
-    </template>
+        <PingSectionError
+          v-if="lastSiteUrl && error"
+          @try-again="tryAgain"
+          :error="error"
+          :site="lastSite"
+        />
+      </template>
+    </transition>
   </div>
 </template>
 
@@ -58,14 +58,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section {
   .v-loading {
     margin: auto;
   }
 
-  .space-top {
+  .ping-section-result,
+  .ping-section-error {
     margin-top: $space-6;
   }
 }

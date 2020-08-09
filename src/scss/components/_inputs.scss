@@ -1,0 +1,23 @@
+.input {
+  background: $white;
+  border-radius: 0;
+  border: 1px solid $gray-300;
+  font-size: $text-sm;
+  outline: none;
+  padding: $size-3 $size-4;
+  border-radius: 2px;
+  transition: .25s ease-in;
+
+  &::placeholder {
+    color: $gray-400;
+  }
+
+  &:focus {
+    border-color: $gray-700;
+  }
+
+  &:disabled {
+    border-color: $gray-100;
+    color: $gray-300;
+  }
+}
