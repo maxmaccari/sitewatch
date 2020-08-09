@@ -21,6 +21,7 @@
               type="text"
               class="input"
               placeholder="Search"
+              :value="historySearch"
               @input="searchHistory($event.target.value)"
             />
           </div>
@@ -67,7 +68,7 @@ export default {
     HistorySectionPagination,
   },
   computed: {
-    ...mapState(['currentPage']),
+    ...mapState(['currentPage', 'historySearch']),
     ...mapGetters(['filteredHistory', 'historyPages']),
   },
   methods: mapActions([

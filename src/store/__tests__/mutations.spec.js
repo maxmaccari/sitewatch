@@ -110,11 +110,15 @@ describe('START_LOADING', () => {
 })
 
 describe('RESET_PING_HISTORY', () => {
-  it('reset the ping history', () => {
-    const state = createState({ pingHistory: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] })
+  it('reset the ping history and historySearch', () => {
+    const state = createState({
+      pingHistory: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      historySearch: 'abc',
+    })
 
     mutations.RESET_PING_HISTORY(state)
     expect(state.pingHistory).toEqual([])
+    expect(state.historySearch).toEqual('')
   })
 
   it('should not allow to set negative pages nor with zero', () => {

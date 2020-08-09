@@ -23,6 +23,7 @@ export default {
 
   RESET_PING_HISTORY(state) {
     state.pingHistory = []
+    state.historySearch = ''
   },
 
   SET_CURRENT_PAGE(state, page) {
