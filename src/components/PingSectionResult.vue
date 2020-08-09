@@ -1,23 +1,21 @@
 <template>
-  <div class="ping-section-result">
+  <div class="ping-section-result" :class="feedbackClass">
     <div class="ping-section-result__details">
       <div class="ping-section-result__site">
         <div class="ping-section-result__site-image">
-          <img
-            src="http://s2.googleusercontent.com/s2/favicons?domain_url=http://www.google.com"
-            alt="www.google.com.br icon"
-          />
+          <img data-test-id="site-icon" :src="iconUrl" :alt="iconAlt" />
         </div>
         <a
-          href="https://www.google.com"
+          data-test-id="site-link"
+          :href="fullUrl"
           target="_blank"
           class="ping-section-result__site-url"
         >
-          www.google.com.br
+          {{ site }}
         </a>
       </div>
       <div class="ping-section-result__description">
-        The latency of <b>www.google.com</b> is good.
+        The latency of <b>{{ site }}</b> is {{ latencyFeedback }}.
       </div>
     </div>
     <div class="ping-section-result__milliseconds">
@@ -25,14 +23,48 @@
         respondend in
       </div>
       <div class="ping-section-result__milliseconds-value">
-        3452 <span>ms</span>
+        {{ latency }} <span>ms</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    latency: {
+      type: Number,
+      required: true,
+    },
+    site: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    fullUrl() {
+      return `http://${this.site}`
+    },
+    iconUrl() {
+      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.site}`
+    },
+    iconAlt() {
+      return `${this.site} icon`
+    },
+    latencyFeedback() {
+      if (this.latency <= 360) {
+        return 'good'
+      } else if (this.latency <= 1000) {
+        return 'average'
+      }
+
+      return 'bad'
+    },
+    feedbackClass() {
+      return `ping-section-result--${this.latencyFeedback}`
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
