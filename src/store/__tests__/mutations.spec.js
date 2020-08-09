@@ -1,4 +1,4 @@
-import mutations from '@/store/mutations'
+import mutations from '../mutations'
 
 describe('SET_PING_RESULT', () => {
   it('should set lastSiteUrl and latency, and clear errors', () => {

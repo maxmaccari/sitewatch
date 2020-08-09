@@ -1,4 +1,4 @@
-import actions from '@/store/actions'
+import actions from '../actions'
 import BrowserPingService from '@/services/BrowserPingService'
 
 jest.mock('@/services/BrowserPingService')
