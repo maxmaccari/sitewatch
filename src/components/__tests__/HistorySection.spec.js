@@ -14,6 +14,16 @@ const defaultStore = {
 }
 
 describe('HistorySection', () => {
+  it('renders a message telling that the ping history is empty', () => {
+    const wrapper = shallowMount(HistorySection, {
+      mocks: {
+        $store: defaultStore,
+      },
+    })
+
+    expect(wrapper.text()).toContain('No data found here.')
+  })
+
   it('renders an empty search input', () => {
     const wrapper = shallowMount(HistorySection, {
       mocks: {

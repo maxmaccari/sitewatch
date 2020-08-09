@@ -40,6 +40,11 @@
         @ping-url="pingSite"
       />
 
+      <div class="history-section__no-data" v-if="!filteredHistory.length">
+        <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
+        <p>No data found here.</p>
+      </div>
+
       <HistorySectionPagination
         :page="currentPage"
         :totalPages="historyPages"
@@ -125,6 +130,26 @@ export default {
       border-bottom-left-radius: 0;
     }
   }
+
+  &__no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $space-5;
+
+    img {
+      max-width: 100%;
+      width: $size-32;
+    }
+
+    p {
+      font-size: $text-lg;
+      font-weight: 600;
+      color: $primary-500;
+      margin-top: 0;
+    }
+  }
+
   .history-section-table {
     margin-top: $space-3;
   }
