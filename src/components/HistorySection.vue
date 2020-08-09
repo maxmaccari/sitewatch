@@ -1,34 +1,42 @@
 <template>
   <div class="history-section">
     <div class="container">
-      <div class="history-section__header">
+      <div
+        class="history-section__header"
+        :class="{ 'history-section__header--empty': !pingHistory.length }"
+      >
         <h2>Ping History</h2>
 
-        <div class="history-section__header-controls">
-          <div class="input-addon">
-            <div class="input-addon__icon">
-              <inline-svg :src="require('@/assets/svg/search.svg')" />
+        <transition name="fade-slow" mode="out-in">
+          <div
+            class="history-section__header-controls"
+            v-if="pingHistory.length"
+          >
+            <div class="input-addon">
+              <div class="input-addon__icon">
+                <inline-svg :src="require('@/assets/svg/search.svg')" />
+              </div>
+
+              <input
+                data-test-id="search-input"
+                type="text"
+                class="input"
+                placeholder="Search"
+                :value="historySearch"
+                @input="searchHistory($event.target.value)"
+              />
             </div>
 
-            <input
-              data-test-id="search-input"
-              type="text"
-              class="input"
-              placeholder="Search"
-              :value="historySearch"
-              @input="searchHistory($event.target.value)"
-            />
+            <button
+              @click="resetHistory()"
+              data-test-id="clear-button"
+              class="btn btn-red"
+            >
+              Clear
+              <inline-svg :src="require('@/assets/svg/trash.svg')" />
+            </button>
           </div>
-
-          <button
-            @click="resetHistory()"
-            data-test-id="clear-button"
-            class="btn btn-red"
-          >
-            Clear
-            <inline-svg :src="require('@/assets/svg/trash.svg')" />
-          </button>
-        </div>
+        </transition>
       </div>
 
       <transition name="fade-slow" mode="out-in">
@@ -69,7 +77,7 @@ export default {
     HistorySectionPagination,
   },
   computed: {
-    ...mapState(['currentPage', 'historySearch']),
+    ...mapState(['currentPage', 'historySearch', 'pingHistory']),
     ...mapGetters(['filteredHistory', 'historyPages']),
   },
   methods: mapActions([
@@ -98,6 +106,14 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+
+  &__header--empty {
+    justify-content: center;
+
+    h2 {
+      margin: auto;
+    }
   }
 
   &__header-controls {

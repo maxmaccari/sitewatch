@@ -45,6 +45,11 @@ export default {
   .container {
     margin-top: $space-16;
     margin: auto;
+    flex-grow: 0;
+  }
+
+  .history-section {
+    min-height: $size-64;
   }
 }
 
