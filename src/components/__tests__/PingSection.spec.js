@@ -123,6 +123,28 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', 'https://www.example.com')
   })
 
+  test('it should dispatch pingSite action with sanitizedUrl if enter is pressed on input', async () => {
+    const dispatch = jest.fn()
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: defaultStore.state,
+          getters: defaultStore.getters,
+          dispatch,
+        },
+      },
+    })
+
+    const siteInput = wrapper.find('[data-test-id="site-input"]')
+
+    siteInput.setValue('www.example.com')
+    await wrapper.vm.$nextTick()
+    siteInput.trigger('keyup.enter')
+    await wrapper.vm.$nextTick()
+
+    expect(dispatch).toHaveBeenCalledWith('pingSite', 'http://www.example.com')
+  })
+
   test('it does not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {

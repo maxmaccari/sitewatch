@@ -4,6 +4,7 @@
       <input
         data-test-id="site-input"
         v-model="siteUrl"
+        @keyup.enter="pingSite(sanitizedUrl)"
         class="input"
         type="text"
         placeholder="ex: www.mywebsite.com"
