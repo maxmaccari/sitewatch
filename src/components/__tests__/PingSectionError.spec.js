@@ -13,15 +13,26 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('Error: the connection timed out!')
   })
 
-  test('it should display connection error if error is connection_error', () => {
+  test('it should display connection error if error is network_error', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
-        error: 'connection_error',
+        error: 'network_error',
       },
     })
 
     expect(wrapper.text()).toContain('Error: connection failed!')
+  })
+
+  test('it should display connection error if error is unresolved_url', () => {
+    const wrapper = shallowMount(PingSectionError, {
+      propsData: {
+        site: 'www.example.com',
+        error: 'unresolved_url',
+      },
+    })
+
+    expect(wrapper.text()).toContain('Error: the url cannot be resolved!')
   })
 
   test('it should display unknow error if error is different', () => {

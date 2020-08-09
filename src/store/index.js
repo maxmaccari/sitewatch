@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import BrowserPingService from '@/services/BrowserPingService'
 
 Vue.use(Vuex)
 
@@ -23,17 +24,15 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    pingSite({ commit }, siteUrl) {
-      /* Ping Logic Here */
-      const latency = Math.floor(Math.random() * 2000)
-
-      if (latency < 1500) {
+    async pingSite({ commit }, siteUrl) {
+      try {
+        const latency = await BrowserPingService.ping(siteUrl)
         commit('SET_PING_RESULT', {
           siteUrl,
           latency,
         })
-      } else {
-        commit('SET_ERROR', { siteUrl, error: 'timeout' })
+      } catch (error) {
+        commit('SET_ERROR', { siteUrl, error })
       }
     },
   },
