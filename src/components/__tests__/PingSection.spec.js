@@ -16,7 +16,7 @@ const defaultStore = {
 }
 
 describe('PingSection', () => {
-  test('it renders with site url input empty and ping button disabled', () => {
+  it('should render with site url input empty and ping button disabled', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -30,7 +30,7 @@ describe('PingSection', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  test('it should keep the ping button disabled if the typed url is invalid', async () => {
+  it('should keep the ping button disabled if the typed url is invalid', async () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -57,7 +57,7 @@ describe('PingSection', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  test('it should enable the ping button if the typed url is valid', async () => {
+  it('should enable the ping button if the typed url is valid', async () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -94,7 +94,7 @@ describe('PingSection', () => {
     expect(pingButton.element.disabled).toBe(false)
   })
 
-  test('it should dispatch pingSite action with sanitizedUrl if ping button is clicked', async () => {
+  it('should dispatch pingSite action with sanitizedUrl if ping button is clicked', async () => {
     const dispatch = jest.fn()
     const wrapper = shallowMount(PingSection, {
       mocks: {
@@ -124,7 +124,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', 'https://www.example.com')
   })
 
-  test('it should dispatch pingSite action with sanitizedUrl if enter is pressed on input', async () => {
+  it('should dispatch pingSite action with sanitizedUrl if enter is pressed on input', async () => {
     const dispatch = jest.fn()
     const wrapper = shallowMount(PingSection, {
       mocks: {
@@ -146,7 +146,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', 'http://www.example.com')
   })
 
-  test('it does not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
+  it('should not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -156,7 +156,7 @@ describe('PingSection', () => {
     expect(wrapper.findComponent(PingSectionResult).exists()).toBe(false)
   })
 
-  test('it show the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
+  it('should show the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const lastLatency = 300
@@ -181,7 +181,7 @@ describe('PingSection', () => {
     expect(pingSectionResult.props('latency')).toBe(lastLatency)
   })
 
-  test('it show the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
+  it('should show the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const error = 'my error'
@@ -206,7 +206,7 @@ describe('PingSection', () => {
     expect(pingSectionError.props('error')).toBe(error)
   })
 
-  test('it should dispatch pingSite action with lastSiteUrl try-again is emitted from PingSectionError', () => {
+  it('should dispatch pingSite action with lastSiteUrl try-again is emitted from PingSectionError', () => {
     const dispatch = jest.fn()
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
@@ -233,7 +233,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', lastSiteUrl)
   })
 
-  test('should fill page url input with lastSiteUrl if try-again is emitted from PingSectionError', async () => {
+  it('should fill page url input with lastSiteUrl if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
@@ -262,7 +262,7 @@ describe('PingSection', () => {
     expect(siteInput.element.value).toBe(lastSiteUrl)
   })
 
-  test('ping button should be changed to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
+  it('should change ping button to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
     const dispatch = jest.fn()
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
@@ -297,7 +297,7 @@ describe('PingSection', () => {
     expect(pingButton.text()).toContain('Retry')
   })
 
-  test('ping button and input should be disabled if state is loading', () => {
+  it('should disable ping button and input if state is loading', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
@@ -320,7 +320,7 @@ describe('PingSection', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  test('should show VLoading component if state is loading', () => {
+  it('should show VLoading component if state is loading', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
@@ -342,7 +342,7 @@ describe('PingSection', () => {
     expect(vLoading.length).toBe(2)
   })
 
-  test('should not show results or errors if state is loading', () => {
+  it('should not show results or errors if state is loading', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {

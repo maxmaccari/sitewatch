@@ -1,7 +1,7 @@
 import mutations from '@/store/mutations'
 
 describe('SET_PING_RESULT', () => {
-  test('should set lastSiteUrl and latency, and clear errors', () => {
+  it('should set lastSiteUrl and latency, and clear errors', () => {
     const state = {
       lastSiteUrl: null,
       lastLatency: null,
@@ -24,7 +24,7 @@ describe('SET_PING_RESULT', () => {
 })
 
 describe('SET_ERROR', () => {
-  test('should set lastSiteUrl and error, and clear latency and loading', () => {
+  it('should set lastSiteUrl and error, and clear latency and loading', () => {
     const state = {
       lastSiteUrl: null,
       lastLatency: 1000,
@@ -47,7 +47,7 @@ describe('SET_ERROR', () => {
 })
 
 describe('START_LOADING', () => {
-  test('should set loading as true', () => {
+  it('should set loading as true', () => {
     const state = {
       lastSiteUrl: null,
       lastLatency: null,

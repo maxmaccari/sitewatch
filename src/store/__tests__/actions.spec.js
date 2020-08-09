@@ -4,7 +4,7 @@ import BrowserPingService from '@/services/BrowserPingService'
 jest.mock('@/services/BrowserPingService')
 
 describe('pingSite', () => {
-  test('should call BrowserPingService.ping with the given url', async () => {
+  it('should call BrowserPingService.ping with the given url', async () => {
     BrowserPingService.ping.mockResolvedValue(100)
     const commit = jest.fn()
     const siteUrl = 'http://www.example.com'
@@ -15,7 +15,7 @@ describe('pingSite', () => {
     expect(BrowserPingService.ping).toBeCalledWith(siteUrl)
   })
 
-  test('should commit START_LOADING and SET_PING_RESULT with the given url and the timeout if ping is sucessfull', async () => {
+  it('should commit START_LOADING and SET_PING_RESULT with the given url and the timeout if ping is sucessfull', async () => {
     const latency = 250
     const siteUrl = 'http://www.example.com'
     const commit = jest.fn()
@@ -29,7 +29,7 @@ describe('pingSite', () => {
     expect(commit).toBeCalledWith('START_LOADING')
   })
 
-  test('should commit START_LOADING and SET_ERROR with the given url and the error in case of errors', async () => {
+  it('should commit START_LOADING and SET_ERROR with the given url and the error in case of errors', async () => {
     const error = 'my error'
     const siteUrl = 'http://www.example.com'
     const commit = jest.fn()
