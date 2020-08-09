@@ -87,6 +87,10 @@
   padding: $size-3 $size-4;
   border-radius: 2px;
 
+  &::placeholder {
+    color: $gray-400;
+  }
+
   &:focus {
     border-color: $gray-700;
   }

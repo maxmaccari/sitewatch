@@ -5,13 +5,25 @@
         <h2>Ping History</h2>
 
         <div class="history-section__header-controls">
-          <input
-            data-test-id="search-input"
-            type="text"
-            class="input"
-            placeholder="Search"
-            @input="searchHistory($event.target.value)"
-          />
+          <div class="input-addon">
+            <div class="input-addon__icon">
+              <svg fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+
+            <input
+              data-test-id="search-input"
+              type="text"
+              class="input"
+              placeholder="Search"
+              @input="searchHistory($event.target.value)"
+            />
+          </div>
 
           <button
             @click="resetHistory()"
@@ -87,10 +99,24 @@ export default {
     width: $size-full;
     display: flex;
 
-    .input {
+    .input-addon {
       flex-grow: 1;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      position: relative;
+    }
+
+    .input {
+      width: $size-full;
+      padding-left: $space-8;
+    }
+
+    .input-addon__icon {
+      width: $size-5;
+      position: absolute;
+      top: 10px;
+      left: 8px;
+      color: $gray-400;
     }
 
     .btn {
@@ -121,7 +147,7 @@ export default {
       width: unset;
       display: flex;
 
-      .input {
+      .input-addon {
         flex-grow: 0;
         width: $size-64;
       }
