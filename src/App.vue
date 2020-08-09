@@ -11,16 +11,20 @@
     </div>
 
     <HistorySection />
+
+    <AppFooter />
   </div>
 </template>
 
 <script>
+import AppFooter from '@/components/AppFooter'
 import PingSection from '@/components/PingSection'
 import HistorySection from '@/components/HistorySection'
 
 export default {
   name: 'App',
   components: {
+    AppFooter,
     PingSection,
     HistorySection,
   },
@@ -31,6 +35,12 @@ export default {
 <style lang="scss" src="@/scss/app.scss"></style>
 
 <style lang="scss" scoped>
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 @include break('medium') {
   .container {
     margin-top: $space-16;
@@ -39,8 +49,6 @@ export default {
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
   margin: auto;
   padding: 0 $space-2;
 }
