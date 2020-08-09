@@ -1,5 +1,5 @@
 <template>
-  <table class="history-section-table">
+  <table class="history-section-table" v-if="pingHistory.length">
     <thead>
       <tr>
         <th class="col-1"></th>
@@ -8,27 +8,34 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="i in 10" :key="i">
+      <tr v-for="(site, index) in pingHistory" :key="index">
         <td class="col-1">
           <img
-            data-test-id="site-icon"
-            src="http://s2.googleusercontent.com/s2/favicons?domain_url=http://www.google.com"
-            alt="www.google.com icon"
+            data-test-id="table-site-icon"
+            :src="
+              `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
+            "
+            :alt="`${site.url} icon`"
           />
         </td>
         <td class="col-2">
-          www.google.com
+          {{ site.url }}
         </td>
-        <td class="col-3">
-          125 ms
-        </td>
+        <td class="col-3">{{ site.latency }} ms</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    pingHistory: {
+      required: true,
+      type: Array,
+    },
+  },
+}
 </script>
 <style lang="scss">
 @import '@/scss/_variables.scss';

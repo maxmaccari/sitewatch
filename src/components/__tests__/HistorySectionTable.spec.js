@@ -1,0 +1,57 @@
+import { shallowMount } from '@vue/test-utils'
+import HistorySectionTable from '../HistorySectionTable.vue'
+
+describe('HistorySectionTable', () => {
+  it('renders nothing if an empty pingHistory is given', () => {
+    const wrapper = shallowMount(HistorySectionTable, {
+      propsData: {
+        pingHistory: [],
+      },
+    })
+
+    expect(wrapper.find('table').exists()).toBe(false)
+  })
+
+  it('renders a table with the given pingHistory', () => {
+    const pingHistory = [
+      { url: 'http://wwww.example-1.com', latency: 100 },
+      { url: 'http://wwww.example-2.com', latency: 200 },
+      { url: 'http://wwww.example-3.com', latency: 300 },
+      { url: 'http://wwww.example-4.com', latency: 400 },
+      { url: 'http://wwww.example-5.com', latency: 500 },
+      { url: 'http://wwww.example-6.com', latency: 500 },
+      { url: 'http://wwww.example-7.com', latency: 700 },
+      { url: 'http://wwww.example-8.com', latency: 800 },
+    ]
+    const wrapper = shallowMount(HistorySectionTable, {
+      propsData: {
+        pingHistory,
+      },
+    })
+
+    expect(wrapper.find('table').exists()).toBe(true)
+
+    pingHistory.forEach(site => {
+      expect(wrapper.text()).toContain(site.url)
+      expect(wrapper.text()).toContain(site.latency)
+    })
+  })
+
+  it('renders the icons properly', () => {
+    const url = 'http://wwww.example-1.com'
+    const pingHistory = [{ url, latency: 100 }]
+    const wrapper = shallowMount(HistorySectionTable, {
+      propsData: {
+        pingHistory,
+      },
+    })
+
+    const icon = wrapper.find('[data-test-id="table-site-icon"]')
+    const expectedSrc = `http://s2.googleusercontent.com/s2/favicons?domain_url=${url}`
+    const expectedAlt = `${url} icon`
+
+    expect(icon.exists()).toBe(true)
+    expect(icon.element.src).toBe(expectedSrc)
+    expect(icon.element.alt).toBe(expectedAlt)
+  })
+})

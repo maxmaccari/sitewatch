@@ -1,15 +1,64 @@
 <template>
-  <ul class="history-section-pagination">
-    <li><a>Back</a></li>
-    <li><a>1</a></li>
-    <li class="active"><a>2</a></li>
-    <li><a>3</a></li>
-    <li><a>Next</a></li>
+  <ul
+    v-if="canShowPaginator"
+    data-test-id="paginator"
+    class="history-section-pagination"
+  >
+    <li>
+      <button
+        @click="$emit('previous-page')"
+        :disabled="disableBack"
+        data-test-id="page-back"
+      >
+        Back
+      </button>
+    </li>
+    <li v-for="n in totalPages" :key="n">
+      <button
+        @click="$emit('change-page', n)"
+        :disabled="n === page"
+        :class="n === page ? 'active' : null"
+        :data-test-id="`page-${n}`"
+      >
+        {{ n }}
+      </button>
+    </li>
+    <li>
+      <button
+        @click="$emit('next-page')"
+        :disabled="disableNext"
+        data-test-id="page-next"
+      >
+        Next
+      </button>
+    </li>
   </ul>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    page: {
+      required: true,
+      type: Number,
+    },
+    totalPages: {
+      required: true,
+      type: Number,
+    },
+  },
+  computed: {
+    canShowPaginator() {
+      return this.totalPages > 1
+    },
+    disableBack() {
+      return this.page === 1
+    },
+    disableNext() {
+      return this.page === this.totalPages
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -30,7 +79,7 @@ export default {}
     margin-left: -1px;
   }
 
-  a {
+  button {
     border: 1px solid $gray-200;
     display: block;
     padding: $space-1 $space-2;
@@ -40,9 +89,13 @@ export default {}
     &:hover {
       background-color: $gray-100;
     }
+
+    &:disabled {
+      cursor: default;
+    }
   }
 
-  .active a {
+  .active {
     background-color: $gray-100;
   }
 }

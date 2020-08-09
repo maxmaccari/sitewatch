@@ -113,12 +113,12 @@ describe('searchHistory', () => {
 })
 
 describe('resetHistory', () => {
-  it('commits RESET_HISTORY', () => {
+  it('commits RESET_PING_HISTORY', () => {
     const commit = jest.fn()
 
     actions.resetHistory({ commit })
 
     expect(commit).toBeCalledTimes(1)
-    expect(commit).toBeCalledWith('RESET_HISTORY')
+    expect(commit).toBeCalledWith('RESET_PING_HISTORY')
   })
 })

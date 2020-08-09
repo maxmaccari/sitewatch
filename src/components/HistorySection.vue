@@ -5,15 +5,33 @@
         <h2>Ping History</h2>
 
         <div class="history-section__header-controls">
-          <input type="text" class="input" placeholder="Search" />
+          <input
+            data-test-id="search-input"
+            type="text"
+            class="input"
+            placeholder="Search"
+            @input="searchHistory($event.target.value)"
+          />
 
-          <button class="btn btn-red">Clear</button>
+          <button
+            @click="resetHistory()"
+            data-test-id="clear-button"
+            class="btn btn-red"
+          >
+            Clear
+          </button>
         </div>
       </div>
 
-      <HistorySectionTable />
+      <HistorySectionTable :pingHistory="filteredHistory" />
 
-      <HistorySectionPagination />
+      <HistorySectionPagination
+        :page="currentPage"
+        :totalPages="historyPages"
+        @next-page="nextPage"
+        @previous-page="previousPage"
+        @change-page="goToPage"
+      />
     </div>
   </div>
 </template>
@@ -21,12 +39,24 @@
 <script>
 import HistorySectionTable from '@/components/HistorySectionTable'
 import HistorySectionPagination from '@/components/HistorySectionPagination'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     HistorySectionTable,
     HistorySectionPagination,
   },
+  computed: {
+    ...mapState(['currentPage']),
+    ...mapGetters(['filteredHistory', 'historyPages']),
+  },
+  methods: mapActions([
+    'searchHistory',
+    'resetHistory',
+    'nextPage',
+    'previousPage',
+    'goToPage',
+  ]),
 }
 </script>
 <style lang="scss" scoped>

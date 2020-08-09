@@ -33,6 +33,6 @@ export default {
   },
 
   resetHistory({ commit }) {
-    commit('RESET_HISTORY')
+    commit('RESET_PING_HISTORY')
   },
 }
