@@ -8,8 +8,8 @@
         <th class="col-4"></th>
       </tr>
     </thead>
-    <tbody>
-      <tr v-for="(site, index) in pingHistory" :key="index">
+    <transition-group name="list" tag="tbody">
+      <tr v-for="site in pingHistory" :key="site.id">
         <td class="col-1">
           <img
             data-test-id="table-site-icon"
@@ -46,7 +46,7 @@
           </a>
         </td>
       </tr>
-    </tbody>
+    </transition-group>
   </table>
 </template>
 
@@ -103,6 +103,7 @@ export default {
 
   tr {
     background-color: $gray-100;
+    transition: 0.25s ease-in;
 
     &:hover {
       background-color: lighten($gray-100, 2%);
@@ -159,6 +160,7 @@ export default {
     width: $size-4;
     color: $gray-800;
     cursor: pointer;
+    transition: 0.25s ease-in;
 
     &:hover {
       color: $gray-600;

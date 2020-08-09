@@ -11,6 +11,8 @@
   &:disabled {
     cursor: default;
   }
+
+  transition: .25s ease-in;
 }
 
 .btn-icon svg{

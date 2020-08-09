@@ -31,23 +31,29 @@
         </div>
       </div>
 
-      <HistorySectionTable
-        :pingHistory="filteredHistory"
-        @ping-url="pingSite"
-      />
+      <transition name="fade-slow" mode="out-in">
+        <HistorySectionTable
+          :pingHistory="filteredHistory"
+          @ping-url="pingSite"
+        />
+      </transition>
 
-      <div class="history-section__no-data" v-if="!filteredHistory.length">
-        <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
-        <p>No data found here.</p>
-      </div>
+      <transition name="fade-slow" mode="out-in">
+        <div class="history-section__no-data" v-if="!filteredHistory.length">
+          <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
+          <p>No data found here.</p>
+        </div>
+      </transition>
 
-      <HistorySectionPagination
-        :page="currentPage"
-        :totalPages="historyPages"
-        @next-page="nextPage"
-        @previous-page="previousPage"
-        @change-page="goToPage"
-      />
+      <transition name="fade-slow" mode="out-in">
+        <HistorySectionPagination
+          :page="currentPage"
+          :totalPages="historyPages"
+          @next-page="nextPage"
+          @previous-page="previousPage"
+          @change-page="goToPage"
+        />
+      </transition>
     </div>
   </div>
 </template>

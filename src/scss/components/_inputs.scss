@@ -6,6 +6,7 @@
   outline: none;
   padding: $size-3 $size-4;
   border-radius: 2px;
+  transition: .25s ease-in;
 
   &::placeholder {
     color: $gray-400;

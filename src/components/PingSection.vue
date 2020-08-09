@@ -8,22 +8,24 @@
       ref="pingSectionInput"
     />
 
-    <VLoading v-if="loading" class="space-top" :with-text="true" />
+    <transition name="fade" mode="out-in">
+      <VLoading class="space-top" :with-text="true" v-if="loading" />
 
-    <template v-else>
-      <PingSectionResult
-        v-if="lastSiteUrl && lastLatency"
-        :site="lastSite"
-        :latency="lastLatency"
-      />
+      <template v-else>
+        <PingSectionResult
+          v-if="lastSiteUrl && lastLatency"
+          :site="lastSite"
+          :latency="lastLatency"
+        />
 
-      <PingSectionError
-        v-if="lastSiteUrl && error"
-        @try-again="tryAgain"
-        :error="error"
-        :site="lastSite"
-      />
-    </template>
+        <PingSectionError
+          v-if="lastSiteUrl && error"
+          @try-again="tryAgain"
+          :error="error"
+          :site="lastSite"
+        />
+      </template>
+    </transition>
   </div>
 </template>
 
