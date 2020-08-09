@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import PingSection from '../PingSection.vue'
+import PingSectionError from '../PingSectionError.vue'
 import PingSectionResult from '../PingSectionResult.vue'
 
 const defaultStore = {
@@ -7,6 +8,9 @@ const defaultStore = {
     lastSiteUrl: null,
     lastLatency: null,
     error: null,
+  },
+  getters: {
+    lastSite: () => null,
   },
 }
 
@@ -95,6 +99,7 @@ describe('PingSection', () => {
       mocks: {
         $store: {
           state: defaultStore.state,
+          getters: defaultStore.getters,
           dispatch,
         },
       },
@@ -130,6 +135,7 @@ describe('PingSection', () => {
 
   test('it show the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
     const lastSiteUrl = 'http://www.example.com'
+    const lastSite = 'www.example.com'
     const lastLatency = 300
     const wrapper = shallowMount(PingSection, {
       mocks: {
@@ -138,6 +144,9 @@ describe('PingSection', () => {
             lastSiteUrl,
             lastLatency,
           },
+          getters: {
+            lastSite,
+          },
         },
       },
     })
@@ -145,7 +154,123 @@ describe('PingSection', () => {
     const pingSectionResult = wrapper.findComponent(PingSectionResult)
 
     expect(pingSectionResult.exists()).toBe(true)
-    expect(pingSectionResult.props('siteUrl')).toBe(lastSiteUrl)
+    expect(pingSectionResult.props('site')).toBe(lastSite)
     expect(pingSectionResult.props('latency')).toBe(lastLatency)
+  })
+
+  test('it show the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
+    const lastSiteUrl = 'http://www.example.com'
+    const lastSite = 'www.example.com'
+    const error = 'my error'
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl,
+            error,
+          },
+          getters: {
+            lastSite: 'www.example.com',
+          },
+        },
+      },
+    })
+
+    const pingSectionError = wrapper.findComponent(PingSectionError)
+
+    expect(pingSectionError.exists()).toBe(true)
+    expect(pingSectionError.props('site')).toBe(lastSite)
+    expect(pingSectionError.props('error')).toBe(error)
+  })
+
+  test('it should dispatch pingSite action with lastSiteUrl try-again is emitted from PingSectionError', () => {
+    const dispatch = jest.fn()
+    const lastSiteUrl = 'http://www.example.com'
+    const lastSite = 'www.example.com'
+    const error = 'my error'
+
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl,
+            error,
+          },
+          getters: {
+            lastSite,
+          },
+          dispatch,
+        },
+      },
+    })
+
+    const pingSectionError = wrapper.findComponent(PingSectionError)
+    pingSectionError.vm.$emit('try-again')
+
+    expect(dispatch).toHaveBeenCalledWith('pingSite', lastSiteUrl)
+  })
+
+  test('should fill page url input with lastSiteUrl if try-again is emitted from PingSectionError', async () => {
+    const dispatch = jest.fn()
+    const lastSiteUrl = 'http://www.example.com'
+    const lastSite = 'www.example.com'
+    const error = 'my error'
+
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl,
+            error,
+          },
+          getters: {
+            lastSite,
+          },
+          dispatch,
+        },
+      },
+    })
+
+    wrapper.findComponent(PingSectionError).vm.$emit('try-again')
+    await wrapper.vm.$nextTick()
+
+    const siteInput = wrapper.find('[data-test-id="site-input"]')
+
+    expect(siteInput.element.value).toBe(lastSiteUrl)
+  })
+
+  test('ping button should be changed to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
+    const dispatch = jest.fn()
+    const lastSiteUrl = 'http://www.example.com'
+    const lastSite = 'www.example.com'
+    const latency = 200
+
+    const wrapper = shallowMount(PingSection, {
+      mocks: {
+        $store: {
+          state: {
+            lastSiteUrl,
+            latency,
+          },
+          getters: {
+            lastSite,
+          },
+          dispatch,
+        },
+      },
+    })
+
+    const siteInput = wrapper.find('[data-test-id="site-input"]')
+    const pingButton = wrapper.find('[data-test-id="ping-button"]')
+
+    expect(pingButton.text()).toContain('Ping')
+
+    siteInput.setValue(lastSite)
+    await wrapper.vm.$nextTick()
+    expect(pingButton.text()).toContain('Retry')
+
+    siteInput.setValue(lastSite)
+    await wrapper.vm.$nextTick()
+    expect(pingButton.text()).toContain('Retry')
   })
 })

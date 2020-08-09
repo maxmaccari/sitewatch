@@ -11,11 +11,11 @@
           target="_blank"
           class="ping-section-result__site-url"
         >
-          {{ siteUrl }}
+          {{ site }}
         </a>
       </div>
       <div class="ping-section-result__description">
-        The latency of <b>{{ siteUrl }}</b> is {{ latencyFeedback }}.
+        The latency of <b>{{ site }}</b> is {{ latencyFeedback }}.
       </div>
     </div>
     <div class="ping-section-result__milliseconds">
@@ -36,20 +36,20 @@ export default {
       type: Number,
       required: true,
     },
-    siteUrl: {
+    site: {
       type: String,
       required: true,
     },
   },
   computed: {
     fullUrl() {
-      return `http://${this.siteUrl}`
+      return `http://${this.site}`
     },
     iconUrl() {
-      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.siteUrl}`
+      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.site}`
     },
     iconAlt() {
-      return `${this.siteUrl} icon`
+      return `${this.site} icon`
     },
     latencyFeedback() {
       if (this.latency <= 360) {

@@ -6,7 +6,7 @@
         v-model="siteUrl"
         class="input"
         type="text"
-        placeholder="ex: www.google.com"
+        placeholder="ex: www.mywebsite.com"
       />
       <button
         data-test-id="ping-button"
@@ -14,22 +14,31 @@
         class="btn btn-primary"
         :disabled="!isValidUrl"
       >
-        Ping
+        {{ pingLabel }}
       </button>
     </div>
 
     <PingSectionResult
       v-if="lastSiteUrl && lastLatency"
-      :siteUrl="lastSiteUrl"
+      :site="lastSite"
       :latency="lastLatency"
-      class="ping-section-result"
+      class="space-top"
+    />
+
+    <PingSectionError
+      v-if="lastSiteUrl && error"
+      @try-again="tryAgain"
+      class="space-top"
+      :error="error"
+      :site="lastSite"
     />
   </div>
 </template>
 
 <script>
+import PingSectionError from '@/components/PingSectionError'
 import PingSectionResult from '@/components/PingSectionResult'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 var urlPattern = new RegExp(
   '^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$',
@@ -38,6 +47,7 @@ var urlPattern = new RegExp(
 
 export default {
   components: {
+    PingSectionError,
     PingSectionResult,
   },
   data() {
@@ -59,9 +69,23 @@ export default {
     isValidUrl() {
       return urlPattern.test(this.sanitizedUrl)
     },
-    ...mapState(['lastSiteUrl', 'lastLatency']),
+    pingLabel() {
+      if (this.siteUrl === this.lastSite || this.siteUrl === this.lastSiteUrl) {
+        return 'Retry'
+      }
+
+      return 'Ping'
+    },
+    ...mapState(['lastSiteUrl', 'lastLatency', 'error']),
+    ...mapGetters(['lastSite']),
   },
-  methods: mapActions(['pingSite']),
+  methods: {
+    tryAgain() {
+      this.siteUrl = this.lastSiteUrl
+      this.pingSite(this.lastSiteUrl)
+    },
+    ...mapActions(['pingSite']),
+  },
 }
 </script>
 
@@ -96,7 +120,7 @@ export default {
     }
   }
 
-  .ping-section-result {
+  .space-top {
     margin-top: $space-6;
   }
 }
