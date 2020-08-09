@@ -90,7 +90,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: $medium-screen) {
+  @include break('medium') {
     flex-direction: row;
     padding: $space-5 $space-6;
 

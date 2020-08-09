@@ -31,7 +31,7 @@ export default {
 <style lang="scss" src="@/scss/app.scss"></style>
 
 <style lang="scss" scoped>
-@media screen and (min-width: $medium-screen) {
+@include break('medium') {
   .container {
     margin-top: $space-16;
     margin: auto;

@@ -156,7 +156,7 @@ export default {
   }
 }
 
-@media screen and (min-width: $medium-screen) {
+@include break('medium') {
   .history-section {
     h2 {
       font-weight: 600;

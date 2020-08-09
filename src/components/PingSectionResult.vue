@@ -184,7 +184,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: $medium-screen) {
+  @include break('medium') {
     &__details {
       padding: $space-4;
     }
