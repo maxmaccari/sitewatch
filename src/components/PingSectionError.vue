@@ -51,6 +51,8 @@ export default {
 
 <style lang="scss" scoped>
 .ping-section-error {
+  max-width: $layout-6;
+  margin: auto;
   background-color: $red-100;
   border: 1px solid $red-700;
   color: $red-700;

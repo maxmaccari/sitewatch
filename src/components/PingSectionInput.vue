@@ -94,6 +94,7 @@ export default {
   margin: auto;
   overflow: hidden;
   width: $size-full;
+  max-width: $layout-8;
 
   .input {
     border-radius: 0;

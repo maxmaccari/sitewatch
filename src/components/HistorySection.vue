@@ -102,6 +102,7 @@ export default {
   &__header-controls {
     width: $size-full;
     display: flex;
+    position: relative;
 
     .input-addon {
       flex-grow: 1;
@@ -124,6 +125,7 @@ export default {
     }
 
     .btn {
+      position: relative;
       font-size: $text-sm;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;

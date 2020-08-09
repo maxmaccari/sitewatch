@@ -69,6 +69,8 @@ export default {
 
 <style lang="scss" scoped>
 .ping-section-result {
+  max-width: $layout-6;
+  margin: auto;
   border-left: $size-1 solid $gray-500;
   display: flex;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));

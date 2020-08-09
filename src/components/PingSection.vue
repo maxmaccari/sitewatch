@@ -1,5 +1,5 @@
 <template>
-  <div class="ping-section grid-8 grid-offset-2">
+  <div class="ping-section">
     <PingSectionInput
       :loading="loading"
       :lastSite="lastSite"
@@ -15,13 +15,11 @@
         v-if="lastSiteUrl && lastLatency"
         :site="lastSite"
         :latency="lastLatency"
-        class="space-top"
       />
 
       <PingSectionError
         v-if="lastSiteUrl && error"
         @try-again="tryAgain"
-        class="space-top"
         :error="error"
         :site="lastSite"
       />
@@ -63,7 +61,8 @@ export default {
     margin: auto;
   }
 
-  .space-top {
+  .ping-section-result,
+  .ping-section-error {
     margin-top: $space-6;
   }
 }
