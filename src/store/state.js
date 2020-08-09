@@ -4,4 +4,6 @@ export default {
   error: null,
   loading: false,
   pingHistory: [],
+  currentPage: 1,
+  historySearch: '',
 }
