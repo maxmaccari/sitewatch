@@ -20,4 +20,17 @@ export default {
   START_LOADING(state) {
     state.loading = true
   },
+
+  RESET_PING_HISTORY(state) {
+    state.pingHistory = []
+  },
+
+  SET_CURRENT_PAGE(state, page) {
+    if (page > 0) state.currentPage = page
+  },
+
+  SET_HISTORY_SEARCH(state, search) {
+    state.historySearch = search
+    state.currentPage = 1
+  },
 }

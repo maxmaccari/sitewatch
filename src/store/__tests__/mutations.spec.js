@@ -108,3 +108,66 @@ describe('START_LOADING', () => {
     expect(state.loading).toBe(true)
   })
 })
+
+describe('RESET_PING_HISTORY', () => {
+  it('reset the ping history', () => {
+    const state = createState({ pingHistory: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] })
+
+    mutations.RESET_PING_HISTORY(state)
+    expect(state.pingHistory).toEqual([])
+  })
+
+  it('should not allow to set negative pages nor with zero', () => {
+    const state = createState()
+
+    mutations.SET_CURRENT_PAGE(state, 0)
+    expect(state.currentPage).toBe(1)
+
+    mutations.SET_CURRENT_PAGE(state, -1)
+    expect(state.currentPage).toBe(1)
+
+    mutations.SET_CURRENT_PAGE(state, -2)
+    expect(state.currentPage).toBe(1)
+  })
+})
+
+describe('SET_CURRENT_PAGE', () => {
+  it('set current page with the given value', () => {
+    const state = createState()
+
+    mutations.SET_CURRENT_PAGE(state, 1)
+    expect(state.currentPage).toBe(1)
+
+    mutations.SET_CURRENT_PAGE(state, 2)
+    expect(state.currentPage).toBe(2)
+  })
+
+  it('should not allow to set negative pages nor with zero', () => {
+    const state = createState()
+
+    mutations.SET_CURRENT_PAGE(state, 0)
+    expect(state.currentPage).toBe(1)
+
+    mutations.SET_CURRENT_PAGE(state, -1)
+    expect(state.currentPage).toBe(1)
+
+    mutations.SET_CURRENT_PAGE(state, -2)
+    expect(state.currentPage).toBe(1)
+  })
+})
+
+describe('SET_HISTORY_SEARCH', () => {
+  it('set history search with the given value', () => {
+    const state = createState()
+
+    mutations.SET_HISTORY_SEARCH(state, 'my search')
+    expect(state.historySearch).toBe('my search')
+  })
+
+  it('set currentPage to 1', () => {
+    const state = createState({ currentPage: 3 })
+
+    mutations.SET_HISTORY_SEARCH(state, 'my search')
+    expect(state.currentPage).toBe(1)
+  })
+})
