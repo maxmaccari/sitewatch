@@ -37,8 +37,10 @@ export default {
     title() {
       if (this.error === 'timeout') {
         return 'the connection timed out!'
-      } else if (this.error === 'connection_error') {
+      } else if (this.error === 'network_error') {
         return 'connection failed!'
+      } else if (this.error === 'unresolved_url') {
+        return 'the url cannot be resolved!'
       }
 
       return 'unknown error!'

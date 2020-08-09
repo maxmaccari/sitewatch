@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import mutations from './mutations'
+import actions from './actions'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -8,35 +11,10 @@ export default new Vuex.Store({
     lastSiteUrl: null,
     lastLatency: null,
     error: null,
+    loading: false,
   },
-  mutations: {
-    SET_PING_RESULT(state, { siteUrl, latency }) {
-      state.lastSiteUrl = siteUrl
-      state.lastLatency = latency
-      state.error = null
-    },
-
-    SET_ERROR(state, { siteUrl, error }) {
-      state.lastSiteUrl = siteUrl
-      state.lastLatency = null
-      state.error = error
-    },
-  },
-  actions: {
-    pingSite({ commit }, siteUrl) {
-      /* Ping Logic Here */
-      const latency = Math.floor(Math.random() * 2000)
-
-      if (latency < 1500) {
-        commit('SET_PING_RESULT', {
-          siteUrl,
-          latency,
-        })
-      } else {
-        commit('SET_ERROR', { siteUrl, error: 'timeout' })
-      }
-    },
-  },
+  mutations,
+  actions,
   getters: {
     lastSite: state => {
       if (!state.lastSiteUrl) return null

@@ -58,4 +58,9 @@
   &:focus {
     border-color: $gray-700;
   }
+
+  &:disabled {
+    border-color: $gray-100;
+    color: $gray-300;
+  }
 }
