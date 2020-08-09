@@ -36,9 +36,12 @@ export default {
 @media screen and (min-width: $medium-screen) {
   .container {
     margin-top: $space-16;
-    display: flex;
-    flex-direction: column;
   }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {

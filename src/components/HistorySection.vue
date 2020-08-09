@@ -73,28 +73,67 @@ export default {
 
   h2 {
     font-weight: 600;
-    font-size: $text-xl;
+    font-size: $text-3xl;
     color: $gray-700;
   }
 
   &__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    flex-direction: column;
   }
 
   &__header-controls {
+    width: $size-full;
     display: flex;
-    height: $size-10;
 
     .input {
-      width: $size-64;
+      flex-grow: 1;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     .btn {
-      flex: 0;
-      margin-left: $space-2;
       font-size: $text-sm;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+  .history-section-table {
+    margin-top: $space-3;
+  }
+}
+
+@media screen and (min-width: $medium-screen) {
+  .history-section {
+    h2 {
+      font-weight: 600;
+      font-size: $text-xl;
+      color: $gray-700;
+    }
+
+    &__header {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &__header-controls {
+      width: unset;
+      display: flex;
+
+      .input {
+        flex-grow: 0;
+        width: $size-64;
+      }
+
+      .btn {
+        font-size: $text-sm;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    .history-section-table {
+      margin-top: 0;
     }
   }
 }
