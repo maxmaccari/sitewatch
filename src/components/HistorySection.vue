@@ -23,7 +23,10 @@
         </div>
       </div>
 
-      <HistorySectionTable :pingHistory="filteredHistory" />
+      <HistorySectionTable
+        :pingHistory="filteredHistory"
+        @ping-url="pingSite"
+      />
 
       <HistorySectionPagination
         :page="currentPage"
@@ -51,6 +54,7 @@ export default {
     ...mapGetters(['filteredHistory', 'historyPages']),
   },
   methods: mapActions([
+    'pingSite',
     'searchHistory',
     'resetHistory',
     'nextPage',

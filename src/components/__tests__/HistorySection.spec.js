@@ -82,6 +82,25 @@ describe('HistorySection', () => {
     expect(historySectionTable.props('pingHistory')).toBe(filteredHistory)
   })
 
+  it('dispatch pingSite if ping-url event is emitted on HistorySectionTable', () => {
+    const dispatch = jest.fn()
+
+    const wrapper = shallowMount(HistorySection, {
+      mocks: {
+        $store: {
+          ...defaultStore,
+          dispatch,
+        },
+      },
+    })
+
+    const historySectionTable = wrapper.findComponent(HistorySectionTable)
+    const url = 'http://www.example.com'
+    historySectionTable.vm.$emit('ping-url', url)
+
+    expect(dispatch).toHaveBeenCalledWith('pingSite', url)
+  })
+
   it('renders HistorySectionPagination passing currentPage and historyPages as props', () => {
     const currentPage = 2
     const historyPages = 10

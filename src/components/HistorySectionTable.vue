@@ -5,6 +5,7 @@
         <th class="col-1"></th>
         <th class="col-2">Site</th>
         <th class="col-3">Latency</th>
+        <th class="col-4"></th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +40,22 @@
             </div>
             <span>{{ site.latency }} ms</span>
           </div>
+        </td>
+        <td class="col-4">
+          <a
+            @click="$emit('ping-url', site.url)"
+            data-test-id="history-table-ping"
+            class="history-section-table__ping-again"
+            title="ping this url"
+          >
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
         </td>
       </tr>
     </tbody>
@@ -118,7 +135,12 @@ export default {
   }
 
   .col-3 {
-    width: $size-32;
+    width: $size-20;
+  }
+
+  .col-4 {
+    width: $size-2;
+    padding-right: $space-2;
   }
 
   &__latency {
@@ -143,6 +165,17 @@ export default {
 
     &--bad {
       color: $red-500;
+    }
+  }
+
+  &__ping-again {
+    display: block;
+    width: $size-4;
+    color: $gray-800;
+    cursor: pointer;
+
+    &:hover {
+      color: $gray-600;
     }
   }
 }

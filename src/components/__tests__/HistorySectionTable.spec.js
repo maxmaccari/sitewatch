@@ -86,4 +86,19 @@ describe('HistorySectionTable', () => {
     )
     expect(indicators.at(2).element.title).toContain('bad')
   })
+
+  it('emits an ping event with the given url if users click on ping bold', () => {
+    const url = 'http://wwww.example-1.com'
+    const wrapper = shallowMount(HistorySectionTable, {
+      propsData: {
+        pingHistory: [{ url, latency: 100 }],
+      },
+    })
+
+    const icon = wrapper.find('[data-test-id="history-table-ping"]')
+    icon.trigger('click')
+
+    expect(wrapper.emitted('ping-url')).toHaveLength(1)
+    expect(wrapper.emitted('ping-url')[0][0]).toBe(url)
+  })
 })
