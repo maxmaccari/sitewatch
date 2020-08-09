@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import mutations from './mutations'
 import actions from './actions'
+import getters from './actions'
 
 Vue.use(Vuex)
 
@@ -15,14 +16,6 @@ export default new Vuex.Store({
   },
   mutations,
   actions,
-  getters: {
-    lastSite: state => {
-      if (!state.lastSiteUrl) return null
-
-      const splittedUrl = state.lastSiteUrl.split('://')
-
-      return splittedUrl[1] || null
-    },
-  },
+  getters,
   modules: {},
 })
