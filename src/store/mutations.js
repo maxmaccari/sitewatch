@@ -4,6 +4,10 @@ export default {
     state.lastLatency = latency
     state.error = null
     state.loading = false
+    state.pingHistory.unshift({
+      url: siteUrl,
+      latency,
+    })
   },
 
   SET_ERROR(state, { siteUrl, error }) {

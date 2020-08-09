@@ -3,4 +3,5 @@ export default {
   lastLatency: null,
   error: null,
   loading: false,
+  pingHistory: [],
 }
