@@ -89,8 +89,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-input {
   display: flex;
   margin: auto;

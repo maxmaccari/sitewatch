@@ -82,8 +82,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .history-section {
   background-color: $gray-100;
   padding-top: $space-4;

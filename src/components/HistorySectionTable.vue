@@ -93,8 +93,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '@/scss/_variables.scss';
-
 .history-section-table {
   width: $size-full;
   border: 1px solid $gray-200;

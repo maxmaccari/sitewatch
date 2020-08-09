@@ -50,8 +50,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-error {
   background-color: $red-100;
   border: 1px solid $red-700;

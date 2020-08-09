@@ -31,8 +31,6 @@ export default {
 <style lang="scss" src="@/scss/app.scss"></style>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 @media screen and (min-width: $medium-screen) {
   .container {
     margin-top: $space-16;

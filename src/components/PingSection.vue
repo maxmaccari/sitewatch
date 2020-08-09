@@ -58,8 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section {
   .v-loading {
     margin: auto;

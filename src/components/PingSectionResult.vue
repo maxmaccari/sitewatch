@@ -68,8 +68,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/_variables.scss';
-
 .ping-section-result {
   border-left: $size-1 solid $gray-500;
   display: flex;
