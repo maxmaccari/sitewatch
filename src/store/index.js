@@ -15,6 +15,7 @@ export default new Vuex.Store({
   mutations,
   actions,
   getters,
+  /* I could use modules here, but I think it's not necessary because the domain is very simple */
   modules: {},
   plugins: [persistedStatePlugin, stateBroadcastPlugin],
 })
