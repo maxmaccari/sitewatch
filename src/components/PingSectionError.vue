@@ -7,7 +7,7 @@
       <div class="ping-section-error__title">Error: {{ title }}</div>
       <div class="ping-section-error__description">
         We were not able to connect to <b>{{ site }}</b
-        >. Check if the URL is correct or if your internet is connected. Click
+        >. Check if the URL is correct or if it exists. Click
         <a data-test-id="try-again" @click="$emit('try-again')">here</a> to try
         again.
       </div>
