@@ -9,7 +9,7 @@
     />
 
     <transition name="fade" mode="out-in">
-      <VLoading class="space-top" :with-text="true" v-if="loading" />
+      <VLoading :with-text="true" v-if="loading" />
 
       <template v-else>
         <PingSectionResult
@@ -61,6 +61,7 @@ export default {
 .ping-section {
   .v-loading {
     margin: auto;
+    margin-top: $space-4;
   }
 
   .ping-section-result,
