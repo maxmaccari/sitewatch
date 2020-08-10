@@ -1,13 +1,11 @@
-import generateGuid from '@/utils/generateGuid'
-
 export default {
-  SET_PING_RESULT(state, { siteUrl, latency }) {
+  SET_PING_RESULT(state, { id, siteUrl, latency }) {
     state.lastSiteUrl = siteUrl
     state.lastLatency = latency
     state.error = null
     state.loading = false
     state.pingHistory.unshift({
-      id: generateGuid(),
+      id,
       url: siteUrl,
       latency,
     })

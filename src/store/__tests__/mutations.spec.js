@@ -1,9 +1,5 @@
 import mutations from '../mutations'
 import originalState from '../state'
-import generateGuid from '@/utils/generateGuid'
-
-jest.mock('@/utils/generateGuid')
-generateGuid.mockImplementation(() => '')
 
 const createState = (replacement = {}) => {
   return {
@@ -17,10 +13,11 @@ describe('SET_PING_RESULT', () => {
   it('should set lastSiteUrl and latency', () => {
     const state = createState()
 
+    const id = 'abc'
     const siteUrl = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
 
     expect(state.lastSiteUrl).toBe(siteUrl)
     expect(state.lastLatency).toBe(latency)
@@ -32,10 +29,11 @@ describe('SET_PING_RESULT', () => {
       loading: true,
     })
 
+    const id = 'abc'
     const siteUrl = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
 
     expect(state.error).toBe(null)
     expect(state.loading).toBe(false)
@@ -44,14 +42,15 @@ describe('SET_PING_RESULT', () => {
   it('should add the new url to pingHistory', () => {
     const state = createState()
 
+    const id = 'abc'
     const siteUrl = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
 
     expect(state.pingHistory).toEqual([
       {
-        id: '',
+        id,
         url: siteUrl,
         latency,
       },
@@ -64,15 +63,13 @@ describe('SET_PING_RESULT', () => {
       pingHistory: [oldUrl],
     })
 
+    const id = 'abc'
     const siteUrl = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
 
-    expect(state.pingHistory).toEqual([
-      { id: '', url: siteUrl, latency },
-      oldUrl,
-    ])
+    expect(state.pingHistory).toEqual([{ id, url: siteUrl, latency }, oldUrl])
   })
 })
 

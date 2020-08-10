@@ -1,17 +1,13 @@
 describe('Ping website', () => {
   it('Ping website with correct url if latency is good', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com')
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
-    cy.wait('@pingSite')
+    cy.waitPing()
 
     cy.contains('www.example.com')
     cy.contains('The latency of www.example.com is good.')
@@ -24,18 +20,13 @@ describe('Ping website', () => {
 
   it('Ping website with correct url if latency is average', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-      delay: 500,
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com', 500)
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
-    cy.wait('@pingSite')
+    cy.waitPing()
 
     cy.contains('www.example.com')
     cy.contains('The latency of www.example.com is average.')
@@ -43,21 +34,29 @@ describe('Ping website', () => {
 
   it('Ping website with correct url if latency is bad', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-      delay: 1200,
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com', 1200)
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
-    cy.wait('@pingSite')
+    cy.waitPing()
 
     cy.contains('www.example.com')
     cy.contains('The latency of www.example.com is bad.')
+  })
+
+  it('Ping inexistent website return network error', () => {
+    cy.server()
+    cy.mockPingError('http://abcd.efgh.htmals')
+
+    cy.visit('/')
+    cy.get('[data-test-id="site-input"]').type('abcd.efgh.htmals')
+    cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
+
+    cy.contains('Error')
   })
 
   it('Ping website with invalid url', () => {

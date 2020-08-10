@@ -23,3 +23,33 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('mockPingResponse', (url, latency = 100) => {
+  cy.route({
+    method: 'POST',
+    url: 'https://sitewatcher-maxmaccari.herokuapp.com/ping',
+    response: {
+      url,
+      latency,
+      status: 200,
+      id: (Math.random() * 1000000000000).toFixed(0),
+    },
+  }).as('pingSite')
+})
+
+Cypress.Commands.add('mockPingError', url => {
+  cy.route({
+    method: 'POST',
+    url: 'https://sitewatcher-maxmaccari.herokuapp.com/ping',
+    status: 401,
+    response: {
+      url,
+      code: 'ENOTFOUND',
+      message: 'getaddrinfo ENOTFOUND',
+    },
+  }).as('pingSite')
+})
+
+Cypress.Commands.add('waitPing', () => {
+  cy.wait('@pingSite')
+})

@@ -1,16 +1,17 @@
-import BrowserPingService from '@/services/BrowserPingService'
+import PingService from '@/services/PingService'
 
 export default {
   async pingSite({ commit }, siteUrl) {
     try {
       commit('START_LOADING')
-      const latency = await BrowserPingService.ping(siteUrl)
+      const result = await PingService.ping(siteUrl)
       commit('SET_PING_RESULT', {
-        siteUrl,
-        latency,
+        id: result.id,
+        siteUrl: result.url,
+        latency: result.latency,
       })
     } catch (error) {
-      commit('SET_ERROR', { siteUrl, error })
+      commit('SET_ERROR', { siteUrl, error: 'network_error' })
     }
   },
 
