@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container top-section">
       <h1>How fast is your website loading?</h1>
       <p>
         Enter a url bellow to measure the website latency and we will show how
@@ -41,21 +41,15 @@ export default {
   min-height: 100vh;
 }
 
-@include break('medium') {
-  .container {
-    margin-top: $space-16;
-    margin: auto;
-    flex-grow: 0;
-  }
+.top-section {
+  margin: auto;
+  padding: 0 $space-2;
+}
 
+@include break('medium') {
   .history-section {
     min-height: $size-64;
   }
-}
-
-.container {
-  margin: auto;
-  padding: 0 $space-2;
 }
 
 h1 {

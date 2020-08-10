@@ -3,7 +3,7 @@ import PingSectionInput from '../PingSectionInput.vue'
 import VLoading from '../VLoading.vue'
 
 describe('PingSectionInput', () => {
-  it('should render with site url input empty and ping button disabled', () => {
+  it('renders with site url input empty and ping button disabled', () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
@@ -13,7 +13,7 @@ describe('PingSectionInput', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  it('should keep the ping button disabled if the typed url is invalid', async () => {
+  it('keeps the ping button disabled if the typed url is invalid', async () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
@@ -36,7 +36,7 @@ describe('PingSectionInput', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  it('should enable the ping button if the typed url is valid', async () => {
+  it('enables the ping button if the typed url is valid', async () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
@@ -69,7 +69,7 @@ describe('PingSectionInput', () => {
     expect(pingButton.element.disabled).toBe(false)
   })
 
-  it("should emit 'ping' event with sanitizedUrl if ping button is clicked", async () => {
+  it("emits 'ping' event with sanitizedUrl if ping button is clicked", async () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
@@ -89,7 +89,7 @@ describe('PingSectionInput', () => {
     expect(wrapper.emitted('ping')[1][0]).toEqual('https://www.example.com')
   })
 
-  it("should emit 'ping' event with sanitizedUrl if enter is pressed on input", async () => {
+  it("emits 'ping' event with sanitizedUrl if enter is pressed on input", async () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
@@ -102,7 +102,7 @@ describe('PingSectionInput', () => {
     expect(wrapper.emitted('ping')[0][0]).toEqual('http://www.example.com')
   })
 
-  it('should change input if setUrl is called with its argument', async () => {
+  it('changes input if setUrl is called with its argument', async () => {
     const wrapper = shallowMount(PingSectionInput)
     const newValue = 'http://my-new-site.com'
 
@@ -114,7 +114,7 @@ describe('PingSectionInput', () => {
     expect(siteInput.element.value).toBe(newValue)
   })
 
-  it('should change ping button to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
+  it('changes ping button to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
 
@@ -139,7 +139,7 @@ describe('PingSectionInput', () => {
     expect(pingButton.text()).toContain('Retry')
   })
 
-  it('should disable ping button and input if state is loading', () => {
+  it('disables ping button and input if state is loading', () => {
     const wrapper = shallowMount(PingSectionInput, {
       propsData: {
         loading: true,
@@ -153,7 +153,7 @@ describe('PingSectionInput', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  it('should show VLoading component if state is loading', () => {
+  it('shows VLoading component if state is loading', () => {
     const wrapper = shallowMount(PingSectionInput, {
       propsData: {
         loading: true,

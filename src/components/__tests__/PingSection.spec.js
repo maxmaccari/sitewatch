@@ -18,7 +18,7 @@ const defaultStore = {
 }
 
 describe('PingSection', () => {
-  it('should render PingSectionInput with store params', () => {
+  it('renders PingSectionInput with store params', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -34,7 +34,7 @@ describe('PingSection', () => {
     })
   })
 
-  it('should dispatch pingSite action with sanitizedUrl if ping is emmitted from PingSectionInput', async () => {
+  it('dispatches pingSite action with sanitizedUrl if ping is emmitted from PingSectionInput', async () => {
     const dispatch = jest.fn()
     const wrapper = shallowMount(PingSection, {
       mocks: {
@@ -55,7 +55,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', url)
   })
 
-  it('should not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
+  it('does not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -63,7 +63,7 @@ describe('PingSection', () => {
     })
     expect(wrapper.findComponent(PingSectionResult).exists()).toBe(false)
   })
-  it('should show the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
+  it('shows the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const lastLatency = 300
@@ -88,7 +88,7 @@ describe('PingSection', () => {
     expect(pingSectionResult.props('latency')).toBe(lastLatency)
   })
 
-  it('should show the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
+  it('shows the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const error = 'my error'
@@ -113,7 +113,7 @@ describe('PingSection', () => {
     expect(pingSectionError.props('error')).toBe(error)
   })
 
-  it('should dispatch pingSite and call setUrl from PingSectionInput if try-again is emitted from PingSectionError', async () => {
+  it('dispatches pingSite and call setUrl from PingSectionInput if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
     const lastSiteUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
@@ -142,7 +142,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', lastSiteUrl)
   })
 
-  it('should show VLoading component if state is loading', () => {
+  it('shows VLoading component if state is loading', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
@@ -163,7 +163,7 @@ describe('PingSection', () => {
     expect(vLoading.exists()).toBe(true)
   })
 
-  it('should not show results or errors if state is loading', () => {
+  it('does not show results or errors if state is loading', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
