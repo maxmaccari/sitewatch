@@ -8,45 +8,43 @@
         <th class="col-4"></th>
       </tr>
     </thead>
-    <transition-group name="list" tag="tbody">
-      <tr v-for="site in pingHistory" :key="site.id">
-        <td class="col-1">
-          <img
-            data-test-id="table-site-icon"
-            :src="
-              `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
-            "
-            :alt="`${site.url} icon`"
-          />
-        </td>
-        <td class="col-2">
-          {{ site.url }}
-        </td>
-        <td class="col-3">
-          <div class="history-section-table__latency">
-            <div
-              class="history-section-table__latency-indicator"
-              :class="getIndicatorClass(site.latency)"
-              :title="getIndicatorTitle(site.latency)"
-              data-test-id="table-latency-indicator"
-            >
-              <inline-svg :src="require('@/assets/svg/globe.svg')" />
-            </div>
-            <span>{{ site.latency }} ms</span>
-          </div>
-        </td>
-        <td class="col-4">
-          <a
-            @click="$emit('ping-url', site.url)"
-            data-test-id="history-table-ping"
-            class="history-section-table__ping-again"
-            title="ping this url"
+    <tr v-for="site in pingHistory" :key="site.id">
+      <td class="col-1">
+        <img
+          data-test-id="table-site-icon"
+          :src="
+            `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
+          "
+          :alt="`${site.url} icon`"
+        />
+      </td>
+      <td class="col-2">
+        {{ site.url }}
+      </td>
+      <td class="col-3">
+        <div class="history-section-table__latency">
+          <div
+            class="history-section-table__latency-indicator"
+            :class="getIndicatorClass(site.latency)"
+            :title="getIndicatorTitle(site.latency)"
+            data-test-id="table-latency-indicator"
           >
-            <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" />
-          </a>
-        </td>
-      </tr>
-    </transition-group>
+            <inline-svg :src="require('@/assets/svg/globe.svg')" />
+          </div>
+          <span>{{ site.latency }} ms</span>
+        </div>
+      </td>
+      <td class="col-4">
+        <a
+          @click="$emit('ping-url', site.url)"
+          data-test-id="history-table-ping"
+          class="history-section-table__ping-again"
+          title="ping this url"
+        >
+          <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" />
+        </a>
+      </td>
+    </tr>
   </table>
 </template>
 
