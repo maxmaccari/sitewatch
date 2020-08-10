@@ -59,7 +59,7 @@ describe('HistorySection', () => {
     expect(clearButton.exists()).toBe(false)
   })
 
-  it("add 'history-section__header--empty' to history-section__header if pingHistory is empty", () => {
+  it("adds 'history-section__header--empty' to history-section__header if pingHistory is empty", () => {
     const wrapper = shallowMount(HistorySection, {
       mocks: {
         $store: {
@@ -89,7 +89,7 @@ describe('HistorySection', () => {
     expect(searchInput.element.value).toBe('')
   })
 
-  it('dispatch searchHistory with element value if search is input', () => {
+  it('dispatches searchHistory with element value if search is input', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {
@@ -107,7 +107,7 @@ describe('HistorySection', () => {
     expect(dispatch).toHaveBeenCalledWith('searchHistory', 'my search')
   })
 
-  it('dispatch resetHistory if clear button is clicked', () => {
+  it('dispatches resetHistory if clear button is clicked', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {
@@ -145,7 +145,7 @@ describe('HistorySection', () => {
     expect(historySectionTable.props('pingHistory')).toBe(filteredHistory)
   })
 
-  it('dispatch pingSite if ping-url event is emitted on HistorySectionTable', () => {
+  it('dispatches pingSite if ping-url event is emitted on HistorySectionTable', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {
@@ -191,7 +191,7 @@ describe('HistorySection', () => {
     expect(historySectionPagination.props('totalPages')).toBe(historyPages)
   })
 
-  it('dispatch nextPage if next-page event is emitted on HistorySectionPagination', () => {
+  it('dispatches nextPage if next-page event is emitted on HistorySectionPagination', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {
@@ -211,7 +211,7 @@ describe('HistorySection', () => {
     expect(dispatch).toHaveBeenCalledWith('nextPage')
   })
 
-  it('dispatch previousPage if previousPage event is emitted on HistorySectionPagination', () => {
+  it('dispatches previousPage if previousPage event is emitted on HistorySectionPagination', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {
@@ -231,7 +231,7 @@ describe('HistorySection', () => {
     expect(dispatch).toHaveBeenCalledWith('previousPage')
   })
 
-  it('dispatch goToPage if change-page event is emitted on HistorySectionPagination', () => {
+  it('dispatches goToPage if change-page event is emitted on HistorySectionPagination', () => {
     const dispatch = jest.fn()
 
     const wrapper = shallowMount(HistorySection, {

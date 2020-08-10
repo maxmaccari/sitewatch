@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import PingSectionError from '../PingSectionError.vue'
 
 describe('PingSectionError', () => {
-  it('should display connection timeout error if error is timeout', () => {
+  it('displays connection timeout error if error is timeout', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
@@ -13,7 +13,7 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('Error: the connection timed out!')
   })
 
-  it('should display connection error if error is network_error', () => {
+  it('displays connection error if error is network_error', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
@@ -24,7 +24,7 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('Error: connection failed!')
   })
 
-  it('should display connection error if error is unresolved_url', () => {
+  it('displays connection error if error is unresolved_url', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
@@ -35,7 +35,7 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('Error: the url cannot be resolved!')
   })
 
-  it('should display unknow error if error is different', () => {
+  it('displays unknow error if error is different', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
@@ -46,7 +46,7 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('Error: unknown error!')
   })
 
-  it('should display the current url', () => {
+  it('displays the current url', () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',
@@ -57,7 +57,7 @@ describe('PingSectionError', () => {
     expect(wrapper.text()).toContain('www.example.com')
   })
 
-  it("when click on try again button should emit 'try-again' event", () => {
+  it("emits 'try-again' event when click on try again button", () => {
     const wrapper = shallowMount(PingSectionError, {
       propsData: {
         site: 'www.example.com',

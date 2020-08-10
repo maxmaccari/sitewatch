@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import PingSectionResult from '../PingSectionResult.vue'
 
 describe('PingSectionResult', () => {
-  it('should display result data according with the given params', () => {
+  it('displays result data according with the given params', () => {
     const site = 'www.example.com'
     const latency = 214
     const wrapper = shallowMount(PingSectionResult, {
@@ -16,7 +16,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.text()).toContain(latency)
   })
 
-  it('should point to the site with the given url', () => {
+  it('points to the site with the given url', () => {
     const site = 'www.example.com'
     const latency = 214
     const wrapper = shallowMount(PingSectionResult, {
@@ -31,7 +31,7 @@ describe('PingSectionResult', () => {
     expect(siteLink.element.href).toContain(site)
   })
 
-  it('should display the favicon from the website', () => {
+  it('displays the favicon from the website', () => {
     const site = 'www.example.com'
     const latency = 214
     const wrapper = shallowMount(PingSectionResult, {
@@ -48,7 +48,7 @@ describe('PingSectionResult', () => {
     expect(siteIcon.element.alt).toContain(`${site} icon`)
   })
 
-  it('it should display a text with the latency feedback if latency is good', () => {
+  it('displays a text with the latency feedback if latency is good', () => {
     const site = 'www.example.com'
     const latency = 200
 
@@ -63,7 +63,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.text()).toContain(expectText)
   })
 
-  it("should have 'ping-section-result--good' if the latency is good", () => {
+  it("has 'ping-section-result--good' class if the latency is good", () => {
     const site = 'www.example.com'
     const latency = 200
 
@@ -77,7 +77,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.classes()).toContain('ping-section-result--good')
   })
 
-  it('should display a text with the latency feedback if latency is average', () => {
+  it('displays a text with the latency feedback if latency is average', () => {
     const site = 'www.example.com'
     const latency = 500
 
@@ -92,7 +92,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.text()).toContain(expectText)
   })
 
-  it("should have 'ping-section-result--good' if the latency is average", () => {
+  it("has 'ping-section-result--good' class if the latency is average", () => {
     const site = 'www.example.com'
     const latency = 500
 
@@ -106,7 +106,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.classes()).toContain('ping-section-result--average')
   })
 
-  it('should display a text with the latency feedback if latency is bad', () => {
+  it('displays a text with the latency feedback if latency is bad', () => {
     const site = 'www.example.com'
     const latency = 1200
 
@@ -121,7 +121,7 @@ describe('PingSectionResult', () => {
     expect(wrapper.text()).toContain(expectText)
   })
 
-  it("should have 'ping-section-result--good' if the latency is average", () => {
+  it("has 'ping-section-result--good' class if the latency is average", () => {
     const site = 'www.example.com'
     const latency = 1200
 
