@@ -1,45 +1,64 @@
 import actions from '../actions'
-import BrowserPingService from '@/services/BrowserPingService'
+import PingService from '@/services/PingService'
 
-jest.mock('@/services/BrowserPingService')
+jest.mock('@/services/PingService')
 
 describe('pingSite', () => {
   it('calls BrowserPingService.ping with the given url', async () => {
-    BrowserPingService.ping.mockResolvedValue(100)
     const commit = jest.fn()
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
 
-    await actions.pingSite({ commit }, siteUrl)
+    PingService.ping.mockResolvedValue({
+      id: '123',
+      url,
+      latency: 100,
+    })
 
-    expect(BrowserPingService.ping).toBeCalledTimes(1)
-    expect(BrowserPingService.ping).toBeCalledWith(siteUrl)
+    await actions.pingSite({ commit }, url)
+
+    expect(PingService.ping).toBeCalledTimes(1)
+    expect(PingService.ping).toBeCalledWith(url)
   })
 
   it('commits START_LOADING and SET_PING_RESULT with the given url and the timeout if ping is sucessfull', async () => {
+    const id = 'abc'
     const latency = 250
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const commit = jest.fn()
 
-    BrowserPingService.ping.mockResolvedValue(latency)
+    PingService.ping.mockResolvedValue({
+      id,
+      url,
+      latency,
+    })
 
-    await actions.pingSite({ commit }, siteUrl)
+    await actions.pingSite({ commit }, url)
 
     expect(commit).toBeCalledTimes(2)
-    expect(commit).toBeCalledWith('SET_PING_RESULT', { latency, siteUrl })
+    expect(commit).toBeCalledWith('SET_PING_RESULT', {
+      id,
+      latency,
+      siteUrl: url,
+    })
     expect(commit).toBeCalledWith('START_LOADING')
   })
 
   it('commits START_LOADING and SET_ERROR with the given url and the error in case of errors', async () => {
-    const error = 'my error'
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const commit = jest.fn()
 
-    BrowserPingService.ping.mockRejectedValue(error)
+    PingService.ping.mockRejectedValue({
+      code: 'ENOTFOUND',
+      message: 'getaddrinfo ENOTFOUND',
+    })
 
-    await actions.pingSite({ commit }, siteUrl)
+    await actions.pingSite({ commit }, url)
 
     expect(commit).toBeCalledTimes(2)
-    expect(commit).toBeCalledWith('SET_ERROR', { error, siteUrl })
+    expect(commit).toBeCalledWith('SET_ERROR', {
+      error: 'network_error',
+      siteUrl: url,
+    })
     expect(commit).toBeCalledWith('START_LOADING')
   })
 })
