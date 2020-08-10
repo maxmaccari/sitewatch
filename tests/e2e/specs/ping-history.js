@@ -1,27 +1,35 @@
 describe('Ping History', () => {
   it('Ping website with correct url creates a ping history', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com')
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
     cy.contains('.history-section', 'http://www.example.com')
+
+    cy.mockPingResponse('http://www.example-1.com')
 
     cy.get('[data-test-id="site-input"]').clear()
     cy.get('[data-test-id="site-input"]').type('www.example-1.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
     cy.contains('.history-section', 'http://www.example-1.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
+    cy.mockPingResponse('http://www.example-1.com/path')
+
     cy.get('[data-test-id="site-input"]').type('/path')
     cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
 
     cy.contains('.history-section', 'http://www.example.com')
     cy.contains('.history-section', 'http://www.example-1.com')
@@ -30,19 +38,21 @@ describe('Ping History', () => {
 
   it('The history should persist to page refresh', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com')
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
+    cy.mockPingResponse('http://www.example-1.com')
+
     cy.get('[data-test-id="site-input"]').clear()
     cy.get('[data-test-id="site-input"]').type('www.example-1.com')
     cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
 
     cy.reload()
 
@@ -52,19 +62,21 @@ describe('Ping History', () => {
 
   it('Clicking clear resets the history', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com')
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
+    cy.mockPingResponse('http://www.example-1.com')
+
     cy.get('[data-test-id="site-input"]').clear()
     cy.get('[data-test-id="site-input"]').type('www.example-1.com')
     cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
 
     cy.get('[data-test-id="clear-button"]').click()
 
@@ -87,19 +99,21 @@ describe('Ping History', () => {
 
   it('Searching the history filter the history by its url', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: '*',
-      response: [],
-    }).as('pingSite')
+    cy.mockPingResponse('http://www.example.com')
 
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('www.example.com')
     cy.get('[data-test-id="ping-button"]').click()
 
+    cy.waitPing()
+
+    cy.mockPingResponse('http://www.example-1.com')
+
     cy.get('[data-test-id="site-input"]').clear()
     cy.get('[data-test-id="site-input"]').type('www.example-1.com')
     cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
 
     cy.get('[data-test-id="search-input"]').type('http: example-1')
 
