@@ -1,16 +1,22 @@
 <template>
-  <div class="ping-section-error">
-    <div class="ping-section-error__icon">
-      <inline-svg :src="require('@/assets/svg/exclamation-circle.svg')" />
-    </div>
-    <div class="ping-section-error__message">
-      <div class="ping-section-error__title">Error: {{ title }}</div>
-      <div class="ping-section-error__description">
-        We were not able to connect to <b>{{ site }}</b
-        >. Check if the URL is correct or if it exists. Click
-        <a data-test-id="try-again" @click="$emit('try-again')">here</a> to try
-        again.
-      </div>
+  <div
+    class="bg-red-100 border border-red-300 text-red-1000 px-3 py-4 text-center rounded shadow-md"
+  >
+    <inline-svg
+      class="m-auto w-10 text-red-900"
+      :src="require('@/assets/svg/exclamation-circle.svg')"
+    />
+    <div class="mt-2 font-bold text-xl ">Error: {{ title }}</div>
+    <div class="mt-1 text-base c leading-tight">
+      We were not able to connect to <b class="font-semibold">{{ site }}</b
+      >. Check if the URL is correct or if it exists. Click
+      <a
+        class="underline cursor-pointer hover:text-red-800"
+        data-test-id="try-again"
+        @click="$emit('try-again')"
+        >here</a
+      >
+      to try again.
     </div>
   </div>
 </template>

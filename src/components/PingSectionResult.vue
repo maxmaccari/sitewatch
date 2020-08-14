@@ -1,29 +1,39 @@
 <template>
-  <div class="ping-section-result" :class="feedbackClass">
-    <div class="ping-section-result__details">
-      <div class="ping-section-result__site">
-        <div class="ping-section-result__site-image">
+  <div
+    class="ping-section-result border-l-4 border-gray-500 flex shadow-md"
+    :class="$style[`border-${latencyFeedback}`]"
+  >
+    <div class="px-2 py-3 bg-gray-200 flex-1">
+      <div class="flex items-center">
+        <div class="bg-white p-1 rounded-full">
           <img data-test-id="site-icon" :src="iconUrl" :alt="iconAlt" />
         </div>
         <a
           data-test-id="site-link"
           :href="fullUrl"
           target="_blank"
-          class="ping-section-result__site-url"
+          class="ml-1"
+          :class="$style.link"
         >
           {{ site }}
         </a>
       </div>
-      <div class="ping-section-result__description">
-        The latency of <b>{{ site }}</b> is {{ latencyFeedback }}.
+      <div class="text-sm mt-4 text-gray-700">
+        The latency of <b class="font-semibold">{{ site }}</b> is
+        {{ latencyFeedback }}.
       </div>
     </div>
-    <div class="ping-section-result__milliseconds">
-      <div class="ping-section-result__milliseconds-header">
-        respondend in
-      </div>
-      <div class="ping-section-result__milliseconds-value">
-        {{ latency }} <span>ms</span>
+    <div
+      class="bg-gray-500 text-white px-4 flex flex-col justify-center items-left"
+      :class="$style[`result-${latencyFeedback}`]"
+    >
+      <span
+        class="text-xs text-gray-200"
+        :class="$style[`result-label-${latencyFeedback}`]"
+        >respondend in</span
+      >
+      <div class="text-2xl font-bold">
+        {{ latency }} <span class="text-sm font-normal">ms</span>
       </div>
     </div>
   </div>
@@ -60,9 +70,54 @@ export default {
 
       return 'bad'
     },
-    feedbackClass() {
-      return `ping-section-result--${this.latencyFeedback}`
-    },
   },
 }
 </script>
+
+<style module>
+.border-good {
+  @apply border-green-600;
+}
+
+.border-average {
+  @apply border-yellow-600;
+}
+
+.border-bad {
+  @apply border-red-600;
+}
+
+.result-good {
+  @apply bg-green-600;
+}
+
+.result-average {
+  @apply bg-yellow-600;
+}
+
+.result-bad {
+  @apply bg-red-600;
+}
+
+.result-label-good {
+  @apply text-green-100;
+}
+
+.result-label-average {
+  @apply text-yellow-100;
+}
+
+.result-label-bad {
+  @apply text-red-100;
+}
+
+.link {
+  @apply text-primary-900 underline font-semibold text-lg;
+
+  &:hover,
+  &:active,
+  &:visited {
+    @apply text-primary-700;
+  }
+}
+</style>

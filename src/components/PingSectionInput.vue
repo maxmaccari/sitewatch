@@ -17,11 +17,10 @@
     >
       {{ pingLabel }}
 
-      <transition name="fade" mode="out-in" v-if="loading">
-        <VLoading color="white" class="ml-2 w-4" />
-      </transition>
-      <transition name="fade" mode="out-in" v-else>
+      <transition name="fade" mode="out-in">
+        <VLoading color="white" class="ml-2 w-4" v-if="loading" />
         <inline-svg
+          v-else
           class="ml-1 w-5"
           :src="require('@/assets/svg/lighting-bolt.svg')"
         />

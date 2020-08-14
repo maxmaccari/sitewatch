@@ -1,8 +1,9 @@
 <template>
   <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-  <div class="v-loading" :class="{ 'v-loading--with-text': withText }">
+  <div class="v-loading flex flex-col items-center">
     <svg
-      class="fill-current w-full h-full"
+      class="fill-current"
+      :class="withText ? 'w-10 -ml-1' : 'w-full'"
       viewBox="0 0 38 38"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -51,7 +52,7 @@
       </g>
     </svg>
 
-    <div class="v-loading__text" v-if="withText">
+    <div class="mt-2 text-primary-1000 font-semibold text-xl" v-if="withText">
       Loading...
     </div>
   </div>
