@@ -26,6 +26,11 @@
 
 .btn-primary {
   @apply bg-primary-900 text-white border-primary-900;
+  
+  &:hover,
+  &:active {
+    @apply bg-primary-800 border-primary-800;
+  }
 
   &:disabled {
     @apply bg-primary-500 border-primary-500 text-primary-100;
@@ -34,6 +39,11 @@
 
 .btn-red {
   @apply bg-red-800 text-white border-red-800;
+  
+  &:hover,
+  &:active {
+    @apply bg-red-700 border-red-700;
+  }
 
   &:disabled {
     @apply bg-red-400 border-red-400 text-red-100;
