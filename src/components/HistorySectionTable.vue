@@ -1,50 +1,58 @@
 <template>
-  <table class="history-section-table" v-if="pingHistory.length">
+  <table
+    class="history-section-table table-auto"
+    :class="$style.table"
+    v-if="pingHistory.length"
+  >
     <thead>
       <tr>
-        <th class="col-1"></th>
-        <th class="col-2">Site</th>
-        <th class="col-3">Latency</th>
-        <th class="col-4"></th>
+        <th></th>
+        <th>Site</th>
+        <th>Latency</th>
+        <th></th>
       </tr>
     </thead>
-    <tr v-for="site in pingHistory" :key="site.id">
-      <td class="col-1">
-        <img
-          data-test-id="table-site-icon"
-          :src="
-            `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
-          "
-          :alt="`${site.url} icon`"
-        />
-      </td>
-      <td class="col-2">
-        {{ site.url }}
-      </td>
-      <td class="col-3">
-        <div class="history-section-table__latency">
-          <div
-            class="history-section-table__latency-indicator"
-            :class="getIndicatorClass(site.latency)"
-            :title="getIndicatorTitle(site.latency)"
-            data-test-id="table-latency-indicator"
-          >
-            <inline-svg :src="require('@/assets/svg/globe.svg')" />
+    <tbody>
+      <tr v-for="site in pingHistory" :key="site.id">
+        <td class="px-2 w-8">
+          <img
+            data-test-id="table-site-icon"
+            class="inline"
+            :src="
+              `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
+            "
+            :alt="`${site.url} icon`"
+          />
+        </td>
+        <td class="pt-1 w-auto">
+          {{ site.url }}
+        </td>
+        <td class="w-20">
+          <div class="flex items-center py-1">
+            <inline-svg
+              class="w-5 fill-current"
+              :class="getIndicatorClass(site.latency)"
+              :title="getIndicatorTitle(site.latency)"
+              :src="require('@/assets/svg/globe.svg')"
+            />
+            <span class="ml-1 pt-px">{{ site.latency }} ms</span>
           </div>
-          <span>{{ site.latency }} ms</span>
-        </div>
-      </td>
-      <td class="col-4">
-        <a
-          @click="$emit('ping-url', site.url)"
-          data-test-id="history-table-ping"
-          class="history-section-table__ping-again"
-          title="ping this url"
-        >
-          <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" />
-        </a>
-      </td>
-    </tr>
+        </td>
+        <td class="w-6 px-2">
+          <a
+            @click="$emit('ping-url', site.url)"
+            data-test-id="history-table-ping"
+            :class="$style.link"
+            title="ping this url"
+          >
+            <inline-svg
+              class="w-6"
+              :src="require('@/assets/svg/lighting-bolt.svg')"
+            />
+          </a>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 
@@ -59,12 +67,12 @@ export default {
   methods: {
     getIndicatorClass(latency) {
       if (latency <= 360) {
-        return 'history-section-table__latency-indicator--good'
+        return this.$style['indicator-good']
       } else if (latency <= 1000) {
-        return 'history-section-table__latency-indicator--average'
+        return this.$style['indicator-average']
       }
 
-      return 'history-section-table__latency-indicator--bad'
+      return this.$style['indicator-bad']
     },
     getIndicatorTitle(latency) {
       if (latency <= 360) {
@@ -78,3 +86,47 @@ export default {
   },
 }
 </script>
+
+<style module>
+.table {
+  @apply text-gray-900 border-collapse w-full;
+
+  & thead {
+    @apply bg-white;
+  }
+
+  & th,
+  & td {
+    @apply text-left text-sm;
+  }
+
+  & tbody tr:nth-child(even) {
+    @apply bg-white;
+  }
+
+  & tbody tr:nth-child(odd) {
+    @apply bg-gray-200;
+  }
+}
+
+.indicator-good {
+  @apply text-green-600;
+}
+
+.indicator-average {
+  @apply text-yellow-600;
+}
+
+.indicator-bad {
+  @apply text-red-600;
+}
+
+.link {
+  @apply cursor-pointer transition-colors duration-500;
+
+  &:hover,
+  &:active {
+    @apply text-gray-700;
+  }
+}
+</style>
