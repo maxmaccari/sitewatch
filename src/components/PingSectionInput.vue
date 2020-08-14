@@ -1,5 +1,5 @@
 <template>
-  <div class="ping-section-input w-full flex">
+  <div class="ping-section-input w-full m-auto max-w-3xl flex">
     <input
       data-test-id="site-input"
       v-model="siteUrl"

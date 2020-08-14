@@ -1,5 +1,5 @@
 <template>
-  <div class="history-section bg-gray-200 px-2 py-6">
+  <div class="history-section">
     <div>
       <h2 class="text-gray-900 font-semibold text-3xl text-center">
         Ping History

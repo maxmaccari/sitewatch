@@ -27,7 +27,7 @@
         <td class="pt-1 w-auto">
           {{ site.url }}
         </td>
-        <td class="w-20">
+        <td class="w-20 sm:w-24">
           <div class="flex items-center py-1">
             <inline-svg
               class="w-5 fill-current"
@@ -89,10 +89,14 @@ export default {
 
 <style module>
 .table {
-  @apply text-gray-900 border-collapse w-full;
+  @apply text-gray-900 border-collapse w-full border border-gray-300;
 
   & thead {
     @apply bg-white;
+  }
+
+  & th {
+    @apply py-1;
   }
 
   & th,

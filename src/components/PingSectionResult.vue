@@ -1,6 +1,6 @@
 <template>
   <div
-    class="ping-section-result border-l-4 border-gray-500 flex shadow-md"
+    class="ping-section-result m-auto max-w-md border-l-4 flex shadow-md"
     :class="$style[`border-${latencyFeedback}`]"
   >
     <div class="px-2 py-3 bg-gray-200 flex-1">
@@ -24,12 +24,10 @@
       </div>
     </div>
     <div
-      class="bg-gray-500 text-white px-4 flex flex-col justify-center items-left"
+      class="text-white px-4 flex flex-col justify-center items-left"
       :class="$style[`result-${latencyFeedback}`]"
     >
-      <span
-        class="text-xs text-gray-200"
-        :class="$style[`result-label-${latencyFeedback}`]"
+      <span class="text-xs" :class="$style[`result-label-${latencyFeedback}`]"
         >respondend in</span
       >
       <div class="text-2xl font-bold">

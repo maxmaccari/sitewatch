@@ -5,11 +5,11 @@
     <p>
       Developed by Maxsuel Maccari -
       <a
-        class="hover:text-white underline transition-colors duration-500"
-        href="https://www.github.com/maxmaccari"
+        class="text-gray-300 hover:text-white underline transition-colors duration-500"
+        href="https://www.github.com/maxmaccari/sitewatch"
         target="_blank"
       >
-        https://www.github.com/maxmaccari
+        https://github.com/maxmaccari/sitewatch
       </a>
     </p>
   </div>
