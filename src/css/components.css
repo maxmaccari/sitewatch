@@ -1,0 +1,33 @@
+.input {
+  @apply px-4 py-2 flex-1 border border-gray-500 outline-none transition-colors 
+    duration-500;
+
+  &:focus {
+    @apply border-gray-1000;
+  }
+
+  &::placeholder {
+    @apply text-gray-500;
+  }
+}
+
+.btn {
+  @apply border-gray-500 px-4 flex items-center border outline-none transition-colors 
+    duration-500 uppercase font-semibold;
+
+  &:focus {
+    @apply border-gray-1000 outline-none;
+  }
+
+  &:disabled {
+    @apply border-gray-300 text-gray-400 cursor-default;
+  }
+}
+
+.btn-primary {
+  @apply bg-primary-900 text-white border-primary-900;
+
+  &:disabled {
+    @apply bg-primary-500 border-primary-500 text-primary-100;
+  }
+}

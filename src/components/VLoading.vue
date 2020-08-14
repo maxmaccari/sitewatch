@@ -1,7 +1,11 @@
 <template>
   <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
   <div class="v-loading" :class="{ 'v-loading--with-text': withText }">
-    <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      class="fill-current w-full h-full"
+      viewBox="0 0 38 38"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <defs>
         <linearGradient
           x1="8.042%"

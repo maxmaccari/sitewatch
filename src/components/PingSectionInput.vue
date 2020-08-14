@@ -1,10 +1,10 @@
 <template>
-  <div class="ping-section-input">
+  <div class="ping-section-input w-full flex">
     <input
       data-test-id="site-input"
       v-model="siteUrl"
       @keyup.enter="$emit('ping', sanitizedUrl)"
-      class="input"
+      class="input rounded-l-full"
       type="text"
       placeholder="ex: www.mywebsite.com"
       :disabled="loading"
@@ -12,13 +12,20 @@
     <button
       data-test-id="ping-button"
       @click="$emit('ping', sanitizedUrl)"
-      class="btn btn-primary btn-icon"
+      class="btn btn-primary rounded-r-full pr-5 -ml-px"
       :disabled="!isValidUrl || loading"
     >
       {{ pingLabel }}
 
-      <VLoading v-if="loading" color="white" class="btn__v-loading" />
-      <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" v-else />
+      <transition name="fade" mode="out-in" v-if="loading">
+        <VLoading color="white" class="ml-2 w-4" />
+      </transition>
+      <transition name="fade" mode="out-in" v-else>
+        <inline-svg
+          class="ml-1 w-5"
+          :src="require('@/assets/svg/lighting-bolt.svg')"
+        />
+      </transition>
     </button>
   </div>
 </template>
