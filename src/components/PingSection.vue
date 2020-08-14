@@ -56,17 +56,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.ping-section {
-  .v-loading {
-    margin: auto;
-    margin-top: $space-4;
-  }
-
-  .ping-section-result,
-  .ping-section-error {
-    margin-top: $space-6;
-  }
-}
-</style>

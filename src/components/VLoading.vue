@@ -84,27 +84,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.v-loading {
-  justify-content: center;
-  align-items: center;
-
-  &--with-text {
-    display: flex;
-    flex-direction: column;
-    width: $size-10;
-  }
-
-  &__text {
-    font-size: $text-xl;
-    margin-top: $space-4;
-    font-weight: 600;
-    color: $primary-900;
-  }
-
-  svg {
-    color: $primary-500;
-  }
-}
-</style>
