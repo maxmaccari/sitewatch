@@ -18,13 +18,20 @@ const defaultStore = {
   },
 }
 
+const createWrapper = (store = {}) => {
+  return shallowMount(PingSection, {
+    mocks: {
+      $store: {
+        ...defaultStore,
+        ...store,
+      },
+    },
+  })
+}
+
 describe('PingSection', () => {
   it('renders PingSectionInput with store params', () => {
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: defaultStore,
-      },
-    })
+    const wrapper = createWrapper()
     const pingSectionInput = wrapper.findComponent(PingSectionInput)
 
     expect(pingSectionInput.exists()).toBe(true)
@@ -37,15 +44,7 @@ describe('PingSection', () => {
 
   it('dispatches pingSite action with sanitizedUrl if ping is emmitted from PingSectionInput', async () => {
     const dispatch = jest.fn()
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: {
-          state: defaultStore.state,
-          getters: defaultStore.getters,
-          dispatch,
-        },
-      },
-    })
+    const wrapper = createWrapper({ dispatch })
 
     const pingSectionInput = wrapper.findComponent(PingSectionInput)
 
@@ -57,28 +56,21 @@ describe('PingSection', () => {
   })
 
   it('does not show the PingSectionResult if lastUrl and lastLatency are null', () => {
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: defaultStore,
-      },
-    })
+    const wrapper = createWrapper()
+
     expect(wrapper.findComponent(PingSectionResult).exists()).toBe(false)
   })
   it('shows the PingSectionResult with properly params if lastUrl and lastLatency are filled', () => {
     const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const lastLatency = 300
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: {
-          state: {
-            lastUrl,
-            lastLatency,
-          },
-          getters: {
-            lastSite,
-          },
-        },
+    const wrapper = createWrapper({
+      state: {
+        lastUrl,
+        lastLatency,
+      },
+      getters: {
+        lastSite,
       },
     })
 
@@ -93,17 +85,13 @@ describe('PingSection', () => {
     const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const error = 'my error'
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: {
-          state: {
-            lastUrl,
-            error,
-          },
-          getters: {
-            lastSite: 'www.example.com',
-          },
-        },
+    const wrapper = createWrapper({
+      state: {
+        lastUrl,
+        error,
+      },
+      getters: {
+        lastSite: 'www.example.com',
       },
     })
 
@@ -143,18 +131,11 @@ describe('PingSection', () => {
   })
 
   it('shows VLoading component if state is loading', () => {
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: {
-          state: {
-            lastUrl: null,
-            latency: null,
-            loading: true,
-          },
-          getters: {
-            lastSite: null,
-          },
-        },
+    const wrapper = createWrapper({
+      state: {
+        lastUrl: null,
+        latency: null,
+        loading: true,
       },
     })
 
@@ -164,19 +145,15 @@ describe('PingSection', () => {
   })
 
   it('does not show results or errors if state is loading', () => {
-    const wrapper = shallowMount(PingSection, {
-      mocks: {
-        $store: {
-          state: {
-            lastUrl: 'https://www.example.com',
-            latency: 200,
-            loading: true,
-            errors: 'my error',
-          },
-          getters: {
-            lastSite: 'www.example.com',
-          },
-        },
+    const wrapper = createWrapper({
+      state: {
+        lastUrl: 'https://www.example.com',
+        latency: 200,
+        loading: true,
+        errors: 'my error',
+      },
+      getters: {
+        lastSite: 'www.example.com',
       },
     })
 
