@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import HistorySectionPagination from '../HistorySectionPagination.vue'
+import HistorySectionPagination from '../HistorySectionPagination'
 
 describe('HistorySectionPagination', () => {
   it('doesn not render if the totalPages is 1', () => {

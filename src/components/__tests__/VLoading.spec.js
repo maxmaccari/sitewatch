@@ -12,21 +12,10 @@ describe('VLoading', () => {
     expect(wrapper.text()).toContain('Loading...')
   })
 
-  it('has v-loading--with-text class if withText is true', () => {
-    const wrapper = shallowMount(VLoading, {
-      propsData: {
-        withText: true,
-      },
-    })
-
-    expect(wrapper.classes()).toContain('v-loading--with-text')
-  })
-
-  it('does not display Loading... nor v-loading--with-text by default', () => {
+  it('does not display Loading... by default', () => {
     const wrapper = shallowMount(VLoading)
 
     expect(wrapper.text()).not.toContain('Loading...')
-    expect(wrapper.classes()).not.toContain('v-loading--with-text')
   })
 
   it('fills colors properly', () => {

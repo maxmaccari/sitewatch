@@ -1,9 +1,5 @@
 <template>
-  <table
-    class="history-section-table table-auto"
-    :class="$style.table"
-    v-if="pingHistory.length"
-  >
+  <table class="history-section-table table-auto" v-if="pingHistory.length">
     <thead>
       <tr>
         <th></th>
@@ -31,6 +27,7 @@
           <div class="flex items-center py-1">
             <inline-svg
               class="w-5 fill-current"
+              data-test-id="history-latency-indicator"
               :class="getIndicatorClass(site.latency)"
               :title="getIndicatorTitle(site.latency)"
               :src="require('@/assets/svg/globe.svg')"
@@ -39,17 +36,17 @@
           </div>
         </td>
         <td class="w-6 px-2">
-          <a
+          <button
             @click="$emit('ping-url', site.url)"
             data-test-id="history-table-ping"
-            :class="$style.link"
+            class="ping-again flex items-center"
             title="ping this url"
           >
             <inline-svg
               class="w-6"
               :src="require('@/assets/svg/lighting-bolt.svg')"
             />
-          </a>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -67,12 +64,12 @@ export default {
   methods: {
     getIndicatorClass(latency) {
       if (latency <= 360) {
-        return this.$style['indicator-good']
+        return 'indicator-good'
       } else if (latency <= 1000) {
-        return this.$style['indicator-average']
+        return 'indicator-average'
       }
 
-      return this.$style['indicator-bad']
+      return 'indicator-bad'
     },
     getIndicatorTitle(latency) {
       if (latency <= 360) {
@@ -87,8 +84,8 @@ export default {
 }
 </script>
 
-<style module>
-.table {
+<style scoped>
+.history-section-table {
   @apply text-gray-900 border-collapse w-full border border-gray-300;
 
   & thead {
@@ -125,7 +122,7 @@ export default {
   @apply text-red-600;
 }
 
-.link {
+.ping-again {
   @apply cursor-pointer transition-colors duration-500;
 
   &:hover,

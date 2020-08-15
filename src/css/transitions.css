@@ -6,7 +6,7 @@
 }
 
 .fade-slow-enter-active, .fade-slow-leave-active {
-  transition: opacity 1s;
+  transition: opacity .5s;
 }
 .fade-slow-enter, .fade-slow-leave-to {
   opacity: 0;

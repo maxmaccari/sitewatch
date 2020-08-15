@@ -3,7 +3,7 @@
     duration-500;
 
   &:focus {
-    @apply border-gray-1000;
+    @apply border-gray-1000 relative z-10;
   }
 
   &::placeholder {
@@ -16,7 +16,7 @@
     duration-500 uppercase font-semibold;
 
   &:focus {
-    @apply border-gray-1000 outline-none;
+    @apply border-gray-1000 outline-none relative z-10;
   }
 
   &:disabled {

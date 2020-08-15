@@ -1,7 +1,7 @@
 <template>
   <div
     class="ping-section-result m-auto max-w-md border-l-4 flex shadow-md"
-    :class="$style[`border-${latencyFeedback}`]"
+    :class="`border-${latencyFeedback}`"
   >
     <div class="px-2 py-3 bg-gray-200 flex-1">
       <div class="flex items-center">
@@ -12,8 +12,7 @@
           data-test-id="site-link"
           :href="fullUrl"
           target="_blank"
-          class="ml-1"
-          :class="$style.link"
+          class="link ml-1"
         >
           {{ site }}
         </a>
@@ -24,12 +23,12 @@
       </div>
     </div>
     <div
-      class="text-white px-4 flex flex-col justify-center items-left"
-      :class="$style[`result-${latencyFeedback}`]"
+      class="text-white px-4 py-3 flex flex-col justify-between items-left"
+      :class="`result-${latencyFeedback}`"
     >
-      <span class="text-xs" :class="$style[`result-label-${latencyFeedback}`]"
-        >respondend in</span
-      >
+      <span class="text-xs mt-2" :class="`result-label-${latencyFeedback}`">
+        respondend in
+      </span>
       <div class="text-2xl font-bold">
         {{ latency }} <span class="text-sm font-normal">ms</span>
       </div>
@@ -72,7 +71,7 @@ export default {
 }
 </script>
 
-<style module>
+<style scoped>
 .border-good {
   @apply border-green-600;
 }

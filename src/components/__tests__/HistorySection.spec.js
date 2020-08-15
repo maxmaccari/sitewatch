@@ -22,7 +22,7 @@ describe('HistorySection', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('No data found here.')
+    expect(wrapper.text()).toContain('No data found.')
   })
 
   it('renders the search input and clear button if it have pingHistory filled', () => {
@@ -59,7 +59,7 @@ describe('HistorySection', () => {
     expect(clearButton.exists()).toBe(false)
   })
 
-  it("adds 'history-section__header--empty' to history-section__header if pingHistory is empty", () => {
+  it("removes 'not-empty' to header control if pingHistory is empty", () => {
     const wrapper = shallowMount(HistorySection, {
       mocks: {
         $store: {
@@ -72,9 +72,9 @@ describe('HistorySection', () => {
       },
     })
 
-    const header = wrapper.find('.history-section__header')
+    const header = wrapper.find('[data-test-id="header-control"]')
 
-    expect(header.classes()).toContain('history-section__header--empty')
+    expect(header.classes()).not.toContain('not-empty')
   })
 
   it('renders an empty search input', () => {

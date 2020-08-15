@@ -1,43 +1,48 @@
 <template>
   <div class="history-section">
-    <div>
-      <h2 class="text-gray-900 font-semibold text-3xl text-center">
+    <transition-group
+      data-test-id="header-control"
+      :class="{ 'not-empty': pingHistory.length }"
+      name="fade"
+    >
+      <h2
+        key="title"
+        class="text-gray-900 font-semibold text-3xl text-center transition-all duration-100"
+        :class="{ 'not-empty-header': pingHistory.length }"
+      >
         Ping History
       </h2>
 
-      <transition name="fade-slow" mode="out-in">
-        <div class="mt-4 flex" v-if="pingHistory.length">
-          <div class="flex-1 relative">
-            <inline-svg
-              class="absolute w-5 top-0 left-0 mt-2 ml-2 text-gray-500"
-              :class="$style.searchIcon"
-              :src="require('@/assets/svg/search.svg')"
-            />
+      <div class="mt-4 flex" key="controls" v-if="pingHistory.length">
+        <div class="flex-1 relative md:flex-none md:w-64">
+          <inline-svg
+            class="search-icon absolute w-5 top-0 left-0 mt-2 ml-2 text-gray-500 z-20"
+            :src="require('@/assets/svg/search.svg')"
+          />
 
-            <input
-              data-test-id="search-input"
-              type="text"
-              class="input pl-8 text-sm w-full h-full rounded-l"
-              placeholder="Search"
-              :value="historySearch"
-              @input="searchHistory($event.target.value)"
-            />
-          </div>
-
-          <button
-            @click="resetHistory()"
-            data-test-id="clear-button"
-            class="btn btn-red -ml-px h-full rounded-r"
-          >
-            Clear
-            <inline-svg
-              class="w-5 ml-1"
-              :src="require('@/assets/svg/trash.svg')"
-            />
-          </button>
+          <input
+            data-test-id="search-input"
+            type="text"
+            class="input pl-8 text-sm w-full h-full rounded-l"
+            placeholder="Search"
+            :value="historySearch"
+            @input="searchHistory($event.target.value)"
+          />
         </div>
-      </transition>
-    </div>
+
+        <button
+          @click="resetHistory()"
+          data-test-id="clear-button"
+          class="btn btn-red -ml-px h-full rounded-r"
+        >
+          Clear
+          <inline-svg
+            class="w-5 ml-1"
+            :src="require('@/assets/svg/trash.svg')"
+          />
+        </button>
+      </div>
+    </transition-group>
 
     <transition name="fade-slow" mode="out-in">
       <HistorySectionTable
@@ -98,9 +103,19 @@ export default {
 }
 </script>
 
-<style module>
-.searchIcon {
+<style scoped>
+.search-icon {
   top: 3px;
   left: 1px;
+}
+
+@screen md {
+  .not-empty {
+    @apply flex items-center justify-between;
+  }
+
+  .not-empty-header {
+    @apply text-2xl mt-3;
+  }
 }
 </style>

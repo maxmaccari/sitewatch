@@ -3,7 +3,6 @@
     v-if="canShowPaginator"
     data-test-id="paginator"
     class="history-section-pagination"
-    :class="$style.paginator"
   >
     <li>
       <button
@@ -73,8 +72,8 @@ export default {
 }
 </script>
 
-<style module>
-.paginator {
+<style scoped>
+.history-section-pagination {
   @apply flex justify-center flex-wrap;
 
   & button {
@@ -86,6 +85,10 @@ export default {
 
     &:hover {
       @apply bg-gray-100 transition-colors;
+    }
+
+    &:focus {
+      @apply border-gray-1000 outline-none relative z-10;
     }
   }
 
