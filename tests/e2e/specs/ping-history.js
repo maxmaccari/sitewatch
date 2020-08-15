@@ -129,6 +129,6 @@ describe('Ping History', () => {
       'not.exist'
     )
 
-    cy.contains('.history-section', 'No data found here.')
+    cy.contains('.history-section', 'No data found.')
   })
 })
