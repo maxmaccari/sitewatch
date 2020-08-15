@@ -1,11 +1,10 @@
 <template>
   <div class="ping-section">
     <PingSectionInput
+      v-model="inputUrl"
       :loading="loading"
-      :lastSite="lastSite"
       :lastUrl="lastUrl"
       @ping="pingSite"
-      ref="pingSectionInput"
     />
 
     <transition name="fade" mode="out-in">
@@ -45,13 +44,18 @@ export default {
     PingSectionResult,
     VLoading,
   },
+  data() {
+    return {
+      inputUrl: null,
+    }
+  },
   computed: {
     ...mapState(['lastUrl', 'lastLatency', 'error', 'loading']),
     ...mapGetters(['lastSite']),
   },
   methods: {
     tryAgain() {
-      this.$refs.pingSectionInput.setUrl(this.lastUrl)
+      this.inputUrl = this.lastUrl
       this.pingSite(this.lastUrl)
     },
     ...mapActions(['pingSite']),

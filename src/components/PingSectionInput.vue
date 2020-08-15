@@ -38,10 +38,11 @@ export default {
     VLoading,
   },
   props: {
-    lastUrl: {
+    value: {
       type: String,
+      default: '',
     },
-    lastSite: {
+    lastUrl: {
       type: String,
     },
     loading: {
@@ -49,12 +50,16 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      url: '',
-    }
-  },
   computed: {
+    url: {
+      get() {
+        return this.value || ''
+      },
+
+      set(newValue) {
+        this.$emit('input', newValue)
+      },
+    },
     isValidUrl() {
       return validateUrl(this.sanitizedUrl)
     },
@@ -66,16 +71,11 @@ export default {
       return `http://${this.url}`
     },
     pingLabel() {
-      if (this.url === this.lastSite || this.url === this.lastUrl) {
+      if (this.sanitizedUrl === this.lastUrl) {
         return 'Retry'
       }
 
       return 'Ping'
-    },
-  },
-  methods: {
-    setUrl(newUrl) {
-      this.url = newUrl
     },
   },
 }

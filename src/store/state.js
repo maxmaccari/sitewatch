@@ -1,5 +1,6 @@
 export default {
-  lastResult: null,
+  lastUrl: null,
+  lastLatency: null,
   error: null,
   loading: false,
   pingHistory: [],

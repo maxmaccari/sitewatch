@@ -28,7 +28,7 @@ describe('PingSection', () => {
 
     expect(pingSectionInput.exists()).toBe(true)
     expect(pingSectionInput.props()).toEqual({
-      lastSite: null,
+      value: null,
       lastUrl: null,
       loading: false,
     })
@@ -113,7 +113,7 @@ describe('PingSection', () => {
     expect(pingSectionError.props('error')).toBe(error)
   })
 
-  it('dispatches pingSite and call setUrl from PingSectionInput if try-again is emitted from PingSectionError', async () => {
+  it('changes the value of PingSectionInput to the lastUrl if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
     const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
@@ -133,13 +133,12 @@ describe('PingSection', () => {
       },
     })
     const pingSectionInput = wrapper.findComponent(PingSectionInput)
-    pingSectionInput.vm.setUrl = jest.fn()
+    const pingSectionError = wrapper.findComponent(PingSectionError)
 
-    wrapper.findComponent(PingSectionError).vm.$emit('try-again')
+    pingSectionError.vm.$emit('try-again')
     await wrapper.vm.$nextTick
 
-    expect(pingSectionInput.vm.setUrl).toBeCalledWith(lastUrl)
-    expect(dispatch).toHaveBeenCalledWith('pingSite', lastUrl)
+    expect(pingSectionInput.props('value')).toBe(lastUrl)
   })
 
   it('shows VLoading component if state is loading', () => {
