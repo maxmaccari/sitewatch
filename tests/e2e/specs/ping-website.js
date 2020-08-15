@@ -59,6 +59,30 @@ describe('Ping website', () => {
     cy.contains('Error')
   })
 
+  it('Allow to retry on errors', () => {
+    cy.server()
+    cy.mockPingError('http://www.example.com')
+
+    cy.visit('/')
+    cy.get('[data-test-id="site-input"]').type('www.example.com')
+    cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
+    cy.contains('Error')
+
+    cy.mockPingResponse('http://www.example.com', 100)
+
+    cy.get('[data-test-id="try-again"]').click()
+    cy.waitPing()
+
+    cy.get('[data-test-id="site-input"]').should(
+      'have.value',
+      'http://www.example.com'
+    )
+    cy.contains('www.example.com')
+    cy.contains('The latency of www.example.com is good.')
+  })
+
   it('Ping website with invalid url', () => {
     cy.visit('/')
     cy.get('[data-test-id="site-input"]').type('invalid url')
