@@ -1,29 +1,36 @@
 <template>
-  <div class="ping-section-result" :class="feedbackClass">
-    <div class="ping-section-result__details">
-      <div class="ping-section-result__site">
-        <div class="ping-section-result__site-image">
+  <div
+    class="ping-section-result m-auto max-w-md border-l-4 flex shadow-md"
+    :class="`border-${latencyFeedback}`"
+  >
+    <div class="px-2 py-3 bg-gray-200 flex-1">
+      <div class="flex items-center">
+        <div class="bg-white p-1 rounded-full">
           <img data-test-id="site-icon" :src="iconUrl" :alt="iconAlt" />
         </div>
         <a
           data-test-id="site-link"
           :href="fullUrl"
           target="_blank"
-          class="ping-section-result__site-url"
+          class="link ml-1"
         >
           {{ site }}
         </a>
       </div>
-      <div class="ping-section-result__description">
-        The latency of <b>{{ site }}</b> is {{ latencyFeedback }}.
+      <div class="text-sm mt-4 text-gray-700">
+        The latency of <b class="font-semibold">{{ site }}</b> is
+        {{ latencyFeedback }}.
       </div>
     </div>
-    <div class="ping-section-result__milliseconds">
-      <div class="ping-section-result__milliseconds-header">
+    <div
+      class="text-white px-4 py-3 flex flex-col justify-between items-left"
+      :class="`result-${latencyFeedback}`"
+    >
+      <span class="text-xs mt-2" :class="`result-label-${latencyFeedback}`">
         respondend in
-      </div>
-      <div class="ping-section-result__milliseconds-value">
-        {{ latency }} <span>ms</span>
+      </span>
+      <div class="text-2xl font-bold">
+        {{ latency }} <span class="text-sm font-normal">ms</span>
       </div>
     </div>
   </div>
@@ -60,155 +67,54 @@ export default {
 
       return 'bad'
     },
-    feedbackClass() {
-      return `ping-section-result--${this.latencyFeedback}`
-    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
-.ping-section-result {
-  max-width: $layout-6;
-  margin: auto;
-  border-left: $size-1 solid $gray-500;
-  display: flex;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+<style scoped>
+.border-good {
+  @apply border-green-600;
+}
 
-  &__details {
-    background-color: $gray-100;
-    padding: $space-3;
-    flex-grow: 1;
-  }
+.border-average {
+  @apply border-yellow-600;
+}
 
-  &__site {
-    display: flex;
-    align-items: center;
-  }
+.border-bad {
+  @apply border-red-600;
+}
 
-  &__site-url {
-    margin-left: $space-1;
-    font-size: $text-lg;
-    font-weight: 600;
-    color: $primary-800;
+.result-good {
+  @apply bg-green-600;
+}
 
-    &:hover {
-      color: $primary-700;
-    }
-  }
+.result-average {
+  @apply bg-yellow-600;
+}
 
-  &__site-image {
-    padding: $space-1;
-    background: white;
-    border: 1px solid $gray-300;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 0;
+.result-bad {
+  @apply bg-red-600;
+}
 
-    img {
-      margin: auto;
-      width: $size-4;
-      height: $size-4;
-    }
-  }
+.result-label-good {
+  @apply text-green-100;
+}
 
-  &__description {
-    margin-top: $space-3;
-    font-size: $text-sm;
-    color: $gray-400;
+.result-label-average {
+  @apply text-yellow-100;
+}
 
-    b {
-      font-weight: 600;
-    }
-  }
+.result-label-bad {
+  @apply text-red-100;
+}
 
-  &__milliseconds {
-    background-color: $gray-500;
-    padding: $space-4;
-    padding-top: $space-5;
-    width: $size-32;
-  }
+.link {
+  @apply text-primary-900 underline font-semibold text-lg;
 
-  &__milliseconds-header {
-    font-size: $text-xs;
-    color: $gray-100;
-  }
-
-  &__milliseconds-value {
-    margin-top: $space-4;
-    font-size: $text-2xl;
-    font-weight: 800;
-    color: $white;
-
-    span {
-      font-weight: 500;
-      font-size: $text-sm;
-    }
-  }
-
-  &--good {
-    border-left-color: $secondary-500;
-
-    .ping-section-result__milliseconds {
-      background-color: $secondary-600;
-    }
-
-    .ping-section-result__milliseconds-header {
-      color: $secondary-100;
-    }
-  }
-
-  &--average {
-    border-left-color: $yellow-500;
-
-    .ping-section-result__milliseconds {
-      background-color: $yellow-600;
-    }
-
-    .ping-section-result__milliseconds-header {
-      color: $yellow-100;
-    }
-  }
-
-  &--bad {
-    border-left-color: $red-500;
-
-    .ping-section-result__milliseconds {
-      background-color: $red-600;
-    }
-
-    .ping-section-result__milliseconds-header {
-      color: $red-100;
-    }
-  }
-
-  @include break('medium') {
-    &__details {
-      padding: $space-4;
-    }
-
-    &__description {
-      margin-top: $space-4;
-    }
-
-    &__milliseconds {
-      padding: $space-5;
-      min-width: $size-32;
-    }
-
-    &__milliseconds-value {
-      margin-top: $space-2;
-      font-size: $text-3xl;
-      font-weight: 800;
-      color: $white;
-
-      span {
-        font-weight: 500;
-        font-size: $text-sm;
-      }
-    }
+  &:hover,
+  &:active,
+  &:visited {
+    @apply text-primary-700;
   }
 }
 </style>

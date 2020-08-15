@@ -1,7 +1,12 @@
 <template>
   <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-  <div class="v-loading" :class="{ 'v-loading--with-text': withText }">
-    <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+  <div class="v-loading flex flex-col items-center">
+    <svg
+      class="fill-current"
+      :class="withText ? 'w-10 -ml-1' : 'w-full'"
+      viewBox="0 0 38 38"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <defs>
         <linearGradient
           x1="8.042%"
@@ -47,7 +52,7 @@
       </g>
     </svg>
 
-    <div class="v-loading__text" v-if="withText">
+    <div class="mt-2 text-primary-1000 font-semibold text-xl" v-if="withText">
       Loading...
     </div>
   </div>
@@ -84,27 +89,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.v-loading {
-  justify-content: center;
-  align-items: center;
-
-  &--with-text {
-    display: flex;
-    flex-direction: column;
-    width: $size-10;
-  }
-
-  &__text {
-    font-size: $text-xl;
-    margin-top: $space-4;
-    font-weight: 600;
-    color: $primary-900;
-  }
-
-  svg {
-    color: $primary-500;
-  }
-}
-</style>

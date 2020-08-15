@@ -9,11 +9,13 @@
         @click="$emit('previous-page')"
         :disabled="disableBack"
         data-test-id="page-back"
-        class="with-icon"
+        class="flex items-center"
         title="Back"
       >
         <inline-svg :src="require('@/assets/svg/arrow-circle-left.svg')" />
-        Back
+        <span class="ml-1">
+          Back
+        </span>
       </button>
     </li>
     <li v-for="n in totalPages" :key="n">
@@ -31,11 +33,14 @@
         @click="$emit('next-page')"
         :disabled="disableNext"
         data-test-id="page-next"
-        class="with-icon"
+        class="flex items-center"
         title="Next"
       >
-        Next
-        <inline-svg :src="require('@/assets/svg/arrow-circle-right.svg')" />
+        <span>Next</span>
+        <inline-svg
+          class="w-6 ml-1"
+          :src="require('@/assets/svg/arrow-circle-right.svg')"
+        />
       </button>
     </li>
   </ul>
@@ -67,52 +72,32 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .history-section-pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: $space-4;
-  border-radius: 5px;
-  overflow: hidden;
-  max-height: $size-8;
+  @apply flex justify-center flex-wrap;
 
-  li {
-    list-style: none;
-  }
-
-  li + li {
-    margin-left: -1px;
-  }
-
-  button {
-    border: 1px solid $gray-200;
-    display: block;
-    padding: $space-1 $space-2;
-    background: $white;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $gray-100;
-    }
+  & button {
+    @apply px-2 py-1 bg-white border border-gray-400 transition-colors duration-500;
 
     &:disabled {
-      cursor: default;
-      background-color: $gray-100;
-
-      svg {
-        color: $gray-300;
-      }
+      @apply bg-gray-200 text-gray-500 border-gray-300;
     }
 
-    svg {
-      width: $size-3;
-      color: $gray-800;
-      vertical-align: middle;
+    &:hover {
+      @apply bg-gray-100 transition-colors;
+    }
+
+    &:focus {
+      @apply border-gray-1000 outline-none relative z-10;
     }
   }
 
-  .active {
-    background-color: $gray-100;
+  & li {
+    @apply -ml-px;
+  }
+
+  & li:first-child {
+    @apply ml-0;
   }
 }
 </style>

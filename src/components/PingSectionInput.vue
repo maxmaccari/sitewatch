@@ -1,10 +1,10 @@
 <template>
-  <div class="ping-section-input">
+  <div class="ping-section-input w-full m-auto max-w-3xl flex">
     <input
       data-test-id="site-input"
       v-model="siteUrl"
       @keyup.enter="$emit('ping', sanitizedUrl)"
-      class="input"
+      class="input rounded-l-full"
       type="text"
       placeholder="ex: www.mywebsite.com"
       :disabled="loading"
@@ -12,13 +12,19 @@
     <button
       data-test-id="ping-button"
       @click="$emit('ping', sanitizedUrl)"
-      class="btn btn-primary btn-icon"
+      class="btn btn-primary rounded-r-full pr-5 -ml-px"
       :disabled="!isValidUrl || loading"
     >
       {{ pingLabel }}
 
-      <VLoading v-if="loading" color="white" class="btn__v-loading" />
-      <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" v-else />
+      <transition name="fade" mode="out-in">
+        <VLoading color="white" class="ml-2 w-4" v-if="loading" />
+        <inline-svg
+          v-else
+          class="ml-1 w-5"
+          :src="require('@/assets/svg/lighting-bolt.svg')"
+        />
+      </transition>
     </button>
   </div>
 </template>
@@ -77,54 +83,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.ping-section-input {
-  display: flex;
-  margin: auto;
-  overflow: hidden;
-  width: $size-full;
-  max-width: $layout-8;
-
-  .input {
-    border-radius: 0;
-    border-bottom-left-radius: 25px;
-    border-top-left-radius: 25px;
-    flex-grow: 1;
-    margin-right: -$size-px;
-    padding-left: $size-6;
-    font-size: $text-sm;
-  }
-
-  .btn {
-    border-radius: 0;
-    border-bottom-right-radius: 25px;
-    border-top-right-radius: 25px;
-    flex-grow: 0;
-    margin-left: -$size-px;
-    padding-right: $size-6;
-    display: flex;
-    align-items: center;
-    font-size: $text-base;
-
-    svg {
-      margin-left: $space-2;
-    }
-  }
-
-  .v-loading.btn__v-loading {
-    margin-left: $space-2;
-    width: 20px;
-    height: 20px;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  &--shadowed {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
-}
-</style>

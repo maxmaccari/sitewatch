@@ -1,15 +1,23 @@
 <template>
-  <div class="ping-section-error">
-    <div class="ping-section-error__icon">
-      <inline-svg :src="require('@/assets/svg/exclamation-circle.svg')" />
-    </div>
-    <div class="ping-section-error__message">
-      <div class="ping-section-error__title">Error: {{ title }}</div>
-      <div class="ping-section-error__description">
-        We were not able to connect to <b>{{ site }}</b
+  <div
+    class="m-auto max-w-md bg-red-100 border border-red-300 text-red-1000 px-3 py-4 text-center rounded shadow-md sm:flex"
+  >
+    <inline-svg
+      class="m-auto w-10 text-red-900 sm:w-48"
+      :src="require('@/assets/svg/exclamation-circle.svg')"
+    />
+    <div class="sm:ml-1">
+      <div class="mt-2 font-bold text-xl">Error: {{ title }}</div>
+      <div class="mt-1 text-base leading-tight">
+        We were not able to connect to <b class="font-semibold">{{ site }}</b
         >. Check if the URL is correct or if it exists. Click
-        <a data-test-id="try-again" @click="$emit('try-again')">here</a> to try
-        again.
+        <a
+          class="underline cursor-pointer hover:text-red-800"
+          data-test-id="try-again"
+          @click="$emit('try-again')"
+          >here</a
+        >
+        to try again.
       </div>
     </div>
   </div>
@@ -42,65 +50,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.ping-section-error {
-  max-width: $layout-6;
-  margin: auto;
-  background-color: $red-100;
-  border: 1px solid $red-700;
-  color: $red-700;
-  border-radius: 5px;
-  padding: $space-4;
-  display: flex;
-  flex-direction: column;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-  &__icon {
-    align-self: center;
-    width: $size-16;
-  }
-
-  &__title {
-    font-weight: 800;
-    font-size: $text-lg;
-    text-align: center;
-  }
-
-  &__description {
-    margin-top: $space-3;
-
-    b {
-      font-weight: 600;
-    }
-
-    a {
-      text-decoration: underline;
-      cursor: pointer;
-
-      &:hover {
-        color: $red-600;
-      }
-    }
-  }
-
-  @include break('medium') {
-    flex-direction: row;
-    padding: $space-5 $space-6;
-
-    &__message {
-      margin-left: $space-4;
-      margin-top: $space-4;
-    }
-
-    &__title {
-      text-align: left;
-    }
-
-    &__icon {
-      width: $size-64;
-      flex-grow: 0;
-    }
-  }
-}
-</style>

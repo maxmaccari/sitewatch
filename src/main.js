@@ -3,6 +3,8 @@ import App from './App.vue'
 import store from './store'
 import InlineSvg from 'vue-inline-svg'
 
+import './css/index.css'
+
 Vue.config.productionTip = false
 
 /* To use the svg icons and to be able to style then using css */

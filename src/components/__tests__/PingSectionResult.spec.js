@@ -59,11 +59,11 @@ describe('PingSectionResult', () => {
       },
     })
 
-    const expectText = `The latency of ${site} is good.`
-    expect(wrapper.text()).toContain(expectText)
+    expect(wrapper.text()).toContain(`The latency of ${site} is`)
+    expect(wrapper.text()).toContain(`good.`)
   })
 
-  it("has 'ping-section-result--good' class if the latency is good", () => {
+  it("contains 'border-good', 'result-good' and 'result-label-good' classes if the latency is good", () => {
     const site = 'www.example.com'
     const latency = 200
 
@@ -74,7 +74,9 @@ describe('PingSectionResult', () => {
       },
     })
 
-    expect(wrapper.classes()).toContain('ping-section-result--good')
+    expect(wrapper.find('.border-good').exists()).toBe(true)
+    expect(wrapper.find('.result-good').exists()).toBe(true)
+    expect(wrapper.find('.result-label-good').exists()).toBe(true)
   })
 
   it('displays a text with the latency feedback if latency is average', () => {
@@ -88,11 +90,11 @@ describe('PingSectionResult', () => {
       },
     })
 
-    const expectText = `The latency of ${site} is average.`
-    expect(wrapper.text()).toContain(expectText)
+    expect(wrapper.text()).toContain(`The latency of ${site} is`)
+    expect(wrapper.text()).toContain(`average.`)
   })
 
-  it("has 'ping-section-result--good' class if the latency is average", () => {
+  it("contains 'border-average', 'result-average' and 'result-label-average' classes if the latency is average", () => {
     const site = 'www.example.com'
     const latency = 500
 
@@ -103,7 +105,9 @@ describe('PingSectionResult', () => {
       },
     })
 
-    expect(wrapper.classes()).toContain('ping-section-result--average')
+    expect(wrapper.find('.border-average').exists()).toBe(true)
+    expect(wrapper.find('.result-average').exists()).toBe(true)
+    expect(wrapper.find('.result-label-average').exists()).toBe(true)
   })
 
   it('displays a text with the latency feedback if latency is bad', () => {
@@ -117,11 +121,11 @@ describe('PingSectionResult', () => {
       },
     })
 
-    const expectText = `The latency of ${site} is bad.`
-    expect(wrapper.text()).toContain(expectText)
+    expect(wrapper.text()).toContain(`The latency of ${site} is`)
+    expect(wrapper.text()).toContain(`bad.`)
   })
 
-  it("has 'ping-section-result--good' class if the latency is average", () => {
+  it("contains 'border-bad', 'result-bad' and 'result-label-bad' classes if the latency is bad", () => {
     const site = 'www.example.com'
     const latency = 1200
 
@@ -132,6 +136,8 @@ describe('PingSectionResult', () => {
       },
     })
 
-    expect(wrapper.classes()).toContain('ping-section-result--bad')
+    expect(wrapper.find('.border-bad').exists()).toBe(true)
+    expect(wrapper.find('.result-bad').exists()).toBe(true)
+    expect(wrapper.find('.result-label-bad').exists()).toBe(true)
   })
 })

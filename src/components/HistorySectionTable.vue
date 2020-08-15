@@ -1,50 +1,55 @@
 <template>
-  <table class="history-section-table" v-if="pingHistory.length">
+  <table class="history-section-table table-auto" v-if="pingHistory.length">
     <thead>
       <tr>
-        <th class="col-1"></th>
-        <th class="col-2">Site</th>
-        <th class="col-3">Latency</th>
-        <th class="col-4"></th>
+        <th></th>
+        <th>Site</th>
+        <th>Latency</th>
+        <th></th>
       </tr>
     </thead>
-    <tr v-for="site in pingHistory" :key="site.id">
-      <td class="col-1">
-        <img
-          data-test-id="table-site-icon"
-          :src="
-            `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
-          "
-          :alt="`${site.url} icon`"
-        />
-      </td>
-      <td class="col-2">
-        {{ site.url }}
-      </td>
-      <td class="col-3">
-        <div class="history-section-table__latency">
-          <div
-            class="history-section-table__latency-indicator"
-            :class="getIndicatorClass(site.latency)"
-            :title="getIndicatorTitle(site.latency)"
-            data-test-id="table-latency-indicator"
-          >
-            <inline-svg :src="require('@/assets/svg/globe.svg')" />
+    <tbody>
+      <tr v-for="site in pingHistory" :key="site.id">
+        <td class="px-2 w-8">
+          <img
+            data-test-id="table-site-icon"
+            class="inline"
+            :src="
+              `http://s2.googleusercontent.com/s2/favicons?domain_url=${site.url}`
+            "
+            :alt="`${site.url} icon`"
+          />
+        </td>
+        <td class="pt-1 w-auto">
+          {{ site.url }}
+        </td>
+        <td class="w-20 sm:w-24">
+          <div class="flex items-center py-1">
+            <inline-svg
+              class="w-5 fill-current"
+              data-test-id="history-latency-indicator"
+              :class="getIndicatorClass(site.latency)"
+              :title="getIndicatorTitle(site.latency)"
+              :src="require('@/assets/svg/globe.svg')"
+            />
+            <span class="ml-1 pt-px">{{ site.latency }} ms</span>
           </div>
-          <span>{{ site.latency }} ms</span>
-        </div>
-      </td>
-      <td class="col-4">
-        <a
-          @click="$emit('ping-url', site.url)"
-          data-test-id="history-table-ping"
-          class="history-section-table__ping-again"
-          title="ping this url"
-        >
-          <inline-svg :src="require('@/assets/svg/lighting-bolt.svg')" />
-        </a>
-      </td>
-    </tr>
+        </td>
+        <td class="w-6 px-2">
+          <button
+            @click="$emit('ping-url', site.url)"
+            data-test-id="history-table-ping"
+            class="ping-again flex items-center"
+            title="ping this url"
+          >
+            <inline-svg
+              class="w-6"
+              :src="require('@/assets/svg/lighting-bolt.svg')"
+            />
+          </button>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 
@@ -59,12 +64,12 @@ export default {
   methods: {
     getIndicatorClass(latency) {
       if (latency <= 360) {
-        return 'history-section-table__latency-indicator--good'
+        return 'indicator-good'
       } else if (latency <= 1000) {
-        return 'history-section-table__latency-indicator--average'
+        return 'indicator-average'
       }
 
-      return 'history-section-table__latency-indicator--bad'
+      return 'indicator-bad'
     },
     getIndicatorTitle(latency) {
       if (latency <= 360) {
@@ -78,91 +83,51 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+
+<style scoped>
 .history-section-table {
-  width: $size-full;
-  border: 1px solid $gray-200;
-  border-radius: 2px;
-  border-collapse: collapse;
+  @apply text-gray-900 border-collapse w-full border border-gray-300;
 
-  th {
-    text-align: left;
-    background-color: $white;
-    padding-top: $space-2;
-    padding-bottom: $space-2;
-    color: $gray-600;
-    font-size: $text-sm;
+  & thead {
+    @apply bg-white;
   }
 
-  td {
-    color: $gray-700;
-    font-size: $text-sm;
+  & th {
+    @apply py-1;
   }
 
-  tr {
-    background-color: $gray-100;
-    transition: 0.25s ease-in;
-
-    &:hover {
-      background-color: lighten($gray-100, 2%);
-    }
+  & th,
+  & td {
+    @apply text-left text-sm;
   }
 
-  tr:nth-child(even) {
-    background-color: $white;
+  & tbody tr:nth-child(even) {
+    @apply bg-white;
   }
 
-  .col-1 {
-    width: 10px;
-    padding-top: $space-2;
-    padding-left: $space-2;
-    padding-right: $space-1;
+  & tbody tr:nth-child(odd) {
+    @apply bg-gray-200;
   }
+}
 
-  .col-3 {
-    width: $size-20;
-  }
+.indicator-good {
+  @apply text-green-600;
+}
 
-  .col-4 {
-    width: $size-2;
-    padding-right: $space-2;
-  }
+.indicator-average {
+  @apply text-yellow-600;
+}
 
-  &__latency {
-    display: flex;
+.indicator-bad {
+  @apply text-red-600;
+}
 
-    span {
-      margin-left: $space-1;
-    }
-  }
+.ping-again {
+  @apply cursor-pointer transition-colors duration-500;
 
-  &__latency-indicator {
-    width: $size-4;
-    padding-top: $space-px;
-
-    &--good {
-      color: $secondary-500;
-    }
-
-    &--average {
-      color: $yellow-500;
-    }
-
-    &--bad {
-      color: $red-500;
-    }
-  }
-
-  &__ping-again {
-    display: block;
-    width: $size-4;
-    color: $gray-800;
-    cursor: pointer;
-    transition: 0.25s ease-in;
-
-    &:hover {
-      color: $gray-600;
-    }
+  &:hover,
+  &:active {
+    @apply text-gray-700;
   }
 }
 </style>

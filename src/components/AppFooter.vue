@@ -1,32 +1,16 @@
 <template>
-  <div class="app-footer">
+  <div
+    class="app-footer w-full text-center bg-gray-800 text-gray-100 px-2 py-4"
+  >
     <p>
       Developed by Maxsuel Maccari -
-      <a href="https://www.github.com/maxmaccari" target="_blank">
-        https://www.github.com/maxmaccari
+      <a
+        class="text-gray-300 hover:text-white underline transition-colors duration-500"
+        href="https://www.github.com/maxmaccari/sitewatch"
+        target="_blank"
+      >
+        https://github.com/maxmaccari/sitewatch
       </a>
     </p>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.app-footer {
-  background-color: $gray-600;
-  padding: $space-3 0;
-
-  p {
-    margin: 0;
-    text-align: center;
-    color: $gray-100;
-  }
-
-  a {
-    color: $gray-200;
-    font-size: $text-sm;
-
-    &:hover {
-      color: $gray-100;
-    }
-  }
-}
-</style>

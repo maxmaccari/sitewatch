@@ -1,68 +1,80 @@
 <template>
   <div class="history-section">
-    <div class="container">
-      <div
-        class="history-section__header"
-        :class="{ 'history-section__header--empty': !pingHistory.length }"
+    <transition-group
+      data-test-id="header-control"
+      :class="{ 'not-empty': pingHistory.length }"
+      name="fade"
+    >
+      <h2
+        key="title"
+        class="text-gray-900 font-semibold text-3xl text-center transition-all duration-100"
+        :class="{ 'not-empty-header': pingHistory.length }"
       >
-        <h2>Ping History</h2>
+        Ping History
+      </h2>
 
-        <transition name="fade-slow" mode="out-in">
-          <div
-            class="history-section__header-controls"
-            v-if="pingHistory.length"
-          >
-            <div class="input-addon">
-              <div class="input-addon__icon">
-                <inline-svg :src="require('@/assets/svg/search.svg')" />
-              </div>
+      <div class="mt-4 flex" key="controls" v-if="pingHistory.length">
+        <div class="flex-1 relative md:flex-none md:w-64">
+          <inline-svg
+            class="search-icon absolute w-5 top-0 left-0 mt-2 ml-2 text-gray-500 z-20"
+            :src="require('@/assets/svg/search.svg')"
+          />
 
-              <input
-                data-test-id="search-input"
-                type="text"
-                class="input"
-                placeholder="Search"
-                :value="historySearch"
-                @input="searchHistory($event.target.value)"
-              />
-            </div>
-
-            <button
-              @click="resetHistory()"
-              data-test-id="clear-button"
-              class="btn btn-red"
-            >
-              Clear
-              <inline-svg :src="require('@/assets/svg/trash.svg')" />
-            </button>
-          </div>
-        </transition>
-      </div>
-
-      <transition name="fade-slow" mode="out-in">
-        <HistorySectionTable
-          :pingHistory="filteredHistory"
-          @ping-url="pingSite"
-        />
-      </transition>
-
-      <transition name="fade-slow" mode="out-in">
-        <div class="history-section__no-data" v-if="!filteredHistory.length">
-          <img src="@/assets/images/undraw_no_data.svg" alt="No Data" />
-          <p>No data found here.</p>
+          <input
+            data-test-id="search-input"
+            type="text"
+            class="input pl-8 text-sm w-full h-full rounded-l"
+            placeholder="Search"
+            :value="historySearch"
+            @input="searchHistory($event.target.value)"
+          />
         </div>
-      </transition>
 
-      <transition name="fade-slow" mode="out-in">
-        <HistorySectionPagination
-          :page="currentPage"
-          :totalPages="historyPages"
-          @next-page="nextPage"
-          @previous-page="previousPage"
-          @change-page="goToPage"
+        <button
+          @click="resetHistory()"
+          data-test-id="clear-button"
+          class="btn btn-red -ml-px h-full rounded-r"
+        >
+          Clear
+          <inline-svg
+            class="w-5 ml-1"
+            :src="require('@/assets/svg/trash.svg')"
+          />
+        </button>
+      </div>
+    </transition-group>
+
+    <transition name="fade-slow" mode="out-in">
+      <HistorySectionTable
+        :pingHistory="filteredHistory"
+        @ping-url="pingSite"
+        class="mt-2"
+      />
+    </transition>
+
+    <transition name="fade-slow" mode="out-in">
+      <div class="mt-4" v-if="!filteredHistory.length">
+        <img
+          class="w-32 m-auto"
+          src="@/assets/images/undraw_no_data.svg"
+          alt="No Data"
         />
-      </transition>
-    </div>
+        <p class="text-center text-lg font-semibold text-primary-700">
+          No data found.
+        </p>
+      </div>
+    </transition>
+
+    <transition name="fade-slow" mode="out-in">
+      <HistorySectionPagination
+        :page="currentPage"
+        :totalPages="historyPages"
+        @next-page="nextPage"
+        @previous-page="previousPage"
+        @change-page="goToPage"
+        class="mt-4 m-auto"
+      />
+    </transition>
   </div>
 </template>
 
@@ -90,131 +102,20 @@ export default {
   ]),
 }
 </script>
-<style lang="scss" scoped>
-.history-section {
-  background-color: $gray-100;
-  padding-top: $space-4;
-  padding-bottom: $space-4;
 
-  h2 {
-    font-weight: 600;
-    font-size: $text-3xl;
-    color: $gray-700;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  &__header--empty {
-    justify-content: center;
-
-    h2 {
-      margin: auto;
-    }
-  }
-
-  &__header-controls {
-    width: $size-full;
-    display: flex;
-    position: relative;
-
-    .input-addon {
-      flex-grow: 1;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      position: relative;
-    }
-
-    .input {
-      width: $size-full;
-      padding-left: $space-8;
-    }
-
-    .input-addon__icon {
-      width: $size-5;
-      position: absolute;
-      top: 10px;
-      left: 8px;
-      color: $gray-400;
-    }
-
-    .btn {
-      position: relative;
-      font-size: $text-sm;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      display: flex;
-
-      svg {
-        width: $size-4;
-        margin-left: $space-1;
-      }
-    }
-  }
-
-  &__no-data {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: $space-5;
-
-    img {
-      max-width: 100%;
-      width: $size-32;
-    }
-
-    p {
-      font-size: $text-lg;
-      font-weight: 600;
-      color: $primary-500;
-      margin-top: 0;
-    }
-  }
-
-  .history-section-table {
-    margin-top: $space-3;
-  }
+<style scoped>
+.search-icon {
+  top: 3px;
+  left: 1px;
 }
 
-@include break('medium') {
-  .history-section {
-    h2 {
-      font-weight: 600;
-      font-size: $text-xl;
-      color: $gray-700;
-    }
-
-    &__header {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-
-    &__header-controls {
-      width: unset;
-      display: flex;
-
-      .input-addon {
-        flex-grow: 0;
-        width: $size-64;
-      }
-
-      .btn {
-        font-size: $text-sm;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-    .history-section-table {
-      margin-top: 0;
-    }
+@screen md {
+  .not-empty {
+    @apply flex items-center justify-between;
   }
-}
 
-.container {
-  padding-left: $space-2;
-  padding-right: $space-2;
+  .not-empty-header {
+    @apply text-2xl mt-3;
+  }
 }
 </style>

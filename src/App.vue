@@ -1,18 +1,30 @@
 <template>
-  <div id="app">
-    <div class="container top-section">
-      <h1>How fast is your website loading?</h1>
-      <p>
+  <div id="app" class="antialiased min-h-screen flex flex-col">
+    <div class="px-2 sm:px-8 md:px-0 container m-auto" :class="$style.top">
+      <h1
+        class="mt-6 m-auto text-3xl font-bold text-center leading-tight flex-grow-0"
+      >
+        How fast is your website loading?
+      </h1>
+      <p
+        class="mt-4 m-auto max-w-2xl text-xl text-gray-700 text-center leading-tight"
+      >
         Enter a url bellow to measure the website latency and we will show how
         fast (or slow) it is.
       </p>
 
-      <PingSection />
+      <PingSection class="mt-4" />
     </div>
 
-    <HistorySection />
+    <div
+      class="mt-4 px-2 py-6 bg-gray-200 flex-1 sm:px-8 md:px-4 lg:px-2 xl:px-0"
+    >
+      <div class="container max-w-3xl m-auto">
+        <HistorySection />
+      </div>
+    </div>
 
-    <AppFooter />
+    <AppFooter class="self-end" />
   </div>
 </template>
 
@@ -31,44 +43,8 @@ export default {
 }
 </script>
 
-<style src="normalize.css"></style>
-<style lang="scss" src="@/scss/app.scss"></style>
-
-<style lang="scss" scoped>
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.top-section {
-  margin: auto;
-  padding: 0 $space-2;
-}
-
-@include break('medium') {
-  .history-section {
-    min-height: $size-64;
-  }
-}
-
-h1 {
-  text-align: center;
-}
-
-p {
-  color: $gray-700;
-  font-size: $text-xl;
-  text-align: center;
-  max-width: $layout-8;
-  margin: auto;
-}
-
-.ping-section {
-  margin-top: $space-6;
-}
-
-.history-section {
-  margin-top: $space-6;
+<style module>
+.top {
+  min-height: 300px;
 }
 </style>

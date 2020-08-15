@@ -69,21 +69,15 @@ describe('HistorySectionTable', () => {
     })
 
     const indicators = wrapper.findAll(
-      '[data-test-id="table-latency-indicator"]'
+      '[data-test-id="history-latency-indicator"]'
     )
 
     expect(indicators.exists()).toBe(true)
-    expect(indicators.at(0).classes()).toContain(
-      'history-section-table__latency-indicator--good'
-    )
+    expect(indicators.at(0).classes()).toContain('indicator-good')
     expect(indicators.at(0).element.title).toContain('good')
-    expect(indicators.at(1).classes()).toContain(
-      'history-section-table__latency-indicator--average'
-    )
+    expect(indicators.at(1).classes()).toContain('indicator-average')
     expect(indicators.at(1).element.title).toContain('average')
-    expect(indicators.at(2).classes()).toContain(
-      'history-section-table__latency-indicator--bad'
-    )
+    expect(indicators.at(2).classes()).toContain('indicator-bad')
     expect(indicators.at(2).element.title).toContain('bad')
   })
 

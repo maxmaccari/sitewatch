@@ -9,13 +9,14 @@
     />
 
     <transition name="fade" mode="out-in">
-      <VLoading :with-text="true" v-if="loading" />
+      <VLoading class="m-auto mt-6" :with-text="true" v-if="loading" />
 
       <template v-else>
         <PingSectionResult
           v-if="lastSiteUrl && lastLatency"
           :site="lastSite"
           :latency="lastLatency"
+          class="mt-4"
         />
 
         <PingSectionError
@@ -23,6 +24,7 @@
           @try-again="tryAgain"
           :error="error"
           :site="lastSite"
+          class="mt-4"
         />
       </template>
     </transition>
@@ -56,17 +58,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.ping-section {
-  .v-loading {
-    margin: auto;
-    margin-top: $space-4;
-  }
-
-  .ping-section-result,
-  .ping-section-error {
-    margin-top: $space-6;
-  }
-}
-</style>

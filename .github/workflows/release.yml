@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
       - name: Cache node_modules
         id: cache-node-modules
         uses: actions/cache@v2
@@ -18,20 +23,20 @@ jobs:
           key: ${{ runner.os }}-node-modules
 
       - name: Install packages
-        run: npm install
+        run: yarn install
 
       - name: Lint files
-        run: npm run lint
+        run: yarn lint
 
       - name: Unit tests
-        run: npm run test:unit
+        run: yarn test:unit
 
       - name: E2E tests
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
           headless: true
-          start: npm start
+          start: yarn start
           wait-on: http://localhost:8080
           config: baseUrl=http://localhost:8080
 
