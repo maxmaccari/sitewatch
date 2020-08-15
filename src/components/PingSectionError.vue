@@ -9,7 +9,7 @@
     <div class="sm:ml-1">
       <div class="mt-2 font-bold text-xl">Error: {{ title }}</div>
       <div class="mt-1 text-base leading-tight">
-        We were not able to connect to <b class="font-semibold">{{ site }}</b
+        We were not able to connect to <b class="font-semibold">{{ url }}</b
         >. Check if the URL is correct or if it exists. Click
         <a
           class="underline cursor-pointer hover:text-red-800"
@@ -30,7 +30,7 @@ export default {
       type: String,
       required: true,
     },
-    site: {
+    url: {
       type: String,
       required: true,
     },

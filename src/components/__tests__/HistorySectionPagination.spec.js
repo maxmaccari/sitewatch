@@ -1,36 +1,31 @@
 import { shallowMount } from '@vue/test-utils'
 import HistorySectionPagination from '../HistorySectionPagination'
 
+const createWrapper = (props = {}) => {
+  return shallowMount(HistorySectionPagination, {
+    propsData: {
+      page: 1,
+      totalPages: 1,
+      ...props,
+    },
+  })
+}
+
 describe('HistorySectionPagination', () => {
   it('doesn not render if the totalPages is 1', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 1,
-      },
-    })
+    const wrapper = createWrapper()
 
     expect(wrapper.find('[data-test-id="paginator"]').exists()).toBe(false)
   })
 
   it('renders if the totalPages is more than 1', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 2,
-      },
-    })
+    const wrapper = createWrapper({ totalPages: 2 })
 
     expect(wrapper.find('[data-test-id="paginator"]').exists()).toBe(true)
   })
 
   it('renders the numbers links properly', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 5,
-      },
-    })
+    const wrapper = createWrapper({ totalPages: 5 })
 
     expect(wrapper.text()).toContain('Back')
     expect(wrapper.text()).toContain('Next')
@@ -42,12 +37,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('emits previous-page event if back is clicked', async () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 2,
-        totalPages: 3,
-      },
-    })
+    const wrapper = createWrapper({ page: 2, totalPages: 3 })
 
     const link = wrapper.find('[data-test-id="page-back"]')
     link.trigger('click')
@@ -57,12 +47,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('emits next-page event if next is clicked', async () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 2,
-        totalPages: 3,
-      },
-    })
+    const wrapper = createWrapper({ page: 2, totalPages: 3 })
 
     const link = wrapper.find('[data-test-id="page-next"]')
     link.trigger('click')
@@ -72,12 +57,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('renders the numbers links properly', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 5,
-      },
-    })
+    const wrapper = createWrapper({ totalPages: 5 })
 
     expect(wrapper.text()).toContain('Back')
     expect(wrapper.text()).toContain('Next')
@@ -89,12 +69,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('disables back if page is 1', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 2,
-      },
-    })
+    const wrapper = createWrapper({ page: 1, totalPages: 2 })
 
     const link = wrapper.find('[data-test-id="page-back"]')
 
@@ -102,12 +77,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('enables back if page is more than 1', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 2,
-        totalPages: 2,
-      },
-    })
+    const wrapper = createWrapper({ page: 2, totalPages: 2 })
 
     const link = wrapper.find('[data-test-id="page-back"]')
 
@@ -115,12 +85,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('disables next if page is equal totalPages', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 2,
-        totalPages: 2,
-      },
-    })
+    const wrapper = createWrapper({ page: 2, totalPages: 2 })
 
     const link = wrapper.find('[data-test-id="page-next"]')
 
@@ -128,12 +93,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('enables next if page is diferent than totalPages', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 1,
-        totalPages: 2,
-      },
-    })
+    const wrapper = createWrapper({ page: 1, totalPages: 2 })
 
     const link = wrapper.find('[data-test-id="page-next"]')
 
@@ -141,12 +101,7 @@ describe('HistorySectionPagination', () => {
   })
 
   it('disables and mark the current page as active', () => {
-    const wrapper = shallowMount(HistorySectionPagination, {
-      propsData: {
-        page: 2,
-        totalPages: 3,
-      },
-    })
+    const wrapper = createWrapper({ page: 2, totalPages: 3 })
 
     const link = wrapper.find('[data-test-id="page-2"]')
 

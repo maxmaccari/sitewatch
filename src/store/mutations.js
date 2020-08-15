@@ -1,18 +1,14 @@
 export default {
-  SET_PING_RESULT(state, { id, siteUrl, latency }) {
-    state.lastSiteUrl = siteUrl
-    state.lastLatency = latency
+  SET_PING_RESULT(state, result) {
+    state.lastUrl = result.url
+    state.lastLatency = result.latency
     state.error = null
     state.loading = false
-    state.pingHistory.unshift({
-      id,
-      url: siteUrl,
-      latency,
-    })
+    state.pingHistory.unshift(result)
   },
 
-  SET_ERROR(state, { siteUrl, error }) {
-    state.lastSiteUrl = siteUrl
+  SET_ERROR(state, { url, error }) {
+    state.lastUrl = url
     state.lastLatency = null
     state.error = error
     state.loading = false

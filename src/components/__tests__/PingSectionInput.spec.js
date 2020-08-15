@@ -36,51 +36,63 @@ describe('PingSectionInput', () => {
     expect(pingButton.element.disabled).toBe(true)
   })
 
-  it('enables the ping button if the typed url is valid', async () => {
+  it('sets the site-input value with the given component value', async () => {
     const wrapper = shallowMount(PingSectionInput)
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
+
+    wrapper.setProps({ value: 'www.example.com' })
+    await wrapper.vm.$nextTick()
+    expect(siteInput.element.value).toBe('www.example.com')
+
+    wrapper.setProps({ value: null })
+    await wrapper.vm.$nextTick()
+    expect(siteInput.element.value).toBe('')
+  })
+
+  it('enables the ping button if the typed url is valid', async () => {
+    const wrapper = shallowMount(PingSectionInput)
+
     const pingButton = wrapper.find('[data-test-id="ping-button"]')
 
-    siteInput.setValue('www.example.com')
+    wrapper.setProps({ value: 'www.example.com' })
     await wrapper.vm.$nextTick()
     expect(pingButton.element.disabled).toBe(false)
 
-    siteInput.setValue('http://www.example.com')
+    wrapper.setProps({ value: 'http://www.example.com' })
     await wrapper.vm.$nextTick()
     expect(pingButton.element.disabled).toBe(false)
 
-    siteInput.setValue('https://www.example.com')
+    wrapper.setProps({ value: 'https://www.example.com' })
     await wrapper.vm.$nextTick()
     expect(pingButton.element.disabled).toBe(false)
 
-    siteInput.setValue('https://www.example.com/my/path/here')
+    wrapper.setProps({ value: 'https://www.example.com/my/path/here' })
     await wrapper.vm.$nextTick()
     expect(pingButton.element.disabled).toBe(false)
 
-    siteInput.setValue('https://www.example.com/my/path/here.html')
+    wrapper.setProps({ value: 'https://www.example.com/my/path/here.html' })
     await wrapper.vm.$nextTick()
     expect(pingButton.element.disabled).toBe(false)
 
-    siteInput.setValue(
-      'https://www.example.com/my/path/here.?arguments=true&other=argument'
-    )
-    await wrapper.vm.$nextTick()
+    wrapper.setProps({
+      value:
+        'https://www.example.com/my/path/here.?arguments=true&other=argument',
+    })
     expect(pingButton.element.disabled).toBe(false)
   })
 
   it("emits 'ping' event with sanitizedUrl if ping button is clicked", async () => {
     const wrapper = shallowMount(PingSectionInput)
 
-    const siteInput = wrapper.find('[data-test-id="site-input"]')
     const pingButton = wrapper.find('[data-test-id="ping-button"]')
 
-    siteInput.setValue('www.example.com')
+    wrapper.setProps({ value: 'www.example.com' })
     await wrapper.vm.$nextTick()
     pingButton.trigger('click')
     await wrapper.vm.$nextTick()
 
-    siteInput.setValue('https://www.example.com')
+    wrapper.setProps({ value: 'https://www.example.com' })
     await wrapper.vm.$nextTick()
     pingButton.trigger('click')
     await wrapper.vm.$nextTick()
@@ -94,7 +106,7 @@ describe('PingSectionInput', () => {
 
     const siteInput = wrapper.find('[data-test-id="site-input"]')
 
-    siteInput.setValue('www.example.com')
+    wrapper.setProps({ value: 'www.example.com' })
     await wrapper.vm.$nextTick()
     siteInput.trigger('keyup.enter')
     await wrapper.vm.$nextTick()
@@ -102,39 +114,26 @@ describe('PingSectionInput', () => {
     expect(wrapper.emitted('ping')[0][0]).toEqual('http://www.example.com')
   })
 
-  it('changes input if setUrl is called with its argument', async () => {
-    const wrapper = shallowMount(PingSectionInput)
-    const newValue = 'http://my-new-site.com'
-
-    wrapper.vm.setUrl('http://my-new-site.com')
-    await wrapper.vm.$nextTick()
-
-    const siteInput = wrapper.find('[data-test-id="site-input"]')
-
-    expect(siteInput.element.value).toBe(newValue)
-  })
-
-  it('changes ping button to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
-    const lastSiteUrl = 'http://www.example.com'
-    const lastSite = 'www.example.com'
+  it('changes ping button to retry if ping is done and input is equal lastUrl', async () => {
+    const lastUrl = 'http://www.example.com'
+    const value = ''
 
     const wrapper = shallowMount(PingSectionInput, {
       propsData: {
-        lastSiteUrl,
-        lastSite,
+        lastUrl,
+        value,
       },
     })
 
-    const siteInput = wrapper.find('[data-test-id="site-input"]')
     const pingButton = wrapper.find('[data-test-id="ping-button"]')
 
     expect(pingButton.text()).toContain('Ping')
 
-    siteInput.setValue(lastSite)
+    wrapper.setProps({ lastUrl, value: 'www.example.com' })
     await wrapper.vm.$nextTick()
     expect(pingButton.text()).toContain('Retry')
 
-    siteInput.setValue(lastSite)
+    wrapper.setProps({ lastUrl, value: 'http://www.example.com' })
     await wrapper.vm.$nextTick()
     expect(pingButton.text()).toContain('Retry')
   })

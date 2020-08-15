@@ -10,15 +10,15 @@
         </div>
         <a
           data-test-id="site-link"
-          :href="fullUrl"
+          :href="url"
           target="_blank"
           class="link ml-1"
         >
-          {{ site }}
+          {{ url }}
         </a>
       </div>
       <div class="text-sm mt-4 text-gray-700">
-        The latency of <b class="font-semibold">{{ site }}</b> is
+        The latency of <b class="font-semibold">{{ url }}</b> is
         {{ latencyFeedback }}.
       </div>
     </div>
@@ -43,20 +43,17 @@ export default {
       type: Number,
       required: true,
     },
-    site: {
+    url: {
       type: String,
       required: true,
     },
   },
   computed: {
-    fullUrl() {
-      return `http://${this.site}`
-    },
     iconUrl() {
-      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.site}`
+      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.url}`
     },
     iconAlt() {
-      return `${this.site} icon`
+      return `${this.url} icon`
     },
     latencyFeedback() {
       if (this.latency <= 360) {

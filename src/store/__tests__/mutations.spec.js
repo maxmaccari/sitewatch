@@ -10,16 +10,16 @@ const createState = (replacement = {}) => {
 }
 
 describe('SET_PING_RESULT', () => {
-  it('should set lastSiteUrl and latency', () => {
+  it('should set lastUrl and latency', () => {
     const state = createState()
 
     const id = 'abc'
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, url, latency })
 
-    expect(state.lastSiteUrl).toBe(siteUrl)
+    expect(state.lastUrl).toBe(url)
     expect(state.lastLatency).toBe(latency)
   })
 
@@ -30,10 +30,10 @@ describe('SET_PING_RESULT', () => {
     })
 
     const id = 'abc'
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, url, latency })
 
     expect(state.error).toBe(null)
     expect(state.loading).toBe(false)
@@ -43,15 +43,15 @@ describe('SET_PING_RESULT', () => {
     const state = createState()
 
     const id = 'abc'
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, url, latency })
 
     expect(state.pingHistory).toEqual([
       {
         id,
-        url: siteUrl,
+        url,
         latency,
       },
     ])
@@ -64,40 +64,40 @@ describe('SET_PING_RESULT', () => {
     })
 
     const id = 'abc'
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const latency = 200
 
-    mutations.SET_PING_RESULT(state, { id, siteUrl, latency })
+    mutations.SET_PING_RESULT(state, { id, url, latency })
 
-    expect(state.pingHistory).toEqual([{ id, url: siteUrl, latency }, oldUrl])
+    expect(state.pingHistory).toEqual([{ id, url, latency }, oldUrl])
   })
 })
 
 describe('SET_ERROR', () => {
-  it('should set lastSiteUrl and error', () => {
+  it('should set lastUrl and error', () => {
     const state = createState()
 
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const error = 'my error'
 
-    mutations.SET_ERROR(state, { siteUrl, error })
+    mutations.SET_ERROR(state, { url, error })
 
-    expect(state.lastSiteUrl).toBe(siteUrl)
+    expect(state.lastUrl).toBe(url)
     expect(state.error).toBe(error)
   })
 
   it('should clear latency and loading', () => {
     const state = createState({
-      lastSiteUrl: null,
+      lastUrl: null,
       lastLatency: 1000,
       error: null,
       loading: true,
     })
 
-    const siteUrl = 'http://www.example.com'
+    const url = 'http://www.example.com'
     const error = 'my error'
 
-    mutations.SET_ERROR(state, { siteUrl, error })
+    mutations.SET_ERROR(state, { url, error })
 
     expect(state.loading).toBe(false)
     expect(state.lastLatency).toBe(null)

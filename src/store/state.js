@@ -1,5 +1,5 @@
 export default {
-  lastSiteUrl: null,
+  lastUrl: null,
   lastLatency: null,
   error: null,
   loading: false,

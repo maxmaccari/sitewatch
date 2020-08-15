@@ -1,11 +1,10 @@
 <template>
   <div class="ping-section">
     <PingSectionInput
+      v-model="inputUrl"
       :loading="loading"
-      :lastSite="lastSite"
-      :lastSiteUrl="lastSiteUrl"
+      :lastUrl="lastUrl"
       @ping="pingSite"
-      ref="pingSectionInput"
     />
 
     <transition name="fade" mode="out-in">
@@ -13,17 +12,17 @@
 
       <template v-else>
         <PingSectionResult
-          v-if="lastSiteUrl && lastLatency"
-          :site="lastSite"
+          v-if="lastUrl && lastLatency"
+          :url="lastUrl"
           :latency="lastLatency"
           class="mt-4"
         />
 
         <PingSectionError
-          v-if="lastSiteUrl && error"
+          v-if="lastUrl && error"
           @try-again="tryAgain"
           :error="error"
-          :site="lastSite"
+          :url="lastUrl"
           class="mt-4"
         />
       </template>
@@ -36,7 +35,7 @@ import PingSectionInput from '@/components/PingSectionInput'
 import PingSectionError from '@/components/PingSectionError'
 import PingSectionResult from '@/components/PingSectionResult'
 import VLoading from '@/components/VLoading'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -45,16 +44,25 @@ export default {
     PingSectionResult,
     VLoading,
   },
+  data() {
+    return {
+      inputUrl: null,
+    }
+  },
   computed: {
-    ...mapState(['lastSiteUrl', 'lastLatency', 'error', 'loading']),
-    ...mapGetters(['lastSite']),
+    ...mapState(['lastUrl', 'lastLatency', 'error', 'loading']),
   },
   methods: {
     tryAgain() {
-      this.$refs.pingSectionInput.setUrl(this.lastSiteUrl)
-      this.pingSite(this.lastSiteUrl)
+      this.inputUrl = this.lastUrl
+      this.pingSite(this.lastUrl)
     },
     ...mapActions(['pingSite']),
+  },
+  watch: {
+    lastUrl(newUrl) {
+      if (!this.inputUrl && newUrl) this.inputUrl = newUrl
+    },
   },
 }
 </script>
