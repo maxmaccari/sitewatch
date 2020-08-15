@@ -60,5 +60,10 @@ export default {
     },
     ...mapActions(['pingSite']),
   },
+  watch: {
+    lastUrl(newUrl) {
+      if (!this.inputUrl && newUrl) this.inputUrl = newUrl
+    },
+  },
 }
 </script>

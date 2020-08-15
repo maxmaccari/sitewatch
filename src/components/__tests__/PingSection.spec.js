@@ -1,4 +1,5 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import store from '@/store'
 import PingSection from '../PingSection.vue'
 import PingSectionInput from '../PingSectionInput.vue'
 import PingSectionError from '../PingSectionError.vue'
@@ -184,5 +185,21 @@ describe('PingSection', () => {
 
     expect(pingSectionResult.exists()).toBe(false)
     expect(pingSectionError.exists()).toBe(false)
+  })
+
+  it('changes the value of PingSectionInput if lastUrl is changed and the value is empty', async () => {
+    const localVue = createLocalVue()
+    localVue.use(store)
+    const wrapper = shallowMount(PingSection, { store, localVue })
+
+    const pingSectionInput = wrapper.findComponent(PingSectionInput)
+
+    wrapper.vm.$store.replaceState({
+      lastUrl: 'http://www.example.com',
+    })
+
+    await wrapper.vm.$nextTick()
+
+    expect(pingSectionInput.props('value')).toBe('http://www.example.com')
   })
 })
