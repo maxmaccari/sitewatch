@@ -7,7 +7,7 @@ import VLoading from '../VLoading.vue'
 
 const defaultStore = {
   state: {
-    lastSiteUrl: null,
+    lastUrl: null,
     lastLatency: null,
     error: null,
     loading: false,
@@ -29,7 +29,7 @@ describe('PingSection', () => {
     expect(pingSectionInput.exists()).toBe(true)
     expect(pingSectionInput.props()).toEqual({
       lastSite: null,
-      lastSiteUrl: null,
+      lastUrl: null,
       loading: false,
     })
   })
@@ -55,7 +55,7 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', url)
   })
 
-  it('does not show the PingSectionResult if lastSiteUrl and lastLatency are null', () => {
+  it('does not show the PingSectionResult if lastUrl and lastLatency are null', () => {
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: defaultStore,
@@ -63,15 +63,15 @@ describe('PingSection', () => {
     })
     expect(wrapper.findComponent(PingSectionResult).exists()).toBe(false)
   })
-  it('shows the PingSectionResult with properly params if lastSiteUrl and lastLatency are filled', () => {
-    const lastSiteUrl = 'http://www.example.com'
+  it('shows the PingSectionResult with properly params if lastUrl and lastLatency are filled', () => {
+    const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const lastLatency = 300
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
           state: {
-            lastSiteUrl,
+            lastUrl,
             lastLatency,
           },
           getters: {
@@ -88,15 +88,15 @@ describe('PingSection', () => {
     expect(pingSectionResult.props('latency')).toBe(lastLatency)
   })
 
-  it('shows the PingSectionError with properly params if lastSiteUrl and error are filled', () => {
-    const lastSiteUrl = 'http://www.example.com'
+  it('shows the PingSectionError with properly params if lastUrl and error are filled', () => {
+    const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const error = 'my error'
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
           state: {
-            lastSiteUrl,
+            lastUrl,
             error,
           },
           getters: {
@@ -115,14 +115,14 @@ describe('PingSection', () => {
 
   it('dispatches pingSite and call setUrl from PingSectionInput if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
-    const lastSiteUrl = 'http://www.example.com'
+    const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
     const error = 'my error'
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
           state: {
-            lastSiteUrl,
+            lastUrl,
             error,
           },
           getters: {
@@ -138,8 +138,8 @@ describe('PingSection', () => {
     wrapper.findComponent(PingSectionError).vm.$emit('try-again')
     await wrapper.vm.$nextTick
 
-    expect(pingSectionInput.vm.setUrl).toBeCalledWith(lastSiteUrl)
-    expect(dispatch).toHaveBeenCalledWith('pingSite', lastSiteUrl)
+    expect(pingSectionInput.vm.setUrl).toBeCalledWith(lastUrl)
+    expect(dispatch).toHaveBeenCalledWith('pingSite', lastUrl)
   })
 
   it('shows VLoading component if state is loading', () => {
@@ -147,7 +147,7 @@ describe('PingSection', () => {
       mocks: {
         $store: {
           state: {
-            lastSiteUrl: null,
+            lastUrl: null,
             latency: null,
             loading: true,
           },
@@ -168,7 +168,7 @@ describe('PingSection', () => {
       mocks: {
         $store: {
           state: {
-            lastSiteUrl: 'https://www.example.com',
+            lastUrl: 'https://www.example.com',
             latency: 200,
             loading: true,
             errors: 'my error',

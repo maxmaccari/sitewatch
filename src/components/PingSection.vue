@@ -3,7 +3,7 @@
     <PingSectionInput
       :loading="loading"
       :lastSite="lastSite"
-      :lastSiteUrl="lastSiteUrl"
+      :lastUrl="lastUrl"
       @ping="pingSite"
       ref="pingSectionInput"
     />
@@ -13,14 +13,14 @@
 
       <template v-else>
         <PingSectionResult
-          v-if="lastSiteUrl && lastLatency"
+          v-if="lastUrl && lastLatency"
           :site="lastSite"
           :latency="lastLatency"
           class="mt-4"
         />
 
         <PingSectionError
-          v-if="lastSiteUrl && error"
+          v-if="lastUrl && error"
           @try-again="tryAgain"
           :error="error"
           :site="lastSite"
@@ -46,13 +46,13 @@ export default {
     VLoading,
   },
   computed: {
-    ...mapState(['lastSiteUrl', 'lastLatency', 'error', 'loading']),
+    ...mapState(['lastUrl', 'lastLatency', 'error', 'loading']),
     ...mapGetters(['lastSite']),
   },
   methods: {
     tryAgain() {
-      this.$refs.pingSectionInput.setUrl(this.lastSiteUrl)
-      this.pingSite(this.lastSiteUrl)
+      this.$refs.pingSectionInput.setUrl(this.lastUrl)
+      this.pingSite(this.lastUrl)
     },
     ...mapActions(['pingSite']),
   },

@@ -38,7 +38,7 @@ describe('pingSite', () => {
     expect(commit).toBeCalledWith('SET_PING_RESULT', {
       id,
       latency,
-      siteUrl: url,
+      url,
     })
     expect(commit).toBeCalledWith('START_LOADING')
   })
@@ -57,7 +57,7 @@ describe('pingSite', () => {
     expect(commit).toBeCalledTimes(2)
     expect(commit).toBeCalledWith('SET_ERROR', {
       error: 'network_error',
-      siteUrl: url,
+      url,
     })
     expect(commit).toBeCalledWith('START_LOADING')
   })

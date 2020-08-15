@@ -114,13 +114,13 @@ describe('PingSectionInput', () => {
     expect(siteInput.element.value).toBe(newValue)
   })
 
-  it('changes ping button to retry if ping is done and input is equal lastSiteUrl or lastSite', async () => {
-    const lastSiteUrl = 'http://www.example.com'
+  it('changes ping button to retry if ping is done and input is equal lastUrl or lastSite', async () => {
+    const lastUrl = 'http://www.example.com'
     const lastSite = 'www.example.com'
 
     const wrapper = shallowMount(PingSectionInput, {
       propsData: {
-        lastSiteUrl,
+        lastUrl,
         lastSite,
       },
     })

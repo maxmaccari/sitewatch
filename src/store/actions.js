@@ -1,17 +1,17 @@
 import PingService from '@/services/PingService'
 
 export default {
-  async pingSite({ commit }, siteUrl) {
+  async pingSite({ commit }, url) {
     try {
       commit('START_LOADING')
-      const result = await PingService.ping(siteUrl)
+      const result = await PingService.ping(url)
       commit('SET_PING_RESULT', {
         id: result.id,
-        siteUrl: result.url,
+        url: result.url,
         latency: result.latency,
       })
     } catch (error) {
-      commit('SET_ERROR', { siteUrl, error: 'network_error' })
+      commit('SET_ERROR', { url, error: 'network_error' })
     }
   },
 

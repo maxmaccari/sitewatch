@@ -2,7 +2,7 @@
   <div class="ping-section-input w-full m-auto max-w-3xl flex">
     <input
       data-test-id="site-input"
-      v-model="siteUrl"
+      v-model="url"
       @keyup.enter="$emit('ping', sanitizedUrl)"
       class="input rounded-l-full"
       type="text"
@@ -38,7 +38,7 @@ export default {
     VLoading,
   },
   props: {
-    lastSiteUrl: {
+    lastUrl: {
       type: String,
     },
     lastSite: {
@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      siteUrl: '',
+      url: '',
     }
   },
   computed: {
@@ -59,17 +59,14 @@ export default {
       return validateUrl(this.sanitizedUrl)
     },
     sanitizedUrl() {
-      if (
-        this.siteUrl.startsWith('http://') ||
-        this.siteUrl.startsWith('https://')
-      ) {
-        return this.siteUrl
+      if (this.url.startsWith('http://') || this.url.startsWith('https://')) {
+        return this.url
       }
 
-      return `http://${this.siteUrl}`
+      return `http://${this.url}`
     },
     pingLabel() {
-      if (this.siteUrl === this.lastSite || this.siteUrl === this.lastSiteUrl) {
+      if (this.url === this.lastSite || this.url === this.lastUrl) {
         return 'Retry'
       }
 
@@ -78,7 +75,7 @@ export default {
   },
   methods: {
     setUrl(newUrl) {
-      this.siteUrl = newUrl
+      this.url = newUrl
     },
   },
 }

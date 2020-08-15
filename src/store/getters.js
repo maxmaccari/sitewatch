@@ -10,9 +10,9 @@ const urlSearchFilter = state => ({ url }) => {
 
 export default {
   lastSite: state => {
-    if (!state.lastSiteUrl) return null
+    if (!state.lastUrl) return null
 
-    const splittedUrl = state.lastSiteUrl.split('://')
+    const splittedUrl = state.lastUrl.split('://')
 
     return splittedUrl[1] || splittedUrl[0]
   },
