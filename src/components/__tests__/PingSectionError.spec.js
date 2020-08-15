@@ -4,7 +4,7 @@ import PingSectionError from '../PingSectionError.vue'
 const createWrapper = (props = {}) => {
   return shallowMount(PingSectionError, {
     propsData: {
-      site: 'www.example.com',
+      url: 'http://www.example.com',
       error: 'network_error',
       ...props,
     },
@@ -37,9 +37,9 @@ describe('PingSectionError', () => {
   })
 
   it('displays the current url', () => {
-    const wrapper = createWrapper({ site: 'www.example.com' })
+    const wrapper = createWrapper({ url: 'http://www.example.com' })
 
-    expect(wrapper.text()).toContain('www.example.com')
+    expect(wrapper.text()).toContain('http://www.example.com')
   })
 
   it("emits 'try-again' event when click on try again button", () => {

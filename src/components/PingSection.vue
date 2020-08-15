@@ -13,7 +13,7 @@
       <template v-else>
         <PingSectionResult
           v-if="lastUrl && lastLatency"
-          :site="lastSite"
+          :url="lastUrl"
           :latency="lastLatency"
           class="mt-4"
         />
@@ -22,7 +22,7 @@
           v-if="lastUrl && error"
           @try-again="tryAgain"
           :error="error"
-          :site="lastSite"
+          :url="lastUrl"
           class="mt-4"
         />
       </template>
@@ -35,7 +35,7 @@ import PingSectionInput from '@/components/PingSectionInput'
 import PingSectionError from '@/components/PingSectionError'
 import PingSectionResult from '@/components/PingSectionResult'
 import VLoading from '@/components/VLoading'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -51,7 +51,6 @@ export default {
   },
   computed: {
     ...mapState(['lastUrl', 'lastLatency', 'error', 'loading']),
-    ...mapGetters(['lastSite']),
   },
   methods: {
     tryAgain() {

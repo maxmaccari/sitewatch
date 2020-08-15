@@ -1,23 +1,5 @@
 import getters from '../getters'
 
-describe('lastSite', () => {
-  it('returns the lastUrl without its protocol', () => {
-    expect(getters.lastSite({ lastUrl: 'http://www.example.com' })).toBe(
-      'www.example.com'
-    )
-
-    expect(getters.lastSite({ lastUrl: 'https://www.example.com' })).toBe(
-      'www.example.com'
-    )
-
-    expect(getters.lastSite({ lastUrl: 'www.example.com' })).toBe(
-      'www.example.com'
-    )
-
-    expect(getters.lastSite({ lastUrl: null })).toBe(null)
-  })
-})
-
 const dummyHistory = quantity => {
   return [...new Array(quantity)].map(() => ({
     url: '',

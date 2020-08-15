@@ -9,14 +9,6 @@ const urlSearchFilter = state => ({ url }) => {
 }
 
 export default {
-  lastSite: state => {
-    if (!state.lastUrl) return null
-
-    const splittedUrl = state.lastUrl.split('://')
-
-    return splittedUrl[1] || splittedUrl[0]
-  },
-
   historyPages: state => {
     const filteredHistory = state.pingHistory.filter(urlSearchFilter(state))
 

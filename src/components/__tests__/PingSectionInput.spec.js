@@ -114,7 +114,7 @@ describe('PingSectionInput', () => {
     expect(wrapper.emitted('ping')[0][0]).toEqual('http://www.example.com')
   })
 
-  it('changes ping button to retry if ping is done and input is equal lastUrl or lastSite', async () => {
+  it('changes ping button to retry if ping is done and input is equal lastUrl', async () => {
     const lastUrl = 'http://www.example.com'
     const value = ''
 

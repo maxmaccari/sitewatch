@@ -13,9 +13,6 @@ const defaultStore = {
     error: null,
     loading: false,
   },
-  getters: {
-    lastSite: null,
-  },
 }
 
 const createWrapper = (store = {}) => {
@@ -62,50 +59,41 @@ describe('PingSection', () => {
   })
   it('shows the PingSectionResult with properly params if lastUrl and lastLatency are filled', () => {
     const lastUrl = 'http://www.example.com'
-    const lastSite = 'www.example.com'
     const lastLatency = 300
     const wrapper = createWrapper({
       state: {
         lastUrl,
         lastLatency,
       },
-      getters: {
-        lastSite,
-      },
     })
 
     const pingSectionResult = wrapper.findComponent(PingSectionResult)
 
     expect(pingSectionResult.exists()).toBe(true)
-    expect(pingSectionResult.props('site')).toBe(lastSite)
+    expect(pingSectionResult.props('url')).toBe(lastUrl)
     expect(pingSectionResult.props('latency')).toBe(lastLatency)
   })
 
   it('shows the PingSectionError with properly params if lastUrl and error are filled', () => {
     const lastUrl = 'http://www.example.com'
-    const lastSite = 'www.example.com'
     const error = 'my error'
     const wrapper = createWrapper({
       state: {
         lastUrl,
         error,
       },
-      getters: {
-        lastSite: 'www.example.com',
-      },
     })
 
     const pingSectionError = wrapper.findComponent(PingSectionError)
 
     expect(pingSectionError.exists()).toBe(true)
-    expect(pingSectionError.props('site')).toBe(lastSite)
+    expect(pingSectionError.props('url')).toBe(lastUrl)
     expect(pingSectionError.props('error')).toBe(error)
   })
 
   it('changes the value of PingSectionInput to the lastUrl if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
     const lastUrl = 'http://www.example.com'
-    const lastSite = 'www.example.com'
     const error = 'my error'
     const wrapper = shallowMount(PingSection, {
       mocks: {
@@ -113,9 +101,6 @@ describe('PingSection', () => {
           state: {
             lastUrl,
             error,
-          },
-          getters: {
-            lastSite,
           },
           dispatch,
         },
@@ -151,9 +136,6 @@ describe('PingSection', () => {
         latency: 200,
         loading: true,
         errors: 'my error',
-      },
-      getters: {
-        lastSite: 'www.example.com',
       },
     })
 
