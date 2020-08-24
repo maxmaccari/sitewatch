@@ -25,21 +25,18 @@ describe('pingSite', () => {
     const latency = 250
     const url = 'http://www.example.com'
     const commit = jest.fn()
-
-    PingService.ping.mockResolvedValue({
+    const result = {
       id,
       url,
       latency,
-    })
+    }
+
+    PingService.ping.mockResolvedValue(result)
 
     await actions.pingSite({ commit }, url)
 
     expect(commit).toBeCalledTimes(2)
-    expect(commit).toBeCalledWith('SET_PING_RESULT', {
-      id,
-      latency,
-      url,
-    })
+    expect(commit).toBeCalledWith('SET_PING_RESULT', result)
     expect(commit).toBeCalledWith('START_LOADING')
   })
 

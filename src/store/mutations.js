@@ -1,7 +1,7 @@
 export default {
   SET_PING_RESULT(state, result) {
     state.lastUrl = result.url
-    state.lastLatency = result.latency
+    state.lastResult = result
     state.error = null
     state.loading = false
     state.pingHistory.unshift(result)
@@ -9,7 +9,7 @@ export default {
 
   SET_ERROR(state, { url, error }) {
     state.lastUrl = url
-    state.lastLatency = null
+    state.lastResult = null
     state.error = error
     state.loading = false
   },
