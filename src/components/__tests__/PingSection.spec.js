@@ -9,7 +9,6 @@ import PingResult from '@/models/PingResult'
 
 const defaultStore = {
   state: {
-    lastUrl: null,
     lastResult: null,
     error: null,
     loading: false,
@@ -77,12 +76,10 @@ describe('PingSection', () => {
     expect(pingSectionResult.props('result')).toBe(lastResult)
   })
 
-  it('shows the PingSectionError with properly params if lastUrl and error are filled', () => {
-    const lastUrl = 'http://www.example.com'
-    const error = 'my error'
+  it('shows the PingSectionError with properly params if error is filled', () => {
+    const error = {}
     const wrapper = createWrapper({
       state: {
-        lastUrl,
         error,
       },
     })
@@ -90,19 +87,18 @@ describe('PingSection', () => {
     const pingSectionError = wrapper.findComponent(PingSectionError)
 
     expect(pingSectionError.exists()).toBe(true)
-    expect(pingSectionError.props('url')).toBe(lastUrl)
     expect(pingSectionError.props('error')).toBe(error)
   })
 
-  it('changes the value of PingSectionInput to the lastUrl if try-again is emitted from PingSectionError', async () => {
+  it('changes the value of PingSectionInput with the error url if try-again is emitted from PingSectionError', async () => {
     const dispatch = jest.fn()
-    const lastUrl = 'http://www.example.com'
-    const error = 'my error'
+    const error = {
+      url: 'http://www.example.com',
+    }
     const wrapper = shallowMount(PingSection, {
       mocks: {
         $store: {
           state: {
-            lastUrl,
             error,
           },
           dispatch,
@@ -115,7 +111,7 @@ describe('PingSection', () => {
     pingSectionError.vm.$emit('try-again')
     await wrapper.vm.$nextTick
 
-    expect(pingSectionInput.props('value')).toBe(lastUrl)
+    expect(pingSectionInput.props('value')).toBe(error.url)
   })
 
   it('shows VLoading component if state is loading', () => {

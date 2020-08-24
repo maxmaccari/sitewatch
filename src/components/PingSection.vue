@@ -18,10 +18,9 @@
         />
 
         <PingSectionError
-          v-if="lastUrl && error"
+          v-if="error"
           @try-again="tryAgain"
           :error="error"
-          :url="lastUrl"
           class="mt-4"
         />
       </template>
@@ -53,8 +52,8 @@ export default {
   },
   methods: {
     tryAgain() {
-      this.inputUrl = this.lastUrl
-      this.pingSite(this.lastUrl)
+      this.inputUrl = this.error.url
+      this.pingSite(this.error.url)
     },
     ...mapActions(['pingSite']),
   },
