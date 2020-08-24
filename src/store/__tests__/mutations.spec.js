@@ -21,7 +21,6 @@ describe('SET_PING_RESULT', () => {
 
     mutations.SET_PING_RESULT(state, result)
 
-    expect(state.lastUrl).toBe(url)
     expect(state.lastResult).toBe(result)
   })
 
@@ -78,15 +77,13 @@ describe('SET_PING_RESULT', () => {
 })
 
 describe('SET_ERROR', () => {
-  it('should set lastUrl and error', () => {
+  it('should set error', () => {
     const state = createState()
 
-    const url = 'http://www.example.com'
-    const error = 'my error'
+    const error = {}
 
-    mutations.SET_ERROR(state, { url, error })
+    mutations.SET_ERROR(state, error)
 
-    expect(state.lastUrl).toBe(url)
     expect(state.error).toBe(error)
   })
 
@@ -98,10 +95,7 @@ describe('SET_ERROR', () => {
       loading: true,
     })
 
-    const url = 'http://www.example.com'
-    const error = 'my error'
-
-    mutations.SET_ERROR(state, { url, error })
+    mutations.SET_ERROR(state, {})
 
     expect(state.loading).toBe(false)
     expect(state.lastResult).toBe(null)

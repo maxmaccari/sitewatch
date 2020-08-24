@@ -1,16 +1,14 @@
 export default {
   SET_PING_RESULT(state, result) {
-    state.lastUrl = result.url
     state.lastResult = result
     state.error = null
     state.loading = false
     state.pingHistory.unshift(result)
   },
 
-  SET_ERROR(state, { url, error }) {
-    state.lastUrl = url
-    state.lastResult = null
+  SET_ERROR(state, error) {
     state.error = error
+    state.lastResult = null
     state.loading = false
   },
 

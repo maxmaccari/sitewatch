@@ -7,7 +7,7 @@ export default {
       const result = await PingService.ping(url)
       commit('SET_PING_RESULT', result)
     } catch (error) {
-      commit('SET_ERROR', { url, error: 'network_error' })
+      commit('SET_ERROR', error)
     }
   },
 
