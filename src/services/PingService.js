@@ -1,5 +1,6 @@
 import Http from './Http'
 import validateUrl from '@/utils/validateUrl'
+import PingResult from '@/models/PingResult'
 
 const PingService = {
   ping(url) {
@@ -9,7 +10,7 @@ const PingService = {
 
       Http.post('/ping', { url })
         .then(response => {
-          resolve(response.data)
+          resolve(new PingResult(response.data))
         })
         .catch(reject)
     })
