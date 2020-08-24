@@ -5,11 +5,12 @@ import PingSectionInput from '../PingSectionInput.vue'
 import PingSectionError from '../PingSectionError.vue'
 import PingSectionResult from '../PingSectionResult.vue'
 import VLoading from '../VLoading.vue'
+import PingResult from '@/models/PingResult'
 
 const defaultStore = {
   state: {
     lastUrl: null,
-    lastLatency: null,
+    lastResult: null,
     error: null,
     loading: false,
   },
@@ -52,26 +53,28 @@ describe('PingSection', () => {
     expect(dispatch).toHaveBeenCalledWith('pingSite', url)
   })
 
-  it('does not show the PingSectionResult if lastUrl and lastLatency are null', () => {
+  it('does not show the PingSectionResult if lastResult is null', () => {
     const wrapper = createWrapper()
 
     expect(wrapper.findComponent(PingSectionResult).exists()).toBe(false)
   })
-  it('shows the PingSectionResult with properly params if lastUrl and lastLatency are filled', () => {
-    const lastUrl = 'http://www.example.com'
-    const lastLatency = 300
+
+  it('shows the PingSectionResult with properly params if lastResult is filled', () => {
+    const lastResult = new PingResult({
+      url: 'http://www.example.com',
+      latency: 300,
+      id: 'abc',
+    })
     const wrapper = createWrapper({
       state: {
-        lastUrl,
-        lastLatency,
+        lastResult,
       },
     })
 
     const pingSectionResult = wrapper.findComponent(PingSectionResult)
 
     expect(pingSectionResult.exists()).toBe(true)
-    expect(pingSectionResult.props('url')).toBe(lastUrl)
-    expect(pingSectionResult.props('latency')).toBe(lastLatency)
+    expect(pingSectionResult.props('result')).toBe(lastResult)
   })
 
   it('shows the PingSectionError with properly params if lastUrl and error are filled', () => {
