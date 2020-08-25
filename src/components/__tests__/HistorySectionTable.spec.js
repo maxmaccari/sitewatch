@@ -39,7 +39,7 @@ describe('HistorySectionTable', () => {
 
   it('renders the icons properly', () => {
     const url = 'http://wwww.example-1.com'
-    const pingHistory = [{ url, latency: 100 }]
+    const pingHistory = [{ url, iconUrl: 'http://www.example.com' }]
     const wrapper = shallowMount(HistorySectionTable, {
       propsData: {
         pingHistory,
@@ -47,20 +47,19 @@ describe('HistorySectionTable', () => {
     })
 
     const icon = wrapper.find('[data-test-id="table-site-icon"]')
-    const expectedSrc = `http://s2.googleusercontent.com/s2/favicons?domain_url=${url}`
+    const expectedSrc = 'http://www.example.com'
     const expectedAlt = `${url} icon`
 
     expect(icon.exists()).toBe(true)
-    expect(icon.element.src).toBe(expectedSrc)
+    expect(icon.element.src).toContain(expectedSrc)
     expect(icon.element.alt).toBe(expectedAlt)
   })
 
   it('renders latency indicators properly', () => {
-    const url = 'http://wwww.example-1.com'
     const pingHistory = [
-      { url, latency: 250 },
-      { url, latency: 500 },
-      { url, latency: 1200 },
+      { feedback: 'good' },
+      { feedback: 'average' },
+      { feedback: 'bad' },
     ]
     const wrapper = shallowMount(HistorySectionTable, {
       propsData: {
@@ -85,7 +84,7 @@ describe('HistorySectionTable', () => {
     const url = 'http://wwww.example-1.com'
     const wrapper = shallowMount(HistorySectionTable, {
       propsData: {
-        pingHistory: [{ url, latency: 100 }],
+        pingHistory: [{ url }],
       },
     })
 
