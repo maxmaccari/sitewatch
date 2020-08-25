@@ -1,68 +1,56 @@
 <template>
   <div
     class="ping-section-result m-auto max-w-md border-l-4 flex shadow-md"
-    :class="`border-${latencyFeedback}`"
+    :class="`border-${result.feedback}`"
   >
     <div class="px-2 py-3 bg-gray-200 flex-1">
       <div class="flex items-center">
         <div class="bg-white p-1 rounded-full">
-          <img data-test-id="site-icon" :src="iconUrl" :alt="iconAlt" />
+          <img
+            data-test-id="site-icon"
+            :src="result.iconUrl"
+            :alt="`${result.url} icon`"
+          />
         </div>
         <a
           data-test-id="site-link"
-          :href="url"
+          :href="result.url"
           target="_blank"
           class="link ml-1"
         >
-          {{ url }}
+          {{ result.url }}
         </a>
       </div>
       <div class="text-sm mt-4 text-gray-700">
-        The latency of <b class="font-semibold">{{ url }}</b> is
-        {{ latencyFeedback }}.
+        The latency of <b class="font-semibold">{{ result.url }}</b> is
+        {{ result.feedback }}.
       </div>
     </div>
     <div
       class="text-white px-4 py-3 flex flex-col justify-between items-left"
-      :class="`result-${latencyFeedback}`"
+      :class="`result-${result.feedback}`"
     >
-      <span class="text-xs mt-2" :class="`result-label-${latencyFeedback}`">
+      <span class="text-xs mt-2" :class="`result-label-${result.feedback}`">
         respondend in
       </span>
       <div class="text-2xl font-bold">
-        {{ latency }} <span class="text-sm font-normal">ms</span>
+        {{ result.latency }} <span class="text-sm font-normal">ms</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import PingResult from '@/models/PingResult'
+
 export default {
   props: {
-    latency: {
-      type: Number,
+    result: {
+      type: Object,
       required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    iconUrl() {
-      return `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${this.url}`
-    },
-    iconAlt() {
-      return `${this.url} icon`
-    },
-    latencyFeedback() {
-      if (this.latency <= 360) {
-        return 'good'
-      } else if (this.latency <= 1000) {
-        return 'average'
-      }
-
-      return 'bad'
+      validator(value) {
+        return value instanceof PingResult
+      },
     },
   },
 }

@@ -9,8 +9,9 @@
     <div class="sm:ml-1">
       <div class="mt-2 font-bold text-xl">Error: {{ title }}</div>
       <div class="mt-1 text-base leading-tight">
-        We were not able to connect to <b class="font-semibold">{{ url }}</b
-        >. Check if the URL is correct or if it exists. Click
+        We were not able to connect to
+        <b class="font-semibold">{{ error.url }}</b>
+        . Check if the URL is correct or if it exists. Click
         <a
           class="underline cursor-pointer hover:text-red-800"
           data-test-id="try-again"
@@ -27,21 +28,17 @@
 export default {
   props: {
     error: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
+      type: Object,
       required: true,
     },
   },
   computed: {
     title() {
-      if (this.error === 'timeout') {
+      if (this.error.code === 'timeout') {
         return 'the connection timed out!'
-      } else if (this.error === 'network_error') {
+      } else if (this.error.code === 'network_error') {
         return 'connection failed!'
-      } else if (this.error === 'unresolved_url') {
+      } else if (this.error.code === 'ENOTFOUND') {
         return 'the url cannot be resolved!'
       }
 

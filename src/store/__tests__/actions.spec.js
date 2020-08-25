@@ -25,40 +25,36 @@ describe('pingSite', () => {
     const latency = 250
     const url = 'http://www.example.com'
     const commit = jest.fn()
-
-    PingService.ping.mockResolvedValue({
+    const result = {
       id,
       url,
       latency,
-    })
+    }
+
+    PingService.ping.mockResolvedValue(result)
 
     await actions.pingSite({ commit }, url)
 
     expect(commit).toBeCalledTimes(2)
-    expect(commit).toBeCalledWith('SET_PING_RESULT', {
-      id,
-      latency,
-      url,
-    })
+    expect(commit).toBeCalledWith('SET_PING_RESULT', result)
     expect(commit).toBeCalledWith('START_LOADING')
   })
 
   it('commits START_LOADING and SET_ERROR with the given url and the error in case of errors', async () => {
     const url = 'http://www.example.com'
     const commit = jest.fn()
-
-    PingService.ping.mockRejectedValue({
+    const error = {
+      url,
       code: 'ENOTFOUND',
       message: 'getaddrinfo ENOTFOUND',
-    })
+    }
+
+    PingService.ping.mockRejectedValue(error)
 
     await actions.pingSite({ commit }, url)
 
     expect(commit).toBeCalledTimes(2)
-    expect(commit).toBeCalledWith('SET_ERROR', {
-      error: 'network_error',
-      url,
-    })
+    expect(commit).toBeCalledWith('SET_ERROR', error)
     expect(commit).toBeCalledWith('START_LOADING')
   })
 })

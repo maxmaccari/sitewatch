@@ -4,34 +4,36 @@ import PingSectionError from '../PingSectionError.vue'
 const createWrapper = (props = {}) => {
   return shallowMount(PingSectionError, {
     propsData: {
-      url: 'http://www.example.com',
-      error: 'network_error',
-      ...props,
+      error: {
+        code: 'network_error',
+        url: 'http://www.example.com',
+        ...props,
+      },
     },
   })
 }
 
 describe('PingSectionError', () => {
   it('displays connection timeout error if error is timeout', () => {
-    const wrapper = createWrapper({ error: 'timeout' })
+    const wrapper = createWrapper({ code: 'timeout' })
 
     expect(wrapper.text()).toContain('Error: the connection timed out!')
   })
 
   it('displays connection error if error is network_error', () => {
-    const wrapper = createWrapper({ error: 'network_error' })
+    const wrapper = createWrapper({ code: 'network_error' })
 
     expect(wrapper.text()).toContain('Error: connection failed!')
   })
 
   it('displays connection error if error is unresolved_url', () => {
-    const wrapper = createWrapper({ error: 'unresolved_url' })
+    const wrapper = createWrapper({ code: 'ENOTFOUND' })
 
     expect(wrapper.text()).toContain('Error: the url cannot be resolved!')
   })
 
   it('displays unknow error if error is different', () => {
-    const wrapper = createWrapper({ error: 'another' })
+    const wrapper = createWrapper({ code: 'another' })
 
     expect(wrapper.text()).toContain('Error: unknown error!')
   })

@@ -1,13 +1,17 @@
 import { shallowMount } from '@vue/test-utils'
 import PingSectionResult from '../PingSectionResult.vue'
+import PingResult from '@/models/PingResult'
 
-const createWrapper = (props = {}) => {
+const createWrapper = (params = {}) => {
+  const result = new PingResult({
+    id: 'abc',
+    url: 'http://www.example.com',
+    latency: 100,
+    ...params,
+  })
+
   return shallowMount(PingSectionResult, {
-    propsData: {
-      url: 'http://www.example.com',
-      latency: 100,
-      ...props,
-    },
+    propsData: { result },
   })
 }
 
@@ -36,8 +40,7 @@ describe('PingSectionResult', () => {
 
     const siteIcon = wrapper.find('[data-test-id="site-icon"]')
 
-    const expectedSrc = `http://s2.googleusercontent.com/s2/favicons?domain_url=http://${url}`
-    expect(siteIcon.element.src).toContain(expectedSrc)
+    expect(siteIcon.element.src).toContain(url)
     expect(siteIcon.element.alt).toContain(`${url} icon`)
   })
 

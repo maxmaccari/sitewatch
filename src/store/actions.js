@@ -5,13 +5,9 @@ export default {
     try {
       commit('START_LOADING')
       const result = await PingService.ping(url)
-      commit('SET_PING_RESULT', {
-        id: result.id,
-        url: result.url,
-        latency: result.latency,
-      })
+      commit('SET_PING_RESULT', result)
     } catch (error) {
-      commit('SET_ERROR', { url, error: 'network_error' })
+      commit('SET_ERROR', error)
     }
   },
 

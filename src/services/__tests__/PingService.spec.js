@@ -1,5 +1,6 @@
 import Http from '../Http'
 import PingService from '../PingService'
+import PingResult from '../../models/PingResult'
 
 jest.mock('../Http')
 
@@ -9,7 +10,7 @@ describe('PingService', () => {
       jest.clearAllMocks()
     })
 
-    it('should calculate milliseconds from a website request is accepted', async () => {
+    it('should return a PingResult from the website if request is accepted', async () => {
       Http.post.mockResolvedValue({
         data: {
           id: 'abc',
@@ -19,22 +20,57 @@ describe('PingService', () => {
         },
       })
 
-      const response = await PingService.ping('http://www.example.com')
+      const result = await PingService.ping('http://www.example.com')
 
       expect(Http.post).toHaveBeenCalledTimes(1)
       expect(Http.post).toBeCalledWith('/ping', {
         url: 'http://www.example.com',
       })
-      expect(response.id).toBe('abc')
-      expect(response.latency).toBe(100)
+      expect(result).toEqual(
+        new PingResult({
+          id: 'abc',
+          latency: 100,
+          url: 'http://www.example.com',
+          status: 200,
+        })
+      )
+    })
+
+    it('should return error if api returns an error', async () => {
+      const error = {
+        response: {
+          data: {
+            url: 'http://www.example.com',
+            code: 'ENOTFOUND',
+            message: 'getaddrinfo ENOTFOUND www.example.com',
+          },
+        },
+      }
+      Http.post.mockRejectedValue(error)
+
+      await expect(PingService.ping('http://www.example.com')).rejects.toEqual(
+        error.response.data
+      )
+    })
+
+    it('should return error if url is invalid', async () => {
+      jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(false)
+
+      await expect(PingService.ping('invalid url')).rejects.toEqual({
+        code: 'invalid_url',
+        url: 'invalid url',
+      })
+
+      expect(Http.post).toHaveBeenCalledTimes(0)
     })
 
     it('should return error if browser is offline', async () => {
       jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(false)
 
-      await expect(PingService.ping('http://www.example.com')).rejects.toEqual(
-        'network_error'
-      )
+      await expect(PingService.ping('http://www.example.com')).rejects.toEqual({
+        code: 'network_error',
+        url: 'http://www.example.com',
+      })
 
       expect(Http.post).toHaveBeenCalledTimes(0)
     })
