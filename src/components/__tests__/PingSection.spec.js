@@ -117,7 +117,7 @@ describe('PingSection', () => {
   it('shows VLoading component if state is loading', () => {
     const wrapper = createWrapper({
       state: {
-        lastUrl: null,
+        lastResult: null,
         latency: null,
         loading: true,
       },
@@ -131,10 +131,10 @@ describe('PingSection', () => {
   it('does not show results or errors if state is loading', () => {
     const wrapper = createWrapper({
       state: {
-        lastUrl: 'https://www.example.com',
+        lastResult: {},
         latency: 200,
         loading: true,
-        errors: 'my error',
+        error: {},
       },
     })
 
@@ -145,7 +145,7 @@ describe('PingSection', () => {
     expect(pingSectionError.exists()).toBe(false)
   })
 
-  it('changes the value of PingSectionInput if lastUrl is changed and the value is empty', async () => {
+  it('changes the value of PingSectionInput if lastResult is changed and the value is empty', async () => {
     const localVue = createLocalVue()
     localVue.use(store)
     const wrapper = shallowMount(PingSection, { store, localVue })
@@ -153,7 +153,11 @@ describe('PingSection', () => {
     const pingSectionInput = wrapper.findComponent(PingSectionInput)
 
     wrapper.vm.$store.replaceState({
-      lastUrl: 'http://www.example.com',
+      lastResult: new PingResult({
+        url: 'http://www.example.com',
+        latency: 100,
+        id: 'abc',
+      }),
     })
 
     await wrapper.vm.$nextTick()

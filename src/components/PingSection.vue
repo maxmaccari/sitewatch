@@ -48,7 +48,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['lastUrl', 'lastResult', 'error', 'loading']),
+    ...mapState(['lastResult', 'error', 'loading']),
   },
   methods: {
     tryAgain() {
@@ -58,8 +58,8 @@ export default {
     ...mapActions(['pingSite']),
   },
   watch: {
-    lastUrl(newUrl) {
-      if (!this.inputUrl && newUrl) this.inputUrl = newUrl
+    lastResult(newResult) {
+      if (!this.inputUrl && newResult) this.inputUrl = newResult.url
     },
   },
 }

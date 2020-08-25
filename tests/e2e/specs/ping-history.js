@@ -131,4 +131,55 @@ describe('Ping History', () => {
 
     cy.contains('.history-section', 'No data found.')
   })
+
+  it('Clicking history ping url icon should ping url again', () => {
+    cy.server()
+    cy.mockPingResponse('http://www.example.com')
+
+    cy.visit('/')
+    cy.get('[data-test-id="site-input"]').type('www.example.com')
+    cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
+
+    cy.mockPingResponse('http://www.example-1.com')
+
+    cy.get('[data-test-id="site-input"]').clear()
+    cy.get('[data-test-id="site-input"]').type('www.example-1.com')
+    cy.get('[data-test-id="ping-button"]').click()
+
+    cy.waitPing()
+
+    cy.get('[data-test-id="history-table-ping"]')
+      .first()
+      .click()
+
+    cy.get('.history-section')
+      .get('tr:contains(http://www.example-1.com)')
+      .should('have.length', 2)
+
+    cy.get('.history-section')
+      .get('tr:contains(http://www.example.com)')
+      .should('have.length', 1)
+
+    cy.contains('.ping-section-result', 'http://www.example-1.com')
+
+    cy.get('[data-test-id="site-input"]').clear()
+    cy.mockPingResponse('http://www.example.com')
+
+    cy.get('[data-test-id="history-table-ping"]')
+      .last()
+      .click()
+
+    cy.get('.history-section')
+      .get('tr:contains(http://www.example.com)')
+      .should('have.length', 2)
+
+    cy.contains('.ping-section-result', 'http://www.example.com')
+
+    cy.get('[data-test-id="site-input"]').should(
+      'have.value',
+      'http://www.example.com'
+    )
+  })
 })
